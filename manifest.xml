@@ -25,6 +25,12 @@
 		<card embed="false" />
 	</platform>
 	<bindings>
+		<cover>
+			<entry title="user_center" do="user_center" state="" direct="false" />
+		</cover>
+		<rule>
+			<entry title="user_center" do="user_center" state="" direct="false" />
+		</rule>
 	</bindings>
 	<permissions>
 	</permissions>
