@@ -1,40 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns="http://www.we7.cc" versionCode="0.6">
-	<application setting="false">
-		<name><![CDATA[简玩校园]]></name>
-		<identifie><![CDATA[xLLLLH_jwschool]]></identifie>
-		<version><![CDATA[1.0]]></version>
-		<type><![CDATA[business]]></type>
-		<ability><![CDATA[简玩校园]]></ability>
-		<description><![CDATA[简玩校园]]></description>
-		<author><![CDATA[0xLLLLH]]></author>
-		<url><![CDATA[http://bbs.we7.cc/]]></url>
-	</application>
-	<platform>
-		<subscribes>
-			<message type="text" />
-			<message type="image" />
-			<message type="voice" />
-			<message type="video" />
-		</subscribes>
-		<handles>
-			<message type="text" />
-			<message type="image" />
-		</handles>
-		<rule embed="false" />
-		<card embed="false" />
-	</platform>
-	<bindings>
-		<cover>
-			<entry title="user_center" do="user_center" state="" direct="false" />
-		</cover>
-		<rule>
-			<entry title="user_center" do="user_center" state="" direct="false" />
-		</rule>
-	</bindings>
-	<permissions>
-	</permissions>
-	<install><![CDATA[]]></install>
-	<uninstall><![CDATA[]]></uninstall>
-	<upgrade><![CDATA[]]></upgrade>
+    <application setting="true">
+        <name><![CDATA[简玩校园]]></name>
+        <identifie><![CDATA[llh_jwschool]]></identifie>
+        <version><![CDATA[1.0]]></version>
+        <type><![CDATA[business]]></type>
+        <ability><![CDATA[简玩校园]]></ability>
+        <description><![CDATA[简玩校园]]></description>
+        <author><![CDATA[0xLLLLH]]></author>
+        <url><![CDATA[http://bbs.we7.cc/]]></url>
+    </application>
+    <platform>
+        <subscribes>
+
+        </subscribes>
+        <handles>
+            <message type="image" />
+            <message type="voice" />
+            <message type="video" />
+            <message type="location" />
+            <message type="link" />
+            <message type="subscribe" />
+            <message type="qr" />
+            <message type="trace" />
+            <message type="click" />
+            <message type="enter" />
+            <message type="text" />
+        </handles>
+        <rule embed="false" />
+        <card embed="false" />
+    </platform>
+    <bindings>
+        <cover>
+            <entry title="首页" do="index" state="" direct="false" />
+        </cover>
+        <rule>
+            <entry title="后台规则" do="rules" state="" direct="false" />
+        </rule>
+        <home>
+            <entry title="首页" do="index" state="" direct="false" />
+        </home>
+        <profile>
+            <entry title="个人中心" do="usercenter" state="" direct="false" />
+        </profile>
+        <menu>
+
+        </menu>
+    </bindings>
+    <permissions>
+    </permissions>
+    <install><![CDATA[]]></install>
+    <uninstall><![CDATA[]]></uninstall>
+    <upgrade><![CDATA[]]></upgrade>
 </manifest>
