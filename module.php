@@ -7,7 +7,7 @@
  */
 defined('IN_IA') or exit('Access Denied');
 
-class XLLLLH_jwschoolModule extends WeModule {
+class llh_jwschoolModule extends WeModule {
 
 
 }
