@@ -4,4 +4,56 @@
  * Date: 2016.3.29
  * Description：用户个人中心相关的样式
  */
+/* for .entry */
+/* for .entry-group */
+/* for .entry-inline */
+/* for .entry-block*/
+.entry-group {
+  background-color: #fff;
+  margin: 10px 0;
+  padding-left: 5%;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+.entry {
+  min-height: 10px;
+  padding: 11px 0;
+  border-bottom: 1px solid #ddd;
+}
+.entry a {
+  width: 100%;
+  height: 100%;
+}
+.entry span {
+  margin: 0 5px;
+}
+.entry-last {
+  border: none !important;
+}
+.entry-inline {
+  height: 40px;
+  font-size: 18px;
+  line-height: 18px;
+  padding-right: 11px;
+}
+.entry-inline .gt {
+  display: block;
+  width: 18px;
+  height: 18px;
+  font-size: 30px;
+  text-align: center;
+  line-height: 18px;
+  color: #cfcfcf;
+  cursor: pointer;
+}
+.padding-r {
+  padding-right: 5%;
+}
+.entry-block {
+  height: 80px;
+  padding: 15px;
+}
+.entry-block .tab-img {
+  padding: 0 20%;
+}
 /*# sourceMappingURL=usercenter.css.map */

@@ -1,0 +1,11 @@
+<link rel="stylesheet" href="../css/basic_info.css"/>
+<div class="info-panel">
+    <div id="gravatar_block" class="container">
+        <img src="{$avatar}" class="center-block img-responsive img-circle" alt="Responsive image">
+    </div>
+    <div id="info_block" class="text-center">
+        <a>
+            $username<span class="badge" style="background-color: #5bc0de;margin-left: 10px;">{if $gender==0}♀{else}♂{/if}{$age}</span>
+        </a>
+    </div>
+</div>

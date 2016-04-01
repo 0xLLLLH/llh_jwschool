@@ -6,9 +6,12 @@
 <div class=".container">
     <div class="jumbotron">
         <h1>Index</h1>
-        <p>还没有写</p>
-        <li><a href="{php $this->createMobileUrl('usercenter',array(),false);}">个人中心</a></li>
+        <p>此处是各个页面的列表</p>
+        <ul>
+
+            <li><a href="{php echo $this->createMobileUrl('usercenter')}">个人中心</a></li>
+        </ul>
     </div>
 </div>
 
-{template 'common/footer'}
+{template 'footer'}
