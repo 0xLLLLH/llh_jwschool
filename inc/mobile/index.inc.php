@@ -11,7 +11,10 @@ global  $_W,$_GPC;
 
 load()->model('mc');
 $avatar = '';
-
+/*
+var_dump($_W['member']);
+echo "<br>-----------<br>";
+var_dump($_W['fans']);*/
 if (!empty($_W['member']['uid'])) {
     $member = mc_fetch(intval($_W['member']['uid']), array('avatar'));//获取uid的avatar字段
     //var_dump($member);
@@ -21,17 +24,16 @@ if (!empty($_W['member']['uid'])) {
 }
 if (empty($avatar)) {
     $fan = mc_fansinfo($_W['openid']); //获取粉丝信息
-    //var_dump($userinfo);
     if (!empty($fan)) {
         $avatar = $fan['avatar'];
     }
 }
-
 if (empty($avatar)) {
     $userinfo = mc_oauth_userinfo();//调用oauth用户授权获取资料并更新会员信息
-//   var_dump($userinfo);
+    var_dump($userinfo);
     if (!is_error($userinfo) && !empty($userinfo) && is_array($userinfo) && !empty($userinfo['avatar'])) {
         $avatar = $userinfo['avatar'];
+        $nickname =$userinfo['nickname'];
     }
 }
 /*
