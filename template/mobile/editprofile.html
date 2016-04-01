@@ -1,6 +1,6 @@
 {template 'header_back'}
 
-<link rel="stylesheet" href="../css/usercenter.css"/>
+<link rel="stylesheet" href="../addons/llh_jwschool/template/css/usercenter.css"/>
 {if !isset($_GPC['op'])}
 <div>
     <div class="entry-group">
@@ -59,11 +59,15 @@
         </div>
         {else if $_GPC['op']=='birth'}
         <div class="form-group">
-            {php echo tpl_form_field_date('date');}
+            {php echo tpl_fans_form('birth', $member['birth'])}
         </div>
         {else if $_GPC['op']=='address'}
         <div class="form-group">
-            {php echo tpl_form_field_district('birth', array('province' => '', 'city' => '', 'district' => '' ));}
+            {php echo tpl_fans_form('reside', $member['reside']);}
+        </div>
+        {else if $_GPC['op']=='gender'}
+        <div class="form-group">
+            {php echo tpl_fans_form('gender', $member['gender']);}
         </div>
         {else}
         <div class="form-group">
