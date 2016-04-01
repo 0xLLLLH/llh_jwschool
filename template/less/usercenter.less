@@ -5,4 +5,75 @@
  * Description：用户个人中心相关的样式
  */
 
-@color : #333;
+/* for .entry */
+@entry-padding:11px;
+@entry-border-color: #ddd;
+
+/* for .entry-group */
+@entry-group-padding-left:5%;
+
+/* for .entry-inline */
+@entry-inline-height:40px;
+
+/* for .entry-block*/
+@entry-block-height:80px;
+
+
+.entry-group{
+  background-color: #fff;
+  margin: 10px 0;
+  padding-left: @entry-group-padding-left;
+  border-top: 1px solid @entry-border-color;
+  border-bottom: 1px solid @entry-border-color;
+}
+
+.entry{
+  min-height: 10px;
+  padding: @entry-padding 0;
+  border-bottom: 1px solid @entry-border-color;
+}
+
+.entry a{
+  width: 100%;
+  height: 100%;
+}
+
+.entry span{
+  margin: 0 5px;
+}
+
+.entry-last{
+  border: none !important;
+}
+
+.entry-inline{
+  height: @entry-inline-height;
+  font-size: @entry-inline-height - (2*@entry-padding);
+  line-height: @entry-inline-height - (2*@entry-padding);
+  padding-right: @entry-padding;
+}
+
+.entry-inline .gt{
+  display: block;
+  width: @entry-inline-height - (2*@entry-padding);
+  height: @entry-inline-height - (2*@entry-padding);
+  font-size: 30px;
+  text-align: center;
+  line-height: @entry-inline-height - (2*@entry-padding);
+  color: #cfcfcf;
+  cursor: pointer;
+}
+
+.padding-r{
+  padding-right: @entry-group-padding-left;
+}
+
+.entry-block{
+  height: @entry-block-height;
+  padding: 15px;
+}
+
+.entry-block .tab-img{
+  padding: 0 20%;
+}
+

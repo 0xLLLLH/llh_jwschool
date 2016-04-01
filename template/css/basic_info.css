@@ -1,0 +1,25 @@
+/**
+ * Created by Phpstorm.
+ * User: 0xLLLLH
+ * Date: 2016.4.1
+ * Description：头像和基本信息
+ */
+.info-panel {
+  background-color: #5cb85c;
+  padding: 10px;
+}
+#gravatar_block {
+  padding: 0px 35%;
+}
+#gravatar_block img {
+  border: 4px solid #fff;
+}
+#info_block {
+  margin: 10px;
+  font-size: 1.5em;
+}
+#info_block a {
+  color: #fff;
+  font-weight: bold;
+}
+/*# sourceMappingURL=basic_info.css.map */
