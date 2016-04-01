@@ -50,12 +50,12 @@
     <permissions>
     </permissions>
     <install><![CDATA[
-    -- phpMyAdmin SQL Dump
+   -- phpMyAdmin SQL Dump
 -- version 4.0.10deb1
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2016-04-01 16:22:39
+-- 生成日期: 2016-04-01 17:43:23
 -- 服务器版本: 5.5.46-0ubuntu0.14.04.2
 -- PHP 版本: 5.5.9-1ubuntu4.14
 
@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `ims_jwschool_comments` (
 
 CREATE TABLE IF NOT EXISTS `ims_jwschool_moments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_ID` int(11) DEFAULT NULL,
+  `uid` int(11) DEFAULT NULL,
   `release_TIME` datetime DEFAULT NULL,
   `travel_TIME` datetime DEFAULT NULL,
   `content` text,
