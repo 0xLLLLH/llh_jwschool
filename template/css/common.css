@@ -2,9 +2,45 @@
  * Created by Phpstorm.
  * User: 0xLLLLH
  * Date: 2016.3.29
- * Description：公共样式
+ * Description：公共样式及基本的header,footer的样式
  */
-.wrap {
-  z-index: 999;
+body {
+  min-height: 400px;
+  padding-bottom: 70px;
+  color: #555;
+  background-color: #f9f9f9;
+  font-size: 1em;
+  font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+}
+a,
+a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+.flex-1 {
+  flex: 1;
+  -moz-box-flex: 1;
+  -ms-flex: 1;
+  -webkit-flex: 1;
+  flex-direction: row;
+  width: 33%;
+}
+#header_back {
+  height: 40px;
+  padding: 10px 2px;
+  font-size: 20px;
+  background-color: #5cb85c;
+  color: #fff;
+  margin-bottom: 10px;
+}
+.glyphicon {
+  margin: 0 15px;
+}
+#footer .tab-img {
+  padding: 0 40%;
+}
+#footer a {
+  padding: 5px;
+  border-top: 1px solid #ddd;
 }
 /*# sourceMappingURL=common.css.map */
