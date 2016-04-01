@@ -1,0 +1,78 @@
+{template 'header_back'}
+
+<link rel="stylesheet" href="../css/usercenter.css"/>
+{if !isset($_GPC['op'])}
+<div>
+    <div class="entry-group">
+        <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'nickname','new_title'=>'昵称'));}">
+            <div class="entry entry-inline">
+                <span>昵称</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{nickname}</span>
+            </div>
+        </a>
+        <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'realname','new_title'=>'昵称'));}">
+            <div class="entry entry-inline">
+                <span>真实姓名</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{realname}</span>
+            </div>
+        </a>
+        <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'gender','new_title'=>'性别'));}">
+            <div class="entry entry-inline">
+                <span>性别</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{gender}</span>
+            </div>
+        </a>
+        <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'phone','new_title'=>'手机号'));}">
+            <div class="entry entry-inline">
+                <span>手机号</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{phone}</span>
+            </div>
+        </a>
+        <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'email','new_title'=>'E-mail'));}">
+            <div class="entry entry-inline">
+                <span>E-mail</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{email}</span>
+            </div>
+        </a>
+        <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'gender','new_title'=>'QQ'));}">
+            <div class="entry entry-inline">
+                <span>QQ</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{qq}</span>
+            </div>
+        </a>
+        <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'birth','new_title'=>'生日'));}">
+            <div class="entry entry-inline">
+                <span>生日</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{birth}</span>
+            </div>
+        </a>
+        <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'address','new_title'=>'地址'));}">
+            <div class="entry entry-inline entry-last">
+                <span>地址</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{address}</span>
+            </div>
+        </a>
+    </div>
+</div>
+{else}
+<script>
+    $(document).attr("title","修改{$_GPC['new_title']}");
+    $("#title").text("修改{$_GPC['new_title']}");
+</script>
+<div class="container">
+    <form>
+        {if $_GPC['op']=='email'}
+        <div class="form-group">
+            <input type="email" class="form-control" id="Email" placeholder="{email}">
+        </div>
+        {else if $_GPC['op']=='birth'}
+        <div class="form-group">
+            {php echo tpl_form_field_date('date');}
+        </div>
+        {else if $_GPC['op']=='address'}
+        <div class="form-group">
+            {php echo tpl_form_field_district('birth', array('province' => '', 'city' => '', 'district' => '' ));}
+        </div>
+        {else}
+        <div class="form-group">
+            <input type="text" class="form-control" id="input" placeholder="{something}">
+        </div>
+        {/if}
+        <input type="hidden" name="token" value="{$_W['token']}">
+        <button type="submit" class="btn btn-default">确认修改</button>
+    </form>
+</div>
+{/if}
+{template 'footer'}
