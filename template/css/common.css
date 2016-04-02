@@ -4,6 +4,14 @@
  * Date: 2016.3.29
  * Description：公共样式及基本的header,footer的样式
  */
+/**
+ * Created by Phpstorm.
+ * User: 0xLLLLH
+ * Date: 2016.4.2
+ * Description：全局配置
+ */
+/* header*/
+/* footer*/
 body {
   min-height: 400px;
   padding-bottom: 70px;
@@ -32,6 +40,39 @@ a:hover {
   background-color: #5cb85c;
   color: #fff;
   margin-bottom: 10px;
+  border: none;
+}
+#header_back a {
+  padding-top: 3px;
+}
+.headerlink {
+  background: none;
+  color: #fff;
+  padding: 2px 8px;
+  border: none;
+  outline: none;
+}
+.header-tab {
+  width: 200px;
+}
+.tab-item {
+  background-color: #5cb85c;
+  color: #ddd;
+  border: none;
+  padding-top: 0;
+  padding-bottom: 10px;
+  font-size: 20px;
+  outline: none;
+}
+.tab-item-active {
+  color: #fff;
+  border-bottom: 3px solid #fff;
+}
+.search-icon {
+  position: absolute;
+  top: 10px;
+  right: 5px;
+  height: 20px;
 }
 .glyphicon {
   margin: 0 15px;
@@ -42,5 +83,61 @@ a:hover {
 #footer a {
   padding: 5px;
   border-top: 1px solid #ddd;
+}
+.content-block {
+  margin: 15px 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+  padding: 10px 10px;
+  font-size: 20px;
+}
+.wrap {
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  filter: alpha(opacity=50);
+  -moz-opacity: 0.5;
+  opacity: 0.5;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  z-index: 1000;
+}
+.wrap-content,
+.wrap-location {
+  background: #fff;
+  padding-top: 10px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1111;
+  font-size: 20px;
+}
+.tag-container {
+  min-height: 100px;
+  padding: 10px 5px;
+  margin-bottom: 50px;
+}
+.tag {
+  float: left;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 15px;
+  line-height: 20px;
+  text-align: center;
+  color: grey;
+  background-color: gainsboro;
+  margin: 5px 10px;
+}
+.tag-select {
+  color: #5cb85c;
+}
+.wrap-confirm {
+  height: 40px;
+  background-color: #5cb85c;
+  color: #fff;
+  font-size: 20px;
 }
 /*# sourceMappingURL=common.css.map */

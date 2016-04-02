@@ -4,9 +4,7 @@
  * Date: 2016.3.29
  * Description：公共样式及基本的header,footer的样式
  */
-
-@primary-background-color: #5cb85c;
-@text-in-primary-background-color: #fff;
+@import "config";
 
 body{
   min-height: 400px;
@@ -30,16 +28,57 @@ a,a:hover{
   flex-direction: row;
   width: 33%;
 }
-@header-back-height:40px;
-@header-back-padding:10px;
+
+
+@tab-group-width: 200px;
+@tab-item-border: 3px;
 
 #header_back{
-  height: @header-back-height;
-  padding: @header-back-padding 2px;
-  font-size: @header-back-height - 2*(@header-back-padding);
+  height: @header-height;
+  padding: @header-padding 2px;
+  font-size: @header-height - 2*(@header-padding);
   background-color: @primary-background-color;
   color: @text-in-primary-background-color;
   margin-bottom: 10px;
+  border: none;
+}
+#header_back a{
+  padding-top: 3px;
+}
+
+.headerlink{
+  background: none;
+  color: @text-in-primary-background-color;
+  padding: 2px 8px;
+  border: none;
+  outline: none;
+}
+
+.header-tab{
+  width: @tab-group-width;
+}
+
+.tab-item{
+  background-color: @primary-background-color;
+  color: @text-in-primary-background-color-darker;
+  border: none;
+  padding-top: 0;
+  padding-bottom: 10px;
+  font-size: @header-height - 2*(@header-padding);
+  outline: none;
+}
+
+.tab-item-active{
+  color: @text-in-primary-background-color;
+  border-bottom: @tab-item-border solid @text-in-primary-background-color;
+}
+
+.search-icon{
+  position: absolute;
+  top: @header-padding;
+  right: @header-padding / 2;
+
+  height: @header-height - 2*(@header-padding);
 }
 
 .glyphicon{
@@ -53,4 +92,67 @@ a,a:hover{
 #footer a{
   padding: 5px;
   border-top: 1px solid #ddd;
+}
+
+.content-block{
+  margin: 15px 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+  padding: 10px 10px;
+  font-size: @header-height - 2*(@header-padding);
+}
+
+.wrap {
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  filter: alpha(opacity=50);
+  -moz-opacity: 0.5;
+  opacity: 0.5;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+
+  z-index: 1000;
+}
+
+.wrap-content,.wrap-location{
+  background: #fff;
+  padding-top: 10px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1111;
+  font-size: @header-height - 2* (@header-padding);
+}
+
+.tag-container{
+  min-height: 100px;
+  padding: 10px 5px;
+  margin-bottom: 50px;
+}
+
+.tag{
+  float: left;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 15px;
+  line-height: 20px;
+  text-align: center;
+  color: grey;
+  background-color: gainsboro;
+  margin: 5px 10px;
+}
+
+.tag-select{
+  color: @primary-background-color;
+}
+
+.wrap-confirm{
+  height: @header-height;
+  background-color: @primary-background-color;
+  color: @text-in-primary-background-color;
+  font-size: @header-height - 2* (@header-padding);
 }
