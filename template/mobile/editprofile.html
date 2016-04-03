@@ -6,42 +6,37 @@
     <div class="entry-group">
         <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'nickname','new_title'=>'昵称'));}">
             <div class="entry entry-inline">
-                <span>昵称</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{$member['nickname']}</span>
+                <span>昵称</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{if $member['nickname']!=""}{$member['nickname']}{else}待完善...{/if}</span>
             </div>
         </a>
         <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'realname','new_title'=>'真实姓名'));}">
             <div class="entry entry-inline">
-                <span>真实姓名</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{$member['realname']}</span>
+                <span>真实姓名</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{if $member['realname']!=""}{$member['realname']}{else}待完善...{/if}</span>
             </div>
         </a>
         <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'gender','new_title'=>'性别'));}">
             <div class="entry entry-inline">
-                <span>性别</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{if $member['gender']==0}保密{else if $member['gender']==1}男{else}{/if}</span>
+                <span>性别</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{if $member['gender']==0}保密{else if $member['gender']==1}男{else}女{/if}</span>
             </div>
         </a>
         <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'mobile','new_title'=>'手机号'));}">
             <div class="entry entry-inline">
-                <span>手机号</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{$member['mobile']}</span>
-            </div>
-        </a>
-        <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'email','new_title'=>'E-mail'));}">
-            <div class="entry entry-inline">
-                <span>E-mail</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{$member['email']}</span>
+                <span>手机号</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{if $member['mobile']!=""}{$member['mobile']}{else}待完善...{/if}</span>
             </div>
         </a>
         <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'qq','new_title'=>'QQ'));}">
             <div class="entry entry-inline">
-                <span>QQ</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{$member['qq']}</span>
+                <span>QQ</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{if $member['qq']!=""}{$member['qq']}{else}待完善...{/if}</span>
             </div>
         </a>
         <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'birth','new_title'=>'生日'));}">
             <div class="entry entry-inline">
-                <span>生日</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{$member['birthyear']}-{$member['birthmonth']}-{$member['birthday']}</span>
+                <span>生日</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{if $member['birthyear']}!=0}{$member['birthyear']}-{$member['birthmonth']}-{$member['birthday']}{else}待完善...{/if}</span>
             </div>
         </a>
         <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'reside','new_title'=>'地址'));}">
             <div class="entry entry-inline entry-last">
-                <span>地址</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{$member['resideprovince']}-{$member['residecity']}-{$member['residedist']}</span>
+                <span>地址</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{if $member['resideprovince']!=""}{$member['resideprovince']}{$member['residecity']}{$member['residedist']}{else}待完善...{/if}</span>
             </div>
         </a>
     </div>
@@ -76,10 +71,6 @@
         {else if $_GPC['op']=='qq'}
         <div class="form-group">
             {php echo tpl_fans_form('qq', $member['qq']);}
-        </div>
-        {else if $_GPC['op']=='email'}
-        <div class="form-group">
-            {php echo tpl_fans_form('email', $member['email']);}
         </div>
         {else if $_GPC['op']=='mobile'}
         <div class="form-group">

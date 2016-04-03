@@ -8,15 +8,15 @@
     <a href="javascript:void(0);" id="send" class="pull-right"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></a>
 </nav>
 
-<form id="state-form" method="post" action="">
+<form enctype="multipart/form-data"  id="state-form" method="post" action="{php echo $this->createMobileUrl('statedetail',array('submit'=>1))}">
         <div class="wrap" style="display: none"></div>
         <div class="wrap-content" style="display: none">
             <div style="padding: 10px;">
-                <textarea id="label_text" class="form-control" style="min-height: 130px;resize: none;" placeholder="标签使用空格分开，最多三个标签" ></textarea>
+                <textarea id="label_text"  class="form-control" style="min-height: 130px;resize: none;" placeholder="标签使用空格分开，最多三个标签" ></textarea>
             </div>
             <div class="tag-container clearfix">
                 {loop $tag $v}
-                <span class="tag" data-tag="{$v}">{$v}</span>
+                <span class="tag" data-tag="{$v['tag']}">{$v['tag']}</span>
                 {/loop}
             </div>
             <a>
@@ -43,12 +43,12 @@
         </div>
     </div><!-- end of content-block -->
     <div class="content-block">
-        <textarea class="form-control" placeholder="写点什么吧..." style="border: none;box-shadow: none;min-height: 160px;"></textarea>
+        <textarea class="form-control" placeholder="写点什么吧..." name="content" style="border: none;box-shadow: none;min-height: 160px;"></textarea>
 
         <div class="weui_uploader">
             <div class="weui_uploader_bd">
                 <ul class="weui_uploader_files">
-                    <li class="weui_uploader_file" style="display:none" id="f_p"></li>
+                    <li class="weui_uploader_file " style="display:none" id="f_p"></li>
                     <li class="weui_uploader_file" style="display:none" id="s_p" ></li>
                     <li class="weui_uploader_file" style="display:none" id="t_p"></li>
                 </ul>
@@ -84,7 +84,7 @@
         <a id="picklocation" href="javascript:void(0)">
             <div class="entry entry-inline entry-last">
                 <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
-                <span id="location">选择你的位置</span><span class="gt pull-right"> &gt</span>
+                <span id="location">选择你的当前位置</span><span class="gt pull-right"> &gt</span>
                 <input id="location-hide" name="location-hide" type="hidden" value="">
             </div>
         </a>
