@@ -20,11 +20,12 @@ var_dump($_W['fans']);*/
 echo mc_update(intval($_W['member']['uid']), array('realname' => 'zhangtao'));
 var_dump();*/
 if (!empty($_W['member']['uid'])) {
-    $member = mc_fetch(intval($_W['member']['uid']), array('avatar','nickname'));//获取uid的avatar字段
+    $member = mc_fetch(intval($_W['member']['uid']), array('avatar','nickname','gender'));//获取uid的avatar字段
     //var_dump($member);
     if (!empty($member)) {
         $avatar = $member['avatar'];
         $nickname = $member['nickname'];
+        $gender = $member['gender'];
     }
 }
 if (empty($avatar)) {
@@ -33,25 +34,27 @@ if (empty($avatar)) {
         $avatar = $fan['avatar'];
     }
 }
+
 if (empty($avatar)) {
     $userinfo = mc_oauth_userinfo();//调用oauth用户授权获取资料并更新会员信息
     //var_dump($userinfo);
     if (!is_error($userinfo) && !empty($userinfo) && is_array($userinfo) && !empty($userinfo['avatar'])) {
         $avatar = $userinfo['avatar'];
         $nickname = $userinfo['nickname'];
+        $gender = $userinfo['sex'];
     }
 }
 /*
 if (empty($avatar) && !empty($_W['member']['uid'])) {
     $avatar = mc_require($_W['member']['uid'], array('avatar'));//显示表单让用户填写
 }*/
-if (empty($avatar)) {
+/*if (empty($avatar)) {
     // 提示用户关注公众号。;
     //echo "最终没有获取到头像,follow: {$_W['fans']['follow']}";
 } else {
 
 /*    echo <<<IMG
   <img src="$avatar">
-IMG;*/
-}
+IMG;
+}*/
 include $this->template('usercenter');
