@@ -7,6 +7,21 @@
  */
 global $_W, $_GPC;
 load()->func('file');
+/*if(empty($_W['member']['uid'])){
+    message("请先关注本公众号以完成信息注册！",'','warning');
+}*/
+/**
+ * 获取会员信息
+ */
+if (!empty($_W['member']['uid'])) {
+    $member = mc_fetch(intval($_W['member']['uid']), array('avatar','nickname','gender'));//获取uid的avatar字段
+    //var_dump($member);
+    if (!empty($member)) {
+        $avatar = $member['avatar'];
+        $nickname = $member['nickname'];
+        $gender = $member['gender'];
+    }
+}
 if (isset($_GPC['submit'])) {
     /* echo $_GPC['content'];
      echo $_GPC['date'];
@@ -79,11 +94,12 @@ if (isset($_GPC['state_ID'])) {
             ++$cnt;
         }
         $thumb_URL = substr_replace($v, "thumb_" . $pic_NAME, strlen($v) - strlen($pic_NAME), strlen($pic_NAME));
-        $thumb_URL = substr_replace($thumb_URL, "../", 0, $cnt);
+        $save_thumb_URL = substr_replace($thumb_URL, "../", 0, $cnt);
         //echo $thumb_URL."<br>";
         // echo $v."<br>";
         echo $thumb_URL . '<br>';
-        thumb($v, 100, 100, $thumb_URL);
+        echo $save_thumb_URL . '<br>';
+        thumb($v, 100, 100, $save_thumb_URL);
     }
 }
 
