@@ -70,4 +70,5 @@ if (isset($_GPC['state_ID'])) {
     $state_detail['tags'] = $tags;
     //  var_dump($state_detail);//状态所有信息；
 }
+
 include $this->template('statedetail');

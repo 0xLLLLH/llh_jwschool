@@ -77,12 +77,15 @@ a:hover {
 .glyphicon {
   margin: 0 15px;
 }
+#footer {
+  height: 50px;
+  border-top: 1px solid #ddd;
+}
 #footer .tab-img {
   padding: 0 40%;
 }
 #footer a {
   padding: 5px;
-  border-top: 1px solid #ddd;
 }
 .content-block {
   margin: 15px 0;
