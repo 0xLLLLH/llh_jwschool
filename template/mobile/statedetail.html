@@ -24,7 +24,7 @@
         {php $images=array('https://lh6.googleusercontent.com/-Cwz4QV1MyWI/AAAAAAAAAAI/AAAAAAAAAEA/5-P-bIt8VaA/photo.jpg?sz=128','https://lh6.googleusercontent.com/-Cwz4QV1MyWI/AAAAAAAAAAI/AAAAAAAAAEA/5-P-bIt8VaA/photo.jpg?sz=128')}
         {loop $images $v}
         <div class="pull-left images">
-            <img src="{$v}"class="center-block img-responsive">
+            <img src="{$v}" class="center-block img-responsive">
         </div>
         {/loop}
     </div>
@@ -34,7 +34,7 @@
         <span class="normal pull-right-center">浏览{read}&nbsp;评论{remarks}</span>
     </div>
 </div>
-<div class="content-block">
+<div class="comment-area content-block">
     <div class="comment-title">
         <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>评论
     </div>
@@ -63,7 +63,7 @@
 {template 'footer_input'}
 
 <script>
-    $(".comment-content").click(function () {
+    $(document).on('click',".comment-content",function () {
         var $text_box=$("#text_box");
         $text_box.val("");
         $text_box.attr('placeholder','回复' + $(this).data('nick'));
@@ -71,11 +71,46 @@
         $text_box.focus();
     });
     $("#text_box").click(function () {
-        var href='{php echo $this->createMobileUrl("statedetail");}'+'&op=edit';
-        var $uid=$('#uid_hiden')
-        if ($uid.val()!="")
-                href+='&uid='+$uid.val();
-        location.href=href;
+        //var href='{php echo $this->createMobileUrl("statedetail");}'+'&op=edit';
+        //var $uid=$('#uid_hiden')
+        //if ($uid.val()!="")
+        //        href+='&uid='+$uid.val();
+        //location.href=href;
+    });
+    $("#submit_btn").click(function(e){
+        if ($("#text_box").val().trim()!='') {
+            //$('#form_footer').submit();
+
+            $.ajax({
+                url: location.href,
+                dataType: 'json',
+                data: {uid:$('#uid_hiden').val(),token:$('input[name="token"]').val()},
+                success: function (data) {
+                    var new_comment='<div class="comment clearfix">'
+                        +'<a href="#">'
+                        +'<div class="avatar-block pull-left">'
+                        +'<img src="'+data.avatar+'" class="center-block img-responsive img-circle">'
+                        +"</div>"
+                        +'</a>'
+                        +'<div class="comment-content" data-cid="'+data.cid+'" data-uid="'+data.uid+'" data-nick='+data.nick+'>'
+                        +'<div class="detail-block pull-left">'
+                        +'<div class="line">'
+                        +'<span class="link">'+data.nick+ (data.replyto?('&nbsp;回复&nbsp;'+data.replyto):'&nbsp;')+'</span>'
+                        +data.comment_content
+                        +'</div>'
+                        +'<div class="line"><span class="normal">'+data.comment_time+'</span></div>'
+                        +'</div>'
+                        +'</div>'
+                        +'</div>';
+                    $(".comment-area").append($(new_comment));
+                },
+                error: function () {
+
+                }
+            })
+        }
+
+
     });
 </script>
 

@@ -7,6 +7,8 @@
  */
 global $_W, $_GPC;
 load()->func('file');
+load()->func('tpl');
+load()->model('mc');
 if (isset($_GPC['submit'])) {
     /* echo $_GPC['content'];
      echo $_GPC['date'];
