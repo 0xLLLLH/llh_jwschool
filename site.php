@@ -9,5 +9,5 @@
 defined('IN_IA') or exit('Access Denied');
 
 class llh_jwschoolModuleSite extends WeModuleSite {
-
+    
 }

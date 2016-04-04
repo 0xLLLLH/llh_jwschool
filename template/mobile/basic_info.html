@@ -5,7 +5,7 @@
     </div>
     <div id="info_block" class="text-center">
         <a>
-            $username<span class="badge" style="background-color: #5bc0de;margin-left: 10px;">{if $gender==0}♀{else}♂{/if}{$age}</span>
+            {$nickname}<span class="badge" style="background-color: #5bc0de;margin-left: 10px;">{if $gender==2}♀{else if $gender==1}♂{else}保密{/if}{$age}</span>
         </a>
     </div>
 </div>
