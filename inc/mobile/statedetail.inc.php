@@ -1,15 +1,5 @@
 <?php
 /**
-<<<<<<< HEAD
- * Created by Phpstorm.
- * User: 0xLLLLH
- * Date: 2016.4.3
- * Description：状态详情
- */
-
-global  $_W,$_GPC;
-load()->func('tpl');
-=======
  * Created by PhpStorm.
  * User: ZT
  * Date: 2016/4/2
@@ -80,5 +70,5 @@ if (isset($_GPC['state_ID'])) {
     $state_detail['tags'] = $tags;
     //  var_dump($state_detail);//状态所有信息；
 }
->>>>>>> refs/remotes/origin/develop
+
 include $this->template('statedetail');
