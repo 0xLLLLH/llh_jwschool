@@ -7,6 +7,7 @@
  */
 global $_W, $_GPC;
 load()->func('file');
+<<<<<<< HEAD
 /*if(empty($_W['member']['uid'])){
     message("请先关注本公众号以完成信息注册！",'','warning');
 }*/
@@ -22,6 +23,10 @@ if (!empty($_W['member']['uid'])) {
         $gender = $member['gender'];
     }
 }
+=======
+load()->func('tpl');
+load()->model('mc');
+>>>>>>> refs/remotes/origin/develop
 if (isset($_GPC['submit'])) {
     /* echo $_GPC['content'];
      echo $_GPC['date'];
