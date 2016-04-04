@@ -6,10 +6,7 @@
  * Description：个人中心
  */
 global  $_W,$_GPC;
-
-
 //echo $_W['openid'];
-
 load()->model('mc');
 $avatar = '';
 /*
@@ -34,7 +31,6 @@ if (empty($avatar)) {
         $avatar = $fan['avatar'];
     }
 }
-
 if (empty($avatar)) {
     $userinfo = mc_oauth_userinfo();//调用oauth用户授权获取资料并更新会员信息
     //var_dump($userinfo);
@@ -52,7 +48,6 @@ if (empty($avatar) && !empty($_W['member']['uid'])) {
     // 提示用户关注公众号。;
     //echo "最终没有获取到头像,follow: {$_W['fans']['follow']}";
 } else {
-
 /*    echo <<<IMG
   <img src="$avatar">
 IMG;
