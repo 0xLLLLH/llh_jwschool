@@ -1,0 +1,96 @@
+{template 'header_back'}
+
+<link rel="stylesheet" href="../addons/llh_jwschool/template/css/state.css"/>
+{if !isset($_GPC['op'])}
+<script>
+    $("#title").text("约游详情");
+</script>
+
+<div class="content-block">
+    <div class="poster-info clear-fix" style="border-bottom: 1px solid #eee;">
+        <div class="avatar-block pull-left clearfix">
+            <img src="{if $avatar}{$avatar}{else}https://lh6.googleusercontent.com/-Cwz4QV1MyWI/AAAAAAAAAAI/AAAAAAAAAEA/5-P-bIt8VaA/photo.jpg?sz=128{/if}" class="center-block img-responsive img-circle">
+        </div>
+        <div class="detail-block pull-left">
+            <div class="line"><a href="{$user_page}" class="link">{name}<span class="badge" style="background-color: #5bc0de;">{if $gender==0}♀{else}♂{/if}{$age}</span></a></div>
+            <div class="line "><span class="normal">{time}</span></div>
+        </div>
+    </div>
+    <div class="content clearfix">
+            <span class="link pull-left">{date}</span>
+            {contents}{contents}{contents}{contents}{contents}{contents}{contents}{contents}{contents}
+    </div>
+    <div class="content-images clearfix">
+        {php $images=array('https://lh6.googleusercontent.com/-Cwz4QV1MyWI/AAAAAAAAAAI/AAAAAAAAAEA/5-P-bIt8VaA/photo.jpg?sz=128','https://lh6.googleusercontent.com/-Cwz4QV1MyWI/AAAAAAAAAAI/AAAAAAAAAEA/5-P-bIt8VaA/photo.jpg?sz=128')}
+        {loop $images $v}
+        <div class="pull-left images">
+            <img src="{$v}"class="center-block img-responsive">
+        </div>
+        {/loop}
+    </div>
+    <div class="content-bottom line" style="margin-top: 5px;position: relative;">
+        <span class="glyphicon glyphicon-map-marker" style="margin: 0;" aria-hidden="true"></span>
+        <span class="normal pull-left-center">我在&nbsp;{location}</span>
+        <span class="normal pull-right-center">浏览{read}&nbsp;评论{remarks}</span>
+    </div>
+</div>
+<div class="content-block">
+    <div class="comment-title">
+        <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>评论
+    </div>
+
+    {php $data=array(array('uid'=>'uid','cid'=>'cid','nick'=>'nick','replyto'=>'replyto','avatar'=>'','comment_content'=>'comment_content','comment_time'=>'comment_time'),array('uid'=>'uid','cid'=>'cid','nick'=>'nick','replyto'=>'replyto','avatar'=>'','comment_content'=>'comment_content','comment_time'=>'comment_time'));}
+    {loop $data $v}
+    <div class="comment clearfix">
+        <a href='#'>
+            <div class="avatar-block pull-left">
+                <img src="{if $v['avatar']}{$v['avatar']}{else}https://lh6.googleusercontent.com/-Cwz4QV1MyWI/AAAAAAAAAAI/AAAAAAAAAEA/5-P-bIt8VaA/photo.jpg?sz=128{/if}" class="center-block img-responsive img-circle">
+            </div>
+        </a>
+        <div class="comment-content" data-cid="{$v['cid']}" data-uid="{$v['uid']}" data-nick="{$v['nick']}">
+            <div class="detail-block pull-left">
+                <div class="line">
+                    <span class="link">{$v['nick']} {if !$v['replyto'] }&nbsp;回复&nbsp;{$v['replyto']}{/if}:</span>
+                    {$v['comment_content']}
+                </div>
+                <div class="line"><span class="normal">{$v['comment_time']}</span></div>
+            </div>
+        </div>
+    </div>
+    {/loop}
+</div>
+
+{template 'footer_input'}
+
+<script>
+    $(".comment-content").click(function () {
+        var $text_box=$("#text_box");
+        $text_box.val("");
+        $text_box.attr('placeholder','回复' + $(this).data('nick'));
+        $('#uid_hiden').val($(this).data('uid'))
+        $text_box.focus();
+    });
+    $("#text_box").click(function () {
+        var href='{php echo $this->createMobileUrl("statedetail");}'+'&op=edit';
+        var $uid=$('#uid_hiden')
+        if ($uid.val()!="")
+                href+='&uid='+$uid.val();
+        location.href=href;
+    });
+</script>
+
+{else}
+<script>
+    $("#title").text("评论");
+</script>
+<div class="container">
+    <form method="post" action="">
+        <div class="form-group">
+            <textarea id="input" class="form-control" style="height: 200px;resize: vertical;" placeholder="评论"></textarea>
+        </div>
+        <input type="hidden" name="token" value="{$_W['token']}">
+        <button type="submit" class="btn btn-default">提交评论</button>
+    </form>
+</div>
+{template 'footer'}
+{/if}
