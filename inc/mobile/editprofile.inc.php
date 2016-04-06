@@ -10,7 +10,7 @@ global $_W, $_GPC;
 load()->func('tpl');
 load()->model('mc');
 
-if(empty($_W['member']['uid'])){
+if(empty($_W['openid'])){
     message("请先关注本公众号以完成信息注册！",'','warning');
 }
 if (isset($_GPC['submit'])) {

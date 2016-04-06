@@ -9,20 +9,19 @@
 <div class="content-block">
     <div class="poster-info clear-fix" style="border-bottom: 1px solid #eee;">
         <div class="avatar-block pull-left clearfix">
-            <img src="{if $avatar}{$avatar}{else}https://lh6.googleusercontent.com/-Cwz4QV1MyWI/AAAAAAAAAAI/AAAAAAAAAEA/5-P-bIt8VaA/photo.jpg?sz=128{/if}" class="center-block img-responsive img-circle">
+            <img src="{if $state_detail['avater']}{$state_detail['avater']}{else}http://tp4.sinaimg.cn/3927645471/180/5753508523/1{/if}" class="center-block img-responsive img-circle">
         </div>
         <div class="detail-block pull-left">
-            <div class="line"><a href="{$user_page}" class="link">{name}<span class="badge" style="background-color: #5bc0de;">{if $gender==0}♀{else}♂{/if}{$age}</span></a></div>
-            <div class="line "><span class="normal">{time}</span></div>
+            <div class="line"><a href="{$user_page}" class="link">{$state_detail['nickname']}<span class="badge" style="background-color: #5bc0de;">{if $state_detail['gender']==0}保密{else if $state_detail['gender']==2}♀{else}♂{/if}{$age}</span></a></div>
+            <div class="line "><span class="normal">{$state_detail['release_TIME']} </span></div>
         </div>
     </div>
     <div class="content clearfix">
-            <span class="link pull-left">{date}</span>
-            {contents}{contents}{contents}{contents}{contents}{contents}{contents}{contents}{contents}
+            <span class="link pull-left"> {$state_detail['travel_TIME']}</span>&nbsp;
+            {$state_detail['content']}
     </div>
     <div class="content-images clearfix">
-        {php $images=array('https://lh6.googleusercontent.com/-Cwz4QV1MyWI/AAAAAAAAAAI/AAAAAAAAAEA/5-P-bIt8VaA/photo.jpg?sz=128','https://lh6.googleusercontent.com/-Cwz4QV1MyWI/AAAAAAAAAAI/AAAAAAAAAEA/5-P-bIt8VaA/photo.jpg?sz=128')}
-        {loop $images $v}
+        {loop $state_detail['pic_URL'] $v}
         <div class="pull-left images">
             <img src="{$v}" class="center-block img-responsive">
         </div>
@@ -30,8 +29,8 @@
     </div>
     <div class="content-bottom line" style="margin-top: 5px;position: relative;">
         <span class="glyphicon glyphicon-map-marker" style="margin: 0;" aria-hidden="true"></span>
-        <span class="normal pull-left-center">我在&nbsp;{location}</span>
-        <span class="normal pull-right-center">浏览{read}&nbsp;评论{remarks}</span>
+        <span class="normal pull-left-center">我在&nbsp;{$state_detail['position']}</span>
+        <span class="normal pull-right-center">浏览{$state_detail['views']}&nbsp;评论{$state_detail['comments_NUM']}</span>
     </div>
 </div>
 <div class="comment-area content-block">
@@ -40,20 +39,20 @@
     </div>
 
     {php $data=array(array('uid'=>'uid','cid'=>'cid','nick'=>'nick','replyto'=>'replyto','avatar'=>'','comment_content'=>'comment_content','comment_time'=>'comment_time'),array('uid'=>'uid','cid'=>'cid','nick'=>'nick','replyto'=>'replyto','avatar'=>'','comment_content'=>'comment_content','comment_time'=>'comment_time'));}
-    {loop $data $v}
+    {loop $comment_data $v}
     <div class="comment clearfix">
         <a href='#'>
             <div class="avatar-block pull-left">
-                <img src="{if $v['avatar']}{$v['avatar']}{else}https://lh6.googleusercontent.com/-Cwz4QV1MyWI/AAAAAAAAAAI/AAAAAAAAAEA/5-P-bIt8VaA/photo.jpg?sz=128{/if}" class="center-block img-responsive img-circle">
+                <img src="{if $v['avatar_FROM']}{$v['avatar_FROM']}{else}http://tp4.sinaimg.cn/3927645471/180/5753508523/1{/if}" class="center-block img-responsive img-circle">
             </div>
         </a>
-        <div class="comment-content" data-cid="{$v['cid']}" data-uid="{$v['uid']}" data-nick="{$v['nick']}">
+        <div class="comment-content" data-cid="{$v['state_ID']}" data-uid="{$v['from_WHO']}" data-nick="{$v['nickname_FROM']}">
             <div class="detail-block pull-left">
                 <div class="line">
-                    <span class="link">{$v['nick']} {if !$v['replyto'] }&nbsp;回复&nbsp;{$v['replyto']}{/if}:</span>
-                    {$v['comment_content']}
+                    <span class="link">{$v['nickname_FROM']} {if $v['nickname_TO'] }&nbsp;回复&nbsp;{$v['nickname_TO']}{/if}:</span>
+                    {$v['content']}
                 </div>
-                <div class="line"><span class="normal">{$v['comment_time']}</span></div>
+                <div class="line"><span class="normal">{$v['release_TIME']}</span></div>
             </div>
         </div>
     </div>
@@ -63,7 +62,8 @@
 {template 'footer_input'}
 
 <script>
-    $(document).on('click',".comment-content",function () {
+    $(document).on('touchend  click',".comment-content",function () {
+    //$(".comment-content").click(function(){
         var $text_box=$("#text_box");
         $text_box.val("");
         $text_box.attr('placeholder','回复' + $(this).data('nick'));
@@ -79,24 +79,25 @@
     });
     $("#submit_btn").click(function(e){
         if ($("#text_box").val().trim()!='') {
-            //$('#form_footer').submit();
 
+            //$('#form_footer').submit();
             $.ajax({
-                url: location.href,
-                dataType: 'json',
-                data: {uid:$('#uid_hiden').val(),token:$('input[name="token"]').val()},
+                url: "{php echo $this->createMobileUrl('submitcomment')}",
+                dataType: "json",
+                type:"post",
+                data: {to_WHO:$('#uid_hiden').val(),content:$('#text_box').val(),token:$('input[name="token"]').val(),state_ID:{$state_detail['state_id']} },
                 success: function (data) {
                     var new_comment='<div class="comment clearfix">'
                         +'<a href="#">'
                         +'<div class="avatar-block pull-left">'
-                        +'<img src="'+data.avatar+'" class="center-block img-responsive img-circle">'
+                        +'<img src="'+data.avatar_FROM+'" class="center-block img-responsive img-circle">'
                         +"</div>"
                         +'</a>'
-                        +'<div class="comment-content" data-cid="'+data.cid+'" data-uid="'+data.uid+'" data-nick='+data.nick+'>'
+                        +'<div class="comment-content" data-cid="'+data.state_ID+'" data-uid="'+data.from_WHO+'" data-nick='+data.nickname_FROM+'>'
                         +'<div class="detail-block pull-left">'
                         +'<div class="line">'
-                        +'<span class="link">'+data.nick+ (data.replyto?('&nbsp;回复&nbsp;'+data.replyto):'&nbsp;')+'</span>'
-                        +data.comment_content
+                        +'<span class="link">'+data.nickname_FROM+ (data.nickname_TO?('&nbsp;回复&nbsp;'+data.nickname_TO):'&nbsp;')+'</span>'
+                        +data.content
                         +'</div>'
                         +'<div class="line"><span class="normal">'+data.comment_time+'</span></div>'
                         +'</div>'
@@ -105,9 +106,10 @@
                     $(".comment-area").append($(new_comment));
                 },
                 error: function () {
-
+                    alert("no!");
                 }
-            })
+            });
+            $("#text_box").val('');
         }
 
 
@@ -124,7 +126,7 @@
             <textarea id="input" class="form-control" style="height: 200px;resize: vertical;" placeholder="评论"></textarea>
         </div>
         <input type="hidden" name="token" value="{$_W['token']}">
-        <button type="submit" class="btn btn-default">提交评论</button>
+        <button type="submit"  class="btn btn-default">提交评论</button>
     </form>
 </div>
 {template 'footer'}
