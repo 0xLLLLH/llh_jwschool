@@ -7,26 +7,12 @@
  */
 global $_W, $_GPC;
 load()->func('file');
-<<<<<<< HEAD
-/*if(empty($_W['member']['uid'])){
-    message("请先关注本公众号以完成信息注册！",'','warning');
-}*/
-/**
- * 获取会员信息
- */
-if (!empty($_W['member']['uid'])) {
-    $member = mc_fetch(intval($_W['member']['uid']), array('avatar','nickname','gender'));//获取uid的avatar字段
-    //var_dump($member);
-    if (!empty($member)) {
-        $avatar = $member['avatar'];
-        $nickname = $member['nickname'];
-        $gender = $member['gender'];
-    }
-}
-=======
 load()->func('tpl');
 load()->model('mc');
->>>>>>> refs/remotes/origin/develop
+/*if(empty($_W['openid'])){
+    message("请先关注本公众号以完成信息注册！",'','warning');
+}*/
+
 if (isset($_GPC['submit'])) {
     /* echo $_GPC['content'];
      echo $_GPC['date'];
@@ -64,7 +50,7 @@ if (isset($_GPC['submit'])) {
     $state_data['travel_TIME'] = $_GPC['date'];
     $state_data['release_TIME'] = date("Y-m-d H:i:s");
     $state_data['position'] = $_GPC['location-hide'];
-    $state_data['uid'] = $_W['member']['uid'];
+    $state_data['openid'] = $_W['openid'];
     $state_data['pic_URL'] = $pic_URL;
     $state_data['tags'] = $tags;
     //var_dump($state_data);
@@ -78,18 +64,19 @@ if (isset($_GPC['submit'])) {
     //echo $state_ID;
 }
 if (isset($_GPC['state_ID'])) {
+    pdo_query("UPDATE  ".tablename('jwschool_moments')." SET views = views+1");
     $state_ID = $_GPC['state_ID'];
     $tb_moments = tablename('jwschool_moments');
     $tb_members = tablename('mc_members');
-    $state_detail = pdo_fetch("SELECT " . $tb_members . ".uid,nickname, gender, comments_NUM,content,pic_URL," . $tb_moments . ".position,release_TIME,tags,travel_TIME,views FROM " . $tb_members . ","
-        . $tb_moments . " WHERE " . $tb_moments . ".uid=" . $tb_members . ".uid and " . $tb_moments . ".id= :state_ID", array(':state_ID' => $state_ID));
+    $state_detail = pdo_fetch("select openid,comments_NUM,content,pic_URL,position,release_TIME,tags,travel_TIME,views from "
+        . $tb_moments . " where " . $tb_moments . ".id= :state_ID", array(':state_ID' => $state_ID));
+    $uid = mc_openid2uid($state_detail['openid']);
+    $member = mc_fetch($uid, array('avatar', 'nickname', 'gender'));
     $pic_URL = explode(';', $state_detail['pic_URL']);
     $string_tag = trim($state_detail['tags'], ";");
     $tags = explode(';', $string_tag);
-    $state_detail['pic_URL'] = $pic_URL;
-    $state_detail['tags'] = $tags;
-    //  var_dump($state_detail);//状态所有信息；
-    foreach ($pic_URL as $v) {
+    //var_dump($member);
+    foreach ($pic_URL as $key => $v) {
         $temp = explode('/', $v);
         $pic_NAME = $temp[count($temp) - 1];
         $cnt = 0;
@@ -100,82 +87,42 @@ if (isset($_GPC['state_ID'])) {
         }
         $thumb_URL = substr_replace($v, "thumb_" . $pic_NAME, strlen($v) - strlen($pic_NAME), strlen($pic_NAME));
         $save_thumb_URL = substr_replace($thumb_URL, "../", 0, $cnt);
+        $pic_URL[$key] = $thumb_URL;
         //echo $thumb_URL."<br>";
         // echo $v."<br>";
-        echo $thumb_URL . '<br>';
-        echo $save_thumb_URL . '<br>';
-        thumb($v, 100, 100, $save_thumb_URL);
+        //echo $save_thumb_URL . '<br>';
+        if (!file_exists($save_thumb_URL)) {
+            $this->thumb($v, 200, 200, $save_thumb_URL);//生成缩略图
+        }
     }
+    $travel_date = explode('-', $state_detail['travel_TIME']);
+    $state_detail['travel_TIME'] = $travel_date[0] . '年' . $travel_date[1] . '月' . $travel_date[2] . '日';
+    $state_detail['pic_URL'] = $pic_URL;
+    $state_detail['tags'] = $tags;
+    $state_detail['uid'] = $uid;
+    $state_detail['avater'] = $member['avater'];
+    $state_detail['nickname'] = $member['nickname'];
+    $state_detail['gender'] = $member['gender'];
+    $state_detail['state_id'] = $_GPC['state_ID'];
+    //var_dump($state_detail);//状态所有信息；
+    /**************************************************************************************************************/
+
+    $comment_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_comments') . " WHERE state_ID = :state_ID order by release_TIME", array(':state_ID' => $_GPC['state_ID']));
+    foreach ($comment_data as $k => $v) {
+        if (!empty($v['to_WHO'])) {
+            $to_ID = mc_openid2uid($v['to_WHO']);
+            $member_TO = mc_fetch(intval($to_ID), array('avatar', 'nickname'));
+            $comment_data[$k]['avatar_TO'] = $member_TO['avatar'];
+            $comment_data[$k]['nickname_TO'] = $member_TO['nickname'];
+        }
+        $from_ID = mc_openid2uid($v['from_WHO']);
+        $member_FROM = mc_fetch(intval($from_ID), array('avatar', 'nickname'));
+        $comment_data[$k]['avatar_FROM'] = $member_FROM['avatar'];
+        $comment_data[$k]['nickname_FROM'] = $member_FROM['nickname'];
+    }
+  //  print_r($comment_data);//评论所有信息
+
 }
-
-/** 缩略图生成函数
- * @param $src 源url
- * @param null $width 宽度
- * @param null $height 高度
- * @param null $filename 目标目录
- * @return bool
- */
-function thumb($src, $width = 200, $height = 200, $filename = null)
-{
-    if (!isset($width) && !isset($height))
-        return false;
-    if (isset($width) && $width <= 0)
-        return false;
-    if (isset($height) && $height <= 0)
-        return false;
-
-    $size = getimagesize($src);
-    if (!$size)
-        return false;
-
-    list($src_w, $src_h, $src_type) = $size;
-    $src_mime = $size['mime'];
-    switch ($src_type) {
-        case 1 :
-            $img_type = 'gif';
-            break;
-        case 2 :
-            $img_type = 'jpeg';
-            break;
-        case 3 :
-            $img_type = 'png';
-            break;
-        case 15 :
-            $img_type = 'wbmp';
-            break;
-        default :
-            return false;
-    }
-
-    /* if (!isset($width))
-         $width = $src_w * ($height / $src_h);
-     if (!isset($height))
-         $height = $src_h * ($width / $src_w);*/
-
-    $imagecreatefunc = 'imagecreatefrom' . $img_type;
-    $src_img = $imagecreatefunc($src);
-    $dest_img = imagecreatetruecolor($width, $height);
-    if ($src_h > $src_w) {
-        $r = $src_w;
-        imagecopyresampled($dest_img, $src_img, 0, 0, 0, ($src_h - $r) / 2, $width, $height, $r, $r);
-    } else {
-        $r = $src_h;
-        imagecopyresampled($dest_img, $src_img, 0, 0, ($src_w - $r) / 2, 0, $width, $height, $r, $r);
-    }
-    //imagecopyresampled($dest_img, $src_img, 0, 0, 0, 0, $width, $height, $src_w, $src_h);//新图，原图，新图坐标x,y，原图坐标x,y,新图高宽，原图高宽
-
-    $imagefunc = 'image' . $img_type;
-    if ($filename) {
-        $imagefunc($dest_img, $filename);
-    } else {
-        header('Content-Type: ' . $src_mime);
-        $imagefunc($dest_img);
-    }
-    imagedestroy($src_img);
-    imagedestroy($dest_img);
-    return true;
-}
-
 include $this->template('statedetail');
 
 
