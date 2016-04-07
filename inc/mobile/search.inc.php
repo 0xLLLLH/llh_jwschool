@@ -7,4 +7,7 @@
 */
 
 global  $_W,$_GPC;
+
+$tag = pdo_fetchall("SELECT tag FROM ".tablename('jwschool_tag'),array(),'id');
+//print_r($tag);
 include $this->template('search');
