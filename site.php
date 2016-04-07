@@ -77,6 +77,47 @@ class llh_jwschoolModuleSite extends WeModuleSite
         imagedestroy($dest_img);
         return true;
     }
+
+    /**
+     * 通过pic_URL获取生成缩略图返回缩略图url数组
+     * @param $pic_URL
+     */
+    function getPicUrlArr($pic_URL)
+    {
+        $pic_URL=trim($pic_URL,';');
+        $pic_arr = explode(';', $pic_URL);
+        foreach ($pic_arr as $key => $v) {
+            $temp = explode('/', $v);
+            $pic_NAME = $temp[count($temp) - 1];
+            $cnt = 0;
+            //var_dump($temp);
+            for ($i = 0; $i < 4; ++$i) {
+                $cnt += strlen($temp[$i]);
+                ++$cnt;
+            }
+            $thumb_URL = substr_replace($v, "thumb_" . $pic_NAME, strlen($v) - strlen($pic_NAME), strlen($pic_NAME));
+            $save_thumb_URL = substr_replace($thumb_URL, "../", 0, $cnt);
+            $pic_arr[$key] = $thumb_URL;
+            if (!file_exists($save_thumb_URL)) {//判断缩略图是否已经有缓存
+                $this->thumb($v, 200, 200, $save_thumb_URL);//生成缩略图
+            }
+        }
+        return $pic_arr;
+    }
+    function getAge($year,$month,$day)
+    {
+        $birthday = $year.'-'.$month.'-'.$day;
+        $age = date('Y', time()) - date('Y', strtotime($birthday)) - 1;
+        if (date('m', time()) == date('m', strtotime($birthday))){
+
+            if (date('d', time()) > date('d', strtotime($birthday))){
+                ++$age;
+            }
+        }elseif (date('m', time()) > date('m', strtotime($birthday))){
+            ++$age;
+        }
+        return $age;
+    }
    /* function PDO_FETCH($field, $table, $condition, $arr)
     {
         $sql = "select ";
