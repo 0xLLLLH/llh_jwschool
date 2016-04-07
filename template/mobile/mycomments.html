@@ -6,36 +6,70 @@
     $("#title").text("我的评论");
 </script>
 
-<div class="comment-area content-block">
-    {php $comment_data=array(array('uid'=>'uid','cid'=>'cid','nick'=>'nick','replyto'=>'replyto','avatar'=>'','comment_content'=>'comment_content','comment_time'=>'comment_time'),array('uid'=>'uid','cid'=>'cid','nick'=>'nick','replyto'=>'replyto','avatar'=>'','comment_content'=>'comment_content','comment_time'=>'comment_time'));}
+<div class="comment-area">
+    {php $comment_data=array(array('state_ID'=>'1','avatar'=>'','nickname'=>'我要去流浪','comments'=>array(array('uid'=>'uid','cid'=>'1','nickname_FROM'=>'nickname_FROM','replyto'=>'replyto','avatar'=>'','content'=>'content content content content content','comment_time'=>'comment_time'),array('uid'=>'uid','cid'=>'cid','nick'=>'nick','replyto'=>'replyto','avatar'=>'','comment_content'=>'comment_content','comment_time'=>'comment_time'))));}
     {if $comment_data}
-    {loop $comment_data $v}
-    <div class="comment clearfix">
-        <div class="avatar-block pull-left">
-            <img src="{if $v['avatar_FROM']}{$v['avatar_FROM']}{else}http://tp4.sinaimg.cn/3927645471/180/5753508523/1{/if}" class="center-block img-responsive img-circle">
-        </div>
-        <div class="comment-content" data-sid="{$v['state_ID']}" data-cid="{$v['comment_ID']}" data-uid="{$v['from_WHO']}" data-nick="{$v['nickname_FROM']}">
-            <div class="detail-block pull-left" style="width: 100%;">
-                <div class="line">
-                    <span class="link">我 {if $v['nickname_TO'] }&nbsp;回复&nbsp;{$v['nickname_TO']}{/if}:</span>
-                    {$v['content']}
+    {loop $comment_data $s}
+    <a class="state clearfix" href="javascript:void(0);">
+        <div class="content-block clearfix">
+            <div class="poster-info clearfix" style="border-bottom: 1px solid #eee;">
+                <div class="avatar-block pull-left clearfix">
+                    <img src="{if $s['avatar']}{$s['avatar']}{else}http://tp4.sinaimg.cn/3927645471/180/5753508523/1{/if}" class="center-block img-responsive img-circle"/>
                 </div>
-                <div class="line"><span class="normal">{$v['release_TIME']}</span></div>
-                <div class="clearfix pull-right"><span class="normal"><span class="delete_btn">删除</span></span></div>
+                <div class="detail-block pull-left clearfix">
+                    <div class="line"><span class="link">{$s['nickname']}<span class="badge"
+                                                                               style="background-color: #5bc0de;">{if $s['gender']==2}♀{else if $s['gender']==1}♂{else}保密{/if}{$s['age']}</span></span>
+                    </div>
+                    <div class="line "><span class="normal">{$s['release_TIME']}</span></div>
+                </div>
+            </div>
+            <div class="content clearfix">
+                <span class="link pull-left">{$s['travel_TIME']}&nbsp;</span>
+                {$s['content']}
+            </div>
+            <div class="content-images clearfix">
+                {loop $s['pic_URL'] $v}
+                <div class="pull-left images">
+                    <img src="{$v}" class="center-block img-responsive">
+                </div>
+                {/loop}
+            </div>
+            <div class="content-bottom line" style="margin-top: 5px;position: relative;">
+                <span class="glyphicon glyphicon-map-marker" style="margin: 0;" aria-hidden="true"></span>
+                <span class="normal pull-left-center">我在&nbsp;{$s['position']}</span>
+                <span class="normal pull-right-center">浏览{$s['views']}&nbsp;评论{$s['comments_NUM']}</span>
+            </div>
+            <div>
+                {loop $s['comments'] $v}
+                    <div class="mycomment clearfix">
+                        <div class="comment-content" data-cid="{$v['cid']}" data-uid="{$v['from_WHO']}" data-nick="{$v['nickname_FROM']}">
+                            <div class="detail-block pull-left">
+                                <div class="line">
+                                    <span class="link">{$v['nickname_FROM']}:</span>
+                                    {$v['content']}
+                                </div>
+                                <div class="line pull-right"><span class="link delete_btn" style="font-size: 15px;">删除</span></div>
+                            </div>
+                        </div>
+                    </div>
+                {/loop}
             </div>
         </div>
-    </div>
+    </a>
     {/loop}
+
     {else}
         暂无评论
     {/if}
 </div>
 <script>
     $(".delete_btn").on("click",function (e) {
+        //console.log($(this).parents(".comment-content").data('cid'));
+        var cid=$(this).parents(".comment-content").data('cid');
         $.ajax({
             url:window.location.href,
             dataType: 'json',
-            data:{cid:$(this).parents(".comment-content").data('cid')},
+            data:{cid:cid},
             success:function () {
 
                 console.log("ajax success")
@@ -46,8 +80,8 @@
         });
         e.stopPropagation();
     });
-    $(".comment").on('click',function () {
-        window.location.href=$(this).data('sid');
+    $(".state").on('click',function () {
+        window.location.href="{php echo $this->createMobileUrl('statedetail',array('state_ID'=>$s['state_ID']));}";
     })
 </script>
 {template 'footer'}
