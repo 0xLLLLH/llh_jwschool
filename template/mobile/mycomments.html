@@ -1,0 +1,53 @@
+{template 'header_back'}
+
+<link rel="stylesheet" href="../addons/llh_jwschool/template/css/state.css"/>
+
+<script>
+    $("#title").text("我的评论");
+</script>
+
+<div class="comment-area content-block">
+    {php $comment_data=array(array('uid'=>'uid','cid'=>'cid','nick'=>'nick','replyto'=>'replyto','avatar'=>'','comment_content'=>'comment_content','comment_time'=>'comment_time'),array('uid'=>'uid','cid'=>'cid','nick'=>'nick','replyto'=>'replyto','avatar'=>'','comment_content'=>'comment_content','comment_time'=>'comment_time'));}
+    {if $comment_data}
+    {loop $comment_data $v}
+    <div class="comment clearfix">
+        <div class="avatar-block pull-left">
+            <img src="{if $v['avatar_FROM']}{$v['avatar_FROM']}{else}http://tp4.sinaimg.cn/3927645471/180/5753508523/1{/if}" class="center-block img-responsive img-circle">
+        </div>
+        <div class="comment-content" data-sid="{$v['state_ID']}" data-cid="{$v['comment_ID']}" data-uid="{$v['from_WHO']}" data-nick="{$v['nickname_FROM']}">
+            <div class="detail-block pull-left" style="width: 100%;">
+                <div class="line">
+                    <span class="link">我 {if $v['nickname_TO'] }&nbsp;回复&nbsp;{$v['nickname_TO']}{/if}:</span>
+                    {$v['content']}
+                </div>
+                <div class="line"><span class="normal">{$v['release_TIME']}</span></div>
+                <div class="clearfix pull-right"><span class="normal"><span class="delete_btn">删除</span></span></div>
+            </div>
+        </div>
+    </div>
+    {/loop}
+    {else}
+        暂无评论
+    {/if}
+</div>
+<script>
+    $(".delete_btn").on("click",function (e) {
+        $.ajax({
+            url:window.location.href,
+            dataType: 'json',
+            data:{cid:$(this).parents(".comment-content").data('cid')},
+            success:function () {
+
+                console.log("ajax success")
+            },
+            error:function () {
+                console.log("ajax error")
+            }
+        });
+        e.stopPropagation();
+    });
+    $(".comment").on('click',function () {
+        window.location.href=$(this).data('sid');
+    })
+</script>
+{template 'footer'}
