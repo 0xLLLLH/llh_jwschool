@@ -31,7 +31,7 @@
         </a>
         <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'birth','new_title'=>'生日'));}">
             <div class="entry entry-inline">
-                <span>生日</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{if $member['birthyear']}!=0}{$member['birthyear']}-{$member['birthmonth']}-{$member['birthday']}{else}待完善...{/if}</span>
+                <span>生日</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{if $member['birthyear']}{$member['birthyear']}-{$member['birthmonth']}-{$member['birthday']}{else}待完善...{/if}</span>
             </div>
         </a>
         <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'reside','new_title'=>'地址'));}">

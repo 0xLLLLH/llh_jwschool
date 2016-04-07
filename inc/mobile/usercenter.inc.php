@@ -11,12 +11,13 @@ $avatar = '';
 //echo $_W['openid'].'<br>';
 //echo mc_openid2uid($_W['openid']);//通过openid获取uid
 if (!empty($_W['member']['uid'])) {
-    $member = mc_fetch(intval($_W['member']['uid']), array('avatar','nickname','gender'));//获取uid的avatar字段
+    $member = mc_fetch(intval($_W['member']['uid']), array('avatar','nickname','gender','birthyear','birthmonth','birthday'));//获取uid的avatar字段
     //var_dump($member);
     if (!empty($member)) {
         $avatar = $member['avatar'];
         $nickname = $member['nickname'];
         $gender = $member['gender'];
+        $age = $this->getAge($member['birthyear'],$member['birthmonth'],$member['birthday']);
     }
 }
 if (empty($avatar)) {

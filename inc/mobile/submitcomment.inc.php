@@ -11,7 +11,7 @@ if ($_W['ispost'] || $_W['isajax']) {
     $content = $_GPC['content'];
     $state_ID = $_GPC['state_ID'];
     $date = date("Y-m-d H:i:s");
-    pdo_query("UPDATE  ".tablename('jwschool_moments')." SET comments_NUM = comments_NUM+1");
+    pdo_query("UPDATE  ".tablename('jwschool_moments')." SET comments_NUM = comments_NUM+1 WHERE id=:state_ID",array(':state_ID'=>$state_ID));
     $comment_data = array(
         'release_TIME' => $date,
         'content' => $content,
