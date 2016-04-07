@@ -6,7 +6,7 @@
 {if $_GPC['op']=='search'}
     {template 'header_back'}
     <script>
-        $("#title").text("{$_GPC['keyword']}");
+        $("#title").text("搜索\“{$_GPC['keyword']}\”:");
     </script>
 {else}
 <nav id="header_back" class="navbar navbar-default navbar-static-top">
@@ -88,7 +88,7 @@
                     url: "{php echo $this->createMobileUrl('getstate')}",
                     dataType: 'json',
                     type: "post",
-                    data: {last_id: $("#last_id").val()},
+                    data: {last_id: $("#last_id").val(),keyword:"{$_GPC['keyword']}" },
                     success: function (data) {
                         //console.log(data.size);
                         //console.log(data.last_id);
