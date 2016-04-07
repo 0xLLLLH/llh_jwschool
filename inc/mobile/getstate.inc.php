@@ -9,7 +9,12 @@ global $_W, $_GPC;
 load()->model('mc');
 if ($_W['ispost'] || $_W['isajax']) {
     $last_id = $_GPC['last_id'];
-    $state_data = pdo_fetchall("SELECT * FROM ".tablename('jwschool_moments')."where id < ".$last_id." ORDER BY release_TIME DESC LIMIT 5");
+    if(!empty($_GPC['keyword'])){
+        $keyword = $_GPC['keyword'];
+        $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . " WHERE id < ".$last_id." AND ( content LIKE '%" . $keyword . "%' OR tags LIKE '%;" . $keyword  . ";%' ) ORDER BY release_TIME DESC LIMIT 5");
+    }else{
+        $state_data = pdo_fetchall("SELECT * FROM ".tablename('jwschool_moments')."WHERE id < ".$last_id." ORDER BY release_TIME DESC LIMIT 5");
+    }
     foreach($state_data as $k => $v){
         $uid=mc_openid2uid($v['openid']);
         $member = mc_fetch(intval($uid), array('avatar', 'nickname','gender','birthyear','birthmonth','birthday'));

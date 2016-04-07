@@ -8,10 +8,10 @@
 global $_W, $_GPC;
 load()->model('mc');
 if (isset($_GPC['op'])) {
-    $search = $_GPC['search'];
-    $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . " WHERE content LIKE '%" . $search . "%' OR tags LIKE '%;" . $search . ";%' ORDER BY release_TIME DESC LIMIT 0,5");
+    $keyword = $_GPC['keyword'];
+    $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . " WHERE content LIKE '%" . $keyword . "%' OR tags LIKE '%;" . $keyword  . ";%' ORDER BY release_TIME DESC LIMIT 5");
 } else {
-    $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . "ORDER BY release_TIME DESC LIMIT 0,5");
+    $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . "ORDER BY release_TIME DESC LIMIT 5");
 }
 //var_dump($state_data);
 foreach ($state_data as $k => $v) {
