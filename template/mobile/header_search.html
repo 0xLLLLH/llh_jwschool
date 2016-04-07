@@ -5,12 +5,30 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-10" style="padding-right: 0">
-                <input type="search" class="form-control" placeholder="输入关键字" >
+                <input id="search_box" type="text" class="form-control" placeholder="输入关键字" >
             </div>
             <div class="pull-right">
-                <a type="button" id=cancel" class="headerlink" href="javascript:history.go(-1);">取消</a>
-                <input type="submit" id="submit" class="headerlink" value="搜索" style="display: none;"/>
+                <input id="index_url" type="hidden" value="{php echo $this->createMobileUrl('index')}">
+                <a type="button" id="cancel" class="headerlink" href="javascript:history.go(-1);">取消</a>
+                <a href="javascript:void(0);" id="submit" class="headerlink" style="display: none;">搜索</a>
             </div>
         </div>
     </div>
 </nav>
+<script>
+    $("#search_box").click(function () {
+        $("#cancel").hide();
+        $("#submit").show();
+    });
+    $("#search_box").blur(function () {
+        var $keyword=$("#search_box");
+        if ($keyword.val().trim()=="") {
+            $("#cancel").show();
+            $("#submit").hide();
+            $keyword.val("");
+        }
+    });
+    $("#submit").click(function () {
+        window.location.href=$("#index_url").val()+'&op=search&keyword='+$("#search_box").val();
+    });
+</script>
