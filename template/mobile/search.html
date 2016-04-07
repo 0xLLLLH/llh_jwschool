@@ -1,6 +1,5 @@
 {template 'header_search'}
 
-{php $tag=array('tag1','tag2','tag3','tag4','tag5','tag1','tag2','tag3','tag4','tag5','tag1','tag2','tag3','tag4','tag5')}
 
 <div style="padding: 0 10px;font-size: 1.8em;">
     <p><span class="glyphicon glyphicon-tags" aria-hidden="true" style="margin: 10px 10px;"></span>热门标签</p>
@@ -8,7 +7,7 @@
 
 <div class="tag-container clearfix">
     {loop $tag $v}
-    <a href="{php echo $this->createMobileUrl('index',array('op'=>'search','keyword'=>$v));}"><span class="tag" data-tag="{$v}">{$v}</span></a>
+    <a href="{php echo $this->createMobileUrl('index',array('op'=>'search','keyword'=>$v['tag']));}"><span class="tag" data-tag="{$v['tag']}">{$v['tag']}</span></a>
     {/loop}
 </div>
 
