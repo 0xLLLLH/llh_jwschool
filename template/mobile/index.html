@@ -6,8 +6,15 @@
 {if $_GPC['op']=='search'}
     {template 'header_back'}
     <script>
-        $("#title").text("搜索\“{$_GPC['keyword']}\”:");
+        $("#title").text("搜索\"{$_GPC['keyword']}\":");
     </script>
+{else if $_GPC['op']=='homepage'}
+    {template 'header_back'}
+    <script>
+        $("#title").text("{$nickname}的主页");
+    </script>
+    {template 'basic_info'}
+{else if $_GPC['op']=='mystates'}
 {else}
 <nav id="header_back" class="navbar navbar-default navbar-static-top">
     <div style="float: left;width: 10%;">
@@ -29,7 +36,7 @@
     {loop $state_data $s}
     <a class="state clearfix" href="{php echo $this->createMobileUrl('statedetail',array('state_ID'=>$s['id']));}">
         <div class="content-block clearfix">
-            <div class="poster-info clearfix" style="border-bottom: 1px solid #eee;">
+            <div data-uid="{$s['uid']}" class="poster-info clearfix" style="border-bottom: 1px solid #eee;">
                 <div class="avatar-block pull-left clearfix">
                     <img src="{if $s['avatar']}{$s['avatar']}{else}http://tp4.sinaimg.cn/3927645471/180/5753508523/1{/if}" class="center-block img-responsive img-circle"/>
                 </div>
@@ -88,7 +95,8 @@
                     url: "{php echo $this->createMobileUrl('getstate')}",
                     dataType: 'json',
                     type: "post",
-                    data: {last_id: $("#last_id").val(),keyword:"{$_GPC['keyword']}" },
+                    data: {last_id: $("#last_id").val(),keyword:"{$_GPC['keyword']}",openid:"{$_W['openid']}"
+                        },
                     success: function (data) {
                         //console.log(data.size);
                         //console.log(data.last_id);
@@ -144,6 +152,9 @@
     $(function () {
         $("#last_id").val({php echo $state_data[count($state_data) - 1]['id']});
     });
+    $(".poster-info").on("click",function (e) {
+        window.location.href="{php echo $this->createMobileUrl('homepage');}"+'&uid='+$(this).data('uid');
+    })
 </script>
 
 {template 'footer'}
