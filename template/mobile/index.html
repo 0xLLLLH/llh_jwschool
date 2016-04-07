@@ -12,115 +12,130 @@
             <input type="text" class="form-control" placeholder="搜索标签或内容">
         </a>
     </div>
-    <div style="float: left;width: 10%;">
-        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-    </div>
+    <a href="{php echo $this->createMobileUrl('newstate');}">
+        <div style="float: left;width: 10%;">
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+        </div>
+    </a>
 </nav>
 <div class="state-area">
-{php $states=array(array('cid'=>'1','$avatar'=>'','tag'=>array('tag1','tag2','tag3'),'user_page'=>'',$name=>'name','gender'=>'1','age'=>'18','time'=>'2016.4.5 12:55','date'=>'2016年4月5日','content'=>'something something something something something','location'=>'杭州市临安市','read'=>'123','remarks'=>'23','images'=>array('https://lh6.googleusercontent.com/-Cwz4QV1MyWI/AAAAAAAAAAI/AAAAAAAAAEA/5-P-bIt8VaA/photo.jpg?sz=128','https://lh6.googleusercontent.com/-Cwz4QV1MyWI/AAAAAAAAAAI/AAAAAAAAAEA/5-P-bIt8VaA/photo.jpg?sz=128')),array('$avatar'=>'','user_page'=>'',$name=>'name','gender'=>'1','age'=>'18','tag'=>array('tag1','tag2','tag3'),'time'=>'2016.4.5 12:55','date'=>'2016年4月5日','content'=>'something something something something something','location'=>'杭州市临安市','read'=>'123','remarks'=>'23','images'=>array('https://lh6.googleusercontent.com/-Cwz4QV1MyWI/AAAAAAAAAAI/AAAAAAAAAEA/5-P-bIt8VaA/photo.jpg?sz=128','https://lh6.googleusercontent.com/-Cwz4QV1MyWI/AAAAAAAAAAI/AAAAAAAAAEA/5-P-bIt8VaA/photo.jpg?sz=128')),array('$avatar'=>'','user_page'=>'',$name=>'name','gender'=>'1','age'=>'18','time'=>'2016.4.5 12:55','date'=>'2016年4月5日','content'=>'something something something something something','location'=>'杭州市临安市','read'=>'123','remarks'=>'23','images'=>array('https://lh6.googleusercontent.com/-Cwz4QV1MyWI/AAAAAAAAAAI/AAAAAAAAAEA/5-P-bIt8VaA/photo.jpg?sz=128','https://lh6.googleusercontent.com/-Cwz4QV1MyWI/AAAAAAAAAAI/AAAAAAAAAEA/5-P-bIt8VaA/photo.jpg?sz=128')))}
-{loop $states $s}
-<a class="state clearfix" href="{php echo $this->createMobileUrl('search');}">
-<div class="content-block clearfix">
-    <div class="poster-info clearfix" style="border-bottom: 1px solid #eee;">
-        <div class="avatar-block pull-left clearfix">
-            <img src="{if $s['avatar']}{$s['avatar']}{else}https://lh6.googleusercontent.com/-Cwz4QV1MyWI/AAAAAAAAAAI/AAAAAAAAAEA/5-P-bIt8VaA/photo.jpg?sz=128{/if}" class="center-block img-responsive img-circle"/>
-        </div>
-        <div class="detail-block pull-left clearfix">
-            <div class="line"><span class="link">{$s['name']}<span class="badge" style="background-color: #5bc0de;">{if $s['gender']==0}♀{else}♂{/if}{$s['age']}</span></span></div>
-            <div class="line "><span class="normal">{$s['time']}</span></div>
-        </div>
-    </div>
-    <div class="content clearfix">
-        <span class="link pull-left">{$s['date']}</span>
-        {$s['content']}
-    </div>
-    <div class="tag-container clearfix">
-        <span class="glyphicon glyphicon-tag pull-left" aria-hidden="true" style="margin: 2px 2px"></span>
-        {loop $s['tag'] $t}
-            <span class="tag" data-tag="{$t}">{$t}</span>
-        {/loop}
-    </div>
-    <div class="content-images clearfix">
-        {loop $s['images'] $k $v}
-            <div class="pull-left images">
-                <img src="{$v}" class="center-block img-responsive">
+    {loop $state_data $s}
+    <a class="state clearfix" href="{php echo $this->createMobileUrl('statedetail',array('state_ID'=>$s['id']));}">
+        <div class="content-block clearfix">
+            <div class="poster-info clearfix" style="border-bottom: 1px solid #eee;">
+                <div class="avatar-block pull-left clearfix">
+                    <img src="{if $s['avatar']}{$s['avatar']}{else}http://tp4.sinaimg.cn/3927645471/180/5753508523/1{/if}" class="center-block img-responsive img-circle"/>
+                </div>
+                <div class="detail-block pull-left clearfix">
+                    <div class="line"><span class="link">{$s['nickname']}<span class="badge"
+                                                                               style="background-color: #5bc0de;">{if $s['gender']==2}♀{else if $s['gender']==1}♂{else}保密{/if}{$s['age']}</span></span>
+                    </div>
+                    <div class="line "><span class="normal">{$s['release_TIME']}</span></div>
+                </div>
             </div>
-        {/loop}
-    </div>
-    <div class="content-bottom line" style="margin-top: 5px;position: relative;">
-        <span class="glyphicon glyphicon-map-marker" style="margin: 0;" aria-hidden="true"></span>
-        <span class="normal pull-left-center">我在&nbsp;{$s['location']}</span>
-        <span class="normal pull-right-center">浏览{$s['read']}&nbsp;评论{$s['remarks']}</span>
-    </div>
+            <div class="content clearfix">
+                <span class="link pull-left">{$s['travel_TIME']}&nbsp;</span>
+                {$s['content']}
+            </div>
+            <div class="tag-container clearfix">
+                <span class="glyphicon glyphicon-tag pull-left" aria-hidden="true" style="margin: 2px 2px"></span>
+                {loop $s['tags'] $t}
+                <span class="tag" data-tag="{$t}">{$t}</span>
+                {/loop}
+            </div>
+            <div class="content-images clearfix">
+                {loop $s['pic_URL'] $v}
+                <div class="pull-left images">
+                    <img src="{$v}" class="center-block img-responsive">
+                </div>
+                {/loop}
+            </div>
+            <div class="content-bottom line" style="margin-top: 5px;position: relative;">
+                <span class="glyphicon glyphicon-map-marker" style="margin: 0;" aria-hidden="true"></span>
+                <span class="normal pull-left-center">我在&nbsp;{$s['position']}</span>
+                <span class="normal pull-right-center">浏览{$s['views']}&nbsp;评论{$s['comments_NUM']}</span>
+            </div>
+        </div>
+    </a>
+    {/loop}
 </div>
-</a>
-{/loop}
-</div>
+<input type="text" style="display: none" id="last_id">
 <script>
-    $(document).ready(function(){
+
+    $(document).ready(function () {
         var range = 100;             //距下边界长度/单位px
         var elemt = 500;           //插入元素高度/单位px
         var maxnum = 20;            //设置加载最多次数
         var num = 1;
         var totalheight = 0;
         var main = $("#state-area");                     //主体元素
-        $(window).scroll(function(){
+        $(window).scroll(function () {
             var srollPos = $(window).scrollTop();    //滚动条距顶部距离(页面超出窗口的高度)
             //console.log("滚动条到顶部的垂直高度: "+$(document).scrollTop());
             //console.log("页面的文档高度 ："+$(document).height());
             //console.log('浏览器的高度：'+$(window).height());
             totalheight = parseFloat($(window).height()) + parseFloat(srollPos);
-            if(($(document).height()-range) <= totalheight  && num != maxnum) {
+            if (($(document).height() - range) <= totalheight && num != maxnum) {
                 console.log('到达页面底部');
                 $.ajax({
-                    url:window.location.href,
+                    url: "{php echo $this->createMobileUrl('getstate')}",
                     dataType: 'json',
-                    data:{},
-                    success:function (data) {
-                        var elem='<a class="clearfix" href="'+data.detail_link+'">'
-                            +'<div class="content-block clearfix">'
-                                +'<div class="poster-info clearfix" style="border-bottom: 1px solid #eee;">'
-                                    +'<div class="avatar-block pull-left clearfix">'
-                                        +'<img src="'+data.avatar+'" class="center-block img-responsive img-circle"/>'
-                                    +'</div>'
-                                    +'<div class="detail-block pull-left clearfix">'
-                                        +'<div class="line"><span class="link"><span class="badge" style="background-color: #5bc0de;">'+(!data.gender?'♀':'♂')+'</span></span></div>'
-                                        +'<div class="line "><span class="normal">'+data.post_time+'</span></div>'
-                                    +'</div>'
-                                +'</div>'
-                                +'<div class="content clearfix">'
-                                    +'<span class="link pull-left">'+data.date+'</span>'
-                                    +data.contents
-                                +'</div>'
-                                +'<div class="tag-container clearfix">';
-                                for (var i=0;i<3;i++){
-                                    elem+= '<span class="tag" data-tag="{$t}">{$t}</span>';
-                                }
-                                elem+='</div>'
-                                +'<div class="content-images clearfix">'
-                                +'<span class="glyphicon glyphicon-tag pull-left" aria-hidden="true" style="margin: 0 2px"></span>';
-                                for (var i=0;i<3;i++) {
-                                    elem+='<div class="pull-left images">'
-                                    + '<img src="' + data.img[0] + '" class="center-block img-responsive">'
-                                    + '</div>';
-                                }
-                                elem+='</div>'
-                                +'<div class="content-bottom line" style="margin-top: 5px;position: relative;">'
-                                    +'<span class="glyphicon glyphicon-map-marker" style="margin: 0;" aria-hidden="true"></span>'
-                                    +'<span class="normal pull-left-center">我在&nbsp;'+data.mylocation+'</span>'
-                                    +'<span class="normal pull-right-center">浏览'+data.read+'&nbsp;评论'+data.remarks+'</span>'
-                                +'</div>'
-                            +'</div>'
-                        +'</a>';
-                        $(".state-area").append($(elem));
+                    type: "post",
+                    data: {last_id: $("#last_id").val()},
+                    success: function (data) {
+                        //console.log(data.size);
+                        //console.log(data.last_id);
+                        for (var s = 0; s < data.size; ++s) {
+                            var elem = '<a class="clearfix" href="' + data[s].detail_link + '">'
+                                    + '<div class="content-block clearfix">'
+                                    + '<div class="poster-info clearfix" style="border-bottom: 1px solid #eee;">'
+                                    + '<div class="avatar-block pull-left clearfix">'
+                                    + '<img src="' + data[s].avatar + '" class="center-block img-responsive img-circle"/>'
+                                    + '</div>'
+                                    + '<div class="detail-block pull-left clearfix">'
+                                    + '<div class="line"><span class="link">'+data[s].nickname+'<span class="badge" style="background-color: #5bc0de;">' + (data[s].gender ==2 ? '♀' : '♂') + data[s].age+'</span></span></div>'
+                                    + '<div class="line "><span class="normal">' + data[s].release_TIME + '</span></div>'
+                                    + '</div>'
+                                    + '</div>'
+                                    + '<div class="content clearfix">'
+                                    + '<span class="link pull-left">' + data[s].travel_TIME + '</span>'
+                                    + data[s].content
+                                    + '</div>'
+                                    + '<div class="tag-container clearfix">';
+                            console.log(data[s].tags.length);
+                            for (var i = 0; i < data[s].tags.length; i++) {
+                                elem += '<span class="tag" data-tag="' + data[s].tags[i] + '">' + data[s].tags[i] + '</span>';
+                            }
+                            elem += '</div>'
+                                    + '<div class="content-images clearfix">'
+                                    + '<span class="glyphicon glyphicon-tag pull-left" aria-hidden="true" style="margin: 0 2px"></span>';
+                            for (var i = 0; i < data[s].pic_URL.length; i++) {
+                                elem += '<div class="pull-left images">'
+                                        + '<img src="' + data[s].pic_URL[i] + '" class="center-block img-responsive">'
+                                        + '</div>';
+                            }
+                            elem += '</div>'
+                                    + '<div class="content-bottom line" style="margin-top: 5px;position: relative;">'
+                                    + '<span class="glyphicon glyphicon-map-marker" style="margin: 0;" aria-hidden="true"></span>'
+                                    + '<span class="normal pull-left-center">我在&nbsp;' + data[s].position + '</span>'
+                                    + '<span class="normal pull-right-center">浏览' + data[s].views + '&nbsp;评论' + data[s].comments_NUM + '</span>'
+                                    + '</div>'
+                                    + '</div>'
+                                    + '</a>';
+                            $(".state-area").append($(elem));
+                        }
                         console.log("ajax加载成功");
+                        $("#last_id").val(data.last_id);
                     },
-                    error:function () {
+                    error: function () {
                         console.log("ajax加载失败");
                     }
                 });
             }
         });
+    });
+    $(function () {
+        $("#last_id").val({php echo $state_data[count($state_data) - 1]['id']});
     });
 </script>
 

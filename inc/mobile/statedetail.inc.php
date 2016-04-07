@@ -64,19 +64,21 @@ if (isset($_GPC['submit'])) {
     //echo $state_ID;
 }
 if (isset($_GPC['state_ID'])) {
-    pdo_query("UPDATE  ".tablename('jwschool_moments')." SET views = views+1");
+    pdo_query("UPDATE  ".tablename('jwschool_moments')." SET views = views+1 WHERE id= :state_ID",array(':state_ID'=>$_GPC['state_ID']));
     $state_ID = $_GPC['state_ID'];
     $tb_moments = tablename('jwschool_moments');
     $tb_members = tablename('mc_members');
     $state_detail = pdo_fetch("select openid,comments_NUM,content,pic_URL,position,release_TIME,tags,travel_TIME,views from "
         . $tb_moments . " where " . $tb_moments . ".id= :state_ID", array(':state_ID' => $state_ID));
     $uid = mc_openid2uid($state_detail['openid']);
-    $member = mc_fetch($uid, array('avatar', 'nickname', 'gender'));
-    $pic_URL = explode(';', $state_detail['pic_URL']);
+    $member = mc_fetch($uid, array('avatar', 'nickname', 'gender','birthyear','birthmonth','birthday'));
+
     $string_tag = trim($state_detail['tags'], ";");
     $tags = explode(';', $string_tag);
+    $pic_URL = $this->getPicUrlArr($state_detail['pic_URL']);
     //var_dump($member);
-    foreach ($pic_URL as $key => $v) {
+    //$pic_URL = explode(';', $state_detail['pic_URL']);
+   /* foreach ($pic_URL as $key => $v) {
         $temp = explode('/', $v);
         $pic_NAME = $temp[count($temp) - 1];
         $cnt = 0;
@@ -91,19 +93,20 @@ if (isset($_GPC['state_ID'])) {
         //echo $thumb_URL."<br>";
         // echo $v."<br>";
         //echo $save_thumb_URL . '<br>';
-        if (!file_exists($save_thumb_URL)) {
+        if (!file_exists($save_thumb_URL)) {//判断缩略图是否已经有缓存
             $this->thumb($v, 200, 200, $save_thumb_URL);//生成缩略图
         }
-    }
+    }*/
     $travel_date = explode('-', $state_detail['travel_TIME']);
     $state_detail['travel_TIME'] = $travel_date[0] . '年' . $travel_date[1] . '月' . $travel_date[2] . '日';
     $state_detail['pic_URL'] = $pic_URL;
     $state_detail['tags'] = $tags;
     $state_detail['uid'] = $uid;
-    $state_detail['avater'] = $member['avater'];
+    $state_detail['avatar'] = $member['avatar'];
     $state_detail['nickname'] = $member['nickname'];
     $state_detail['gender'] = $member['gender'];
     $state_detail['state_id'] = $_GPC['state_ID'];
+    $state_detail['age'] = $this->getAge($member['birthyear'],$member['birthmonth'],$member['birthday']);
     //var_dump($state_detail);//状态所有信息；
     /**************************************************************************************************************/
 

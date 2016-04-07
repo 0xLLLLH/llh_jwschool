@@ -9,10 +9,10 @@
 <div class="content-block">
     <div class="poster-info clear-fix" style="border-bottom: 1px solid #eee;">
         <div class="avatar-block pull-left clearfix">
-            <img src="{if $state_detail['avater']}{$state_detail['avater']}{else}http://tp4.sinaimg.cn/3927645471/180/5753508523/1{/if}" class="center-block img-responsive img-circle">
+            <img src="{if $state_detail['avatar']}{$state_detail['avatar']}{else}http://tp4.sinaimg.cn/3927645471/180/5753508523/1{/if}" class="center-block img-responsive img-circle">
         </div>
         <div class="detail-block pull-left">
-            <div class="line"><a href="{$user_page}" class="link">{$state_detail['nickname']}<span class="badge" style="background-color: #5bc0de;">{if $state_detail['gender']==0}保密{else if $state_detail['gender']==2}♀{else}♂{/if}{$age}</span></a></div>
+            <div class="line"><a href="{$user_page}" class="link">{$state_detail['nickname']}<span class="badge" style="background-color: #5bc0de;">{if $state_detail['gender']==0}保密{else if $state_detail['gender']==2}♀{else}♂{/if}{$state_detail['age']}</span></a></div>
             <div class="line "><span class="normal">{$state_detail['release_TIME']} </span></div>
         </div>
     </div>
