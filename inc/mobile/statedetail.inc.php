@@ -4,6 +4,7 @@
  * User: ZT
  * Date: 2016/4/2
  * Time: 23:29
+ * Description：约游详情
  */
 global $_W, $_GPC;
 load()->func('file');

@@ -4,6 +4,7 @@
  * User: ZT
  * Date: 2016/4/5
  * Time: 20:36
+ * Description:ajax提交评论
  */
 global $_W, $_GPC;
 if ($_W['ispost'] || $_W['isajax']) {

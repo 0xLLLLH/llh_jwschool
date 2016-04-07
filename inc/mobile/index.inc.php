@@ -1,17 +1,26 @@
 <?php
 /**
  * Created by Phpstorm.
- * User: 0xLLLLH
+ * User: short
  * Date: 2016.3.31
- * Description：主页
+ * Description：主页/个人主页/我的约游
  */
 global $_W, $_GPC;
 load()->model('mc');
 if (isset($_GPC['op'])) {
-    $keyword = $_GPC['keyword'];
-    $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . " WHERE content LIKE '%" . $keyword . "%' OR tags LIKE '%;" . $keyword  . ";%' ORDER BY release_TIME DESC LIMIT 5");
+    if ($_GPC['op'] == 'search') {
+        $keyword = $_GPC['keyword'];
+        $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . " WHERE content LIKE '%" . $keyword . "%' OR tags LIKE '%;" . $keyword . ";%' ORDER BY release_TIME DESC LIMIT 5");
+    } else if ($_GPC['op'] == 'homepage') {
+        $uid=mc_openid2uid($_GPC['openid']);
+        //个人信息member
+        $member = mc_fetch(intval($uid),  array('nickname','realname','gender','mobile','qq','birthyear','birthmonth','birthday','resideprovince','residecity','residedist'));
+        $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . "WHERE openid=:openid ORDER BY release_TIME DESC LIMIT 5",array(':openid'=>$_GPC['openid']));
+    } else if ($_GPC['op'] == 'mystates') {
+        $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . "WHERE openid=:openid ORDER BY release_TIME DESC LIMIT 5",array(':openid'=>$_GPC['openid']));
+    }
 } else {
-    $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . "ORDER BY release_TIME DESC LIMIT 5");
+    $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . " ORDER BY release_TIME DESC LIMIT 5");
 }
 //var_dump($state_data);
 foreach ($state_data as $k => $v) {
