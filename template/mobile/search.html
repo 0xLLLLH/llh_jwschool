@@ -8,7 +8,7 @@
 
 <div class="tag-container clearfix">
     {loop $tag $v}
-    <a href="{php echo $this->createMobileUrl('index',array('op'=>'search','tag'=>$v));}"><span class="tag" data-tag="{$v}">{$v}</span></a>
+    <a href="{php echo $this->createMobileUrl('index',array('op'=>'search','keyword'=>$v));}"><span class="tag" data-tag="{$v}">{$v}</span></a>
     {/loop}
 </div>
 
