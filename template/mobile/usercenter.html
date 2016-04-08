@@ -7,31 +7,31 @@
 
 <div>
     <div class="entry-group">
-        <a href="#">
+        <a href="{php echo $this->createMobileUrl('index',array('op'=>'homepage'));}">
             <div class="entry entry-inline">
                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span><span>个人主页</span><span class="gt pull-right"> &gt </span>
             </div>
         </a>
         <div class="padding-r" style="display: flex;">
-            <a href="{php echo $this->createMobileUrl('index')}" class="entry-block flex-1">
+            <a href="{php echo $this->createMobileUrl('index')}" class="entry-block flex-1" style="width: 25%">
                 <div class="tab-img">
                     <img src="../addons/llh_jwschool/images/icon_nav_button.png" class="center-block img-responsive">
                 </div>
                 <div class="text-center">index</div>
             </a>
-            <a href="javascript:;" class="entry-block flex-1">
+            <a href="javascript:;" class="entry-block flex-1" style="width: 25%">
                 <div class="tab-img">
                     <img src="../addons/llh_jwschool/images/icon_nav_article.png" class="center-block img-responsive">
                 </div>
                 <div class="text-center">发现</div>
             </a>
-            <a href="javascript:;" class="entry-block flex-1">
+            <a href="javascript:;" class="entry-block flex-1" style="width: 25%">
                 <div class="tab-img">
                     <img src="../addons/llh_jwschool/images/icon_nav_article.png" class="center-block img-responsive">
                 </div>
                 <div class="text-center">发现</div>
             </a>
-            <a href="{php echo $this->createMobileUrl('usercenter');}" class="entry-block flex-1">
+            <a href="{php echo $this->createMobileUrl('usercenter');}" class="entry-block flex-1"  style="width: 25%">
                 <div class="tab-img">
                     <img src="../addons/llh_jwschool/images/icon_nav_cell.png" class="center-block img-responsive">
                 </div>
@@ -48,7 +48,7 @@
     </div><!-- end of entry-group -->
 
     <div class="entry-group">
-        <a href="#">
+        <a href="{php echo $this->createMobileUrl('index',array('op'=>'mystates','openid'=>$_w['openid']));}">
             <div class="entry entry-inline">
                 <span class="glyphicon glyphicon-flag" aria-hidden="true"></span><span>我的约游</span><span class="gt pull-right"> &gt </span>
             </div>
