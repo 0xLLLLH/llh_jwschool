@@ -12,12 +12,24 @@ if (isset($_GPC['op'])) {
         $keyword = $_GPC['keyword'];
         $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . " WHERE content LIKE '%" . $keyword . "%' OR tags LIKE '%;" . $keyword . ";%' ORDER BY release_TIME DESC LIMIT 5");
     } else if ($_GPC['op'] == 'homepage') {
-        $uid=mc_openid2uid($_GPC['openid']);
+        $uid = mc_openid2uid($_GPC['openid']);
         //个人信息member
-        $member = mc_fetch(intval($uid),  array('nickname','realname','gender','mobile','qq','birthyear','birthmonth','birthday','resideprovince','residecity','residedist'));
-        $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . "WHERE openid=:openid ORDER BY release_TIME DESC LIMIT 5",array(':openid'=>$_GPC['openid']));
+        $home_member = mc_fetch(intval($uid), array('avatar','nickname', 'realname', 'gender', 'mobile', 'qq', 'birthyear', 'birthmonth', 'birthday', 'resideprovince', 'residecity', 'residedist'));
+        //var_dump($home_member);
+        $nickname = $home_member['nickname'];
+        $avatar = $home_member['avatar'];
+        $gender = $home_member['gender'];
+        $location = $home_member['resideprovince'].$home_member['residecity'].$home_member['residedist'];
+        $location = $location?$location:'未知';
+        $qq = $home_member['qq']?$home_member['qq']:'未知';
+        $mobile = $home_member['mobile'];
+        $mobile=substr_replace($mobile,'****',3,4);
+        $mobile=$mobile?$mobile:'未知';
+        $birth = $home_member['birthyear'].'年'.$home_member['birthmonth'].'月'.$home_member['birthday'].'日';
+        $age = $this->getAge($home_member['birthyear'], $home_member['birthmonth'], $home_member['birthday']);
+        $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . "WHERE openid=:openid ORDER BY release_TIME DESC LIMIT 5", array(':openid' => $_GPC['openid']));
     } else if ($_GPC['op'] == 'mystates') {
-        $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . "WHERE openid=:openid ORDER BY release_TIME DESC LIMIT 5",array(':openid'=>$_GPC['openid']));
+        $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . "WHERE openid=:openid ORDER BY release_TIME DESC LIMIT 5", array(':openid' => $_GPC['openid']));
     }
 } else {
     $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . " ORDER BY release_TIME DESC LIMIT 5");
@@ -30,7 +42,7 @@ foreach ($state_data as $k => $v) {
     $state_data[$k]['nickname'] = $member['nickname'];
     $state_data[$k]['gender'] = $member['gender'];
     $state_data[$k]['age'] = $this->getAge($member['birthyear'], $member['birthmonth'], $member['birthday']);
-    $pic_URL = trim($v['pic_URL']);
+    $pic_URL = trim($v['pic_URL'], ';');
     $pic_arr = explode(';', $pic_URL);
     $state_data[$k]['pic_URL'] = $this->getPicUrlArr($v['pic_URL']);
     $string_tag = trim($v['tags'], ";");
