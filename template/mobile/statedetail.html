@@ -112,7 +112,7 @@
             $("#text_box").val('');
         }
         $(".poster-info").on("click",function (e) {
-            window.location.href="{php echo $this->createMobileUrl('index');}"+'&uid='+$(this).data('uid')+'&op=homepage';
+            window.location.href="{php echo $this->createMobileUrl('index');}"+'&openid='+$(this).data('uid')+'&op=homepage';
             e.stopPropagation();
         });
     });
