@@ -12,9 +12,21 @@
     {template 'header_back'}
     <script>
         $("#title").text("{$nickname}的主页");
+        $("#header_back").css("margin",'0');
     </script>
     {template 'basic_info'}
+    <div class="content-block">
+        <div class="info_title"> <span class="glyphicon glyphicon-user" aria-hidden="true"></span>个人资料</div>
+        <div class="info_line">所在地&nbsp;&nbsp;{location}</div>
+        <div class="info_line">所在地&nbsp;&nbsp;</div>
+        <div class="info_line">所在地&nbsp;&nbsp;</div>
+        <div class="info_line">所在地&nbsp;&nbsp;</div>
+    </div>
 {else if $_GPC['op']=='mystates'}
+{template 'header_back'}
+<script>
+    $("#title").text("{$nickname}的约游");
+</script>
 {else}
 <nav id="header_back" class="navbar navbar-default navbar-static-top">
     <div style="float: left;width: 10%;">
@@ -34,7 +46,7 @@
 {/if}
 <div class="state-area">
     {loop $state_data $s}
-    <a class="state clearfix" href="{php echo $this->createMobileUrl('statedetail',array('state_ID'=>$s['id']));}">
+    <a class="state clearfix" href="javascript:void(0);" data-uid="{$s['uid']}">
         <div class="content-block clearfix">
             <div data-uid="{$s['uid']}" class="poster-info clearfix" style="border-bottom: 1px solid #eee;">
                 <div class="avatar-block pull-left clearfix">
@@ -150,11 +162,22 @@
         });
     });
     $(function () {
-        $("#last_id").val({php echo $state_data[count($state_data) - 1]['id']});
+        $("#last_id").val("{php echo $state_data[count($state_data) - 1]['id']}");
     });
     $(".poster-info").on("click",function (e) {
-        window.location.href="{php echo $this->createMobileUrl('homepage');}"+'&uid='+$(this).data('uid');
-    })
+        window.location.href="{php echo $this->createMobileUrl('index');}"+'&uid='+$(this).data('uid')+'&op=homepage';
+        e.stopPropagation();
+    });
+    $(".state").on("click",function (e) {
+        var state = {
+            title: "index",
+            url: window.location.href
+        };
+        var next_url="{php echo $this->createMobileUrl('statedetail');}"+'&uid='+$(this).data('uid');
+        window.location.href=next_url;
+        window.history.pushState(state, "index", next_url);
+        e.stopPropagation();
+    });
 </script>
 
 {template 'footer'}
