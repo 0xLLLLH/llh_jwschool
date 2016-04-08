@@ -7,18 +7,17 @@
 </script>
 
 <div class="comment-area">
-    {php $comment_data=array(array('state_ID'=>'1','avatar'=>'','nickname'=>'我要去流浪','comments'=>array(array('uid'=>'uid','cid'=>'1','nickname_FROM'=>'nickname_FROM','replyto'=>'replyto','avatar'=>'','content'=>'content content content content content','comment_time'=>'comment_time'),array('uid'=>'uid','cid'=>'cid','nick'=>'nick','replyto'=>'replyto','avatar'=>'','comment_content'=>'comment_content','comment_time'=>'comment_time'))));}
-    {if $comment_data}
-    {loop $comment_data $s}
-    <a class="state clearfix" href="javascript:void(0);">
+    {if $comments_data}
+    {loop $comments_data $s}
+    <a class="state clearfix" href="javascript:void(0);" data-cid="{$s['state_ID']}">
         <div class="content-block clearfix">
             <div class="poster-info clearfix" style="border-bottom: 1px solid #eee;">
                 <div class="avatar-block pull-left clearfix">
-                    <img src="{if $s['avatar']}{$s['avatar']}{else}http://tp4.sinaimg.cn/3927645471/180/5753508523/1{/if}" class="center-block img-responsive img-circle"/>
+                    <img src="{if $s['state_USER']['avatar']}{$s['state_USER']['avatar']}{else}http://tp4.sinaimg.cn/3927645471/180/5753508523/1{/if}" class="center-block img-responsive img-circle"/>
                 </div>
                 <div class="detail-block pull-left clearfix">
-                    <div class="line"><span class="link">{$s['nickname']}<span class="badge"
-                                                                               style="background-color: #5bc0de;">{if $s['gender']==2}♀{else if $s['gender']==1}♂{else}保密{/if}{$s['age']}</span></span>
+                    <div class="line"><span class="link">{$s['state_USER']['nickname']}<span class="badge"
+                                                                               style="background-color: #5bc0de;">{if $s['state_USER']['gender']==2}♀{else if $s['gender']==1}♂{else}保密{/if}{$s['age']}{$s['state_USER']['age']}</span></span>
                     </div>
                     <div class="line "><span class="normal">{$s['release_TIME']}</span></div>
                 </div>
@@ -27,13 +26,13 @@
                 <span class="link pull-left">{$s['travel_TIME']}&nbsp;</span>
                 {$s['content']}
             </div>
-            <div class="content-images clearfix">
+          <!--  <div class="content-images clearfix">
                 {loop $s['pic_URL'] $v}
                 <div class="pull-left images">
                     <img src="{$v}" class="center-block img-responsive">
                 </div>
                 {/loop}
-            </div>
+            </div>-->
             <div class="content-bottom line" style="margin-top: 5px;position: relative;">
                 <span class="glyphicon glyphicon-map-marker" style="margin: 0;" aria-hidden="true"></span>
                 <span class="normal pull-left-center">我在&nbsp;{$s['position']}</span>
@@ -42,10 +41,10 @@
             <div>
                 {loop $s['comments'] $v}
                     <div class="mycomment clearfix">
-                        <div class="comment-content" data-cid="{$v['cid']}" data-uid="{$v['from_WHO']}" data-nick="{$v['nickname_FROM']}">
+                        <div class="comment-content" data-cid="{$v['id']}" data-stateid="{$s['state_ID']}">
                             <div class="detail-block pull-left">
                                 <div class="line">
-                                    <span class="link">{$v['nickname_FROM']}:</span>
+                                    <span class="link">{$member['nickname']}:</span>
                                     {$v['content']}
                                 </div>
                                 <div class="line pull-right"><span class="link delete_btn" style="font-size: 15px;">删除</span></div>
@@ -65,14 +64,17 @@
 <script>
     $(".delete_btn").on("click",function (e) {
         //console.log($(this).parents(".comment-content").data('cid'));
-        var cid=$(this).parents(".comment-content").data('cid');
+        $cid=$(this).parents(".comment-content").data('cid');
+        $stateid=$(this).parents(".comment-content").data('stateid');
+        $del=$(this).parents(".mycomment");
         $.ajax({
-            url:window.location.href,
-            dataType: 'json',
-            data:{cid:cid},
+            url: "{php echo $this->createMobileUrl('deletecomment')}",
+            dataType: 'text',
+            type:'post',
+            data:{cid:$cid,state_ID:$stateid},
             success:function () {
-
-                console.log("ajax success")
+                console.log("ajax success");
+                $del.remove();
             },
             error:function () {
                 console.log("ajax error")
@@ -81,7 +83,8 @@
         e.stopPropagation();
     });
     $(".state").on('click',function () {
-        window.location.href="{php echo $this->createMobileUrl('statedetail',array('state_ID'=>$s['state_ID']));}";
+        window.location.href="{php echo $this->createMobileUrl('statedetail');}"+'&state_ID='+$(this).data('cid');
+
     })
 </script>
 {template 'footer'}
