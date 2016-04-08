@@ -46,10 +46,10 @@
 {/if}
 <div class="state-area">
     {loop $state_data $s}
-    <a class="state clearfix" href="javascript:void(0);" data-uid="{$s['uid']}">
+    <a class="state clearfix" href="javascript:void(0);" data-uid="{$s['id']}">
         <div class="content-block clearfix">
-            <div data-uid="{$s['uid']}" class="poster-info clearfix" style="border-bottom: 1px solid #eee;">
-                <div class="avatar-block pull-left clearfix">
+            <div class="poster-info clearfix" style="border-bottom: 1px solid #eee;">
+                <div data-uid="{$s['openid']}" class="avatar-block pull-left clearfix">
                     <img src="{if $s['avatar']}{$s['avatar']}{else}http://tp4.sinaimg.cn/3927645471/180/5753508523/1{/if}" class="center-block img-responsive img-circle"/>
                 </div>
                 <div class="detail-block pull-left clearfix">
@@ -164,8 +164,8 @@
     $(function () {
         $("#last_id").val("{php echo $state_data[count($state_data) - 1]['id']}");
     });
-    $(".poster-info").on("click",function (e) {
-        window.location.href="{php echo $this->createMobileUrl('index');}"+'&uid='+$(this).data('uid')+'&op=homepage';
+    $(".avatar-block").on("click",function (e) {
+        window.location.href="{php echo $this->createMobileUrl('index');}"+'&openid='+$(this).data('uid')+'&op=homepage';
         e.stopPropagation();
     });
     $(".state").on("click",function (e) {
@@ -173,7 +173,7 @@
             title: "index",
             url: window.location.href
         };
-        var next_url="{php echo $this->createMobileUrl('statedetail');}"+'&uid='+$(this).data('uid');
+        var next_url="{php echo $this->createMobileUrl('statedetail');}"+'&state_ID='+$(this).data('uid');
         window.location.href=next_url;
         window.history.pushState(state, "index", next_url);
         e.stopPropagation();
