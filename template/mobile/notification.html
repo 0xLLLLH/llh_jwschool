@@ -1,0 +1,35 @@
+{template 'header_back'}
+<link rel="stylesheet" href="../addons/llh_jwschool/template/css/state.css"/>
+
+<script>
+    $("#title").text("消息");
+</script>
+
+<div class="comment-area content-block">
+    {php $comment_data=array(array('sid'=>'1','uid'=>'uid','cid'=>'cid','nickname_FROM'=>'nick','replyto'=>'replyto','avatar'=>'','content'=>'comment_content content content content','comment_time'=>'comment_time'),array('uid'=>'uid','cid'=>'cid','nick'=>'nick','replyto'=>'replyto','avatar'=>'','comment_content'=>'comment_content','comment_time'=>'comment_time'));}
+    {loop $comment_data $v}
+    <div class="comment clearfix">
+        <a href='#'>
+            <div class="avatar-block pull-left">
+                <img src="{if $v['avatar_FROM']}{$v['avatar_FROM']}{else}http://tp4.sinaimg.cn/3927645471/180/5753508523/1{/if}" class="center-block img-responsive img-circle">
+            </div>
+        </a>
+        <div class="comment-content" data-cid="{$v['state_ID']}" data-uid="{$v['from_WHO']}" data-nick="{$v['nickname_FROM']}">
+            <div class="detail-block pull-left">
+                <div class="line">
+                    <span class="link">{$v['nickname_FROM']} &nbsp;回复了你：</span>
+                    {$v['content']}
+                </div>
+                <div class="line"><span class="normal">{$v['release_TIME']}</span></div>
+            </div>
+        </div>
+    </div>
+    {/loop}
+</div>
+<script>
+    $(".comment").on('click',function () {
+        window.location.href="{php echo $this->createMobileUrl('statedetail');}"+'&sid='+$(this).data('sid');
+    })
+</script>
+
+{template 'footer'}

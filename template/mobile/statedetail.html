@@ -7,7 +7,7 @@
 </script>
 
 <div class="content-block">
-    <div class="poster-info clear-fix" style="border-bottom: 1px solid #eee;">
+    <div class="poster-info clear-fix" data-uid="{$_W['openid']}" style="border-bottom: 1px solid #eee;">
         <div class="avatar-block pull-left clearfix">
             <img src="{if $state_detail['avatar']}{$state_detail['avatar']}{else}http://tp4.sinaimg.cn/3927645471/180/5753508523/1{/if}" class="center-block img-responsive img-circle">
         </div>
@@ -111,8 +111,10 @@
             });
             $("#text_box").val('');
         }
-
-
+        $(".poster-info").on("click",function (e) {
+            window.location.href="{php echo $this->createMobileUrl('index');}"+'&uid='+$(this).data('uid')+'&op=homepage';
+            e.stopPropagation();
+        });
     });
 </script>
 

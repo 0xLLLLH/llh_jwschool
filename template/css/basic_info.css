@@ -22,4 +22,13 @@
   color: #fff;
   font-weight: bold;
 }
+.header_bg {
+  min-height: 200px;
+  background: #5cb85c;
+}
+.info_line {
+  padding-left: 50px;
+  color: grey;
+  font-size: 18px;
+}
 /*# sourceMappingURL=basic_info.css.map */
