@@ -97,10 +97,11 @@
         });
     }
     $(document).ready(function () {
-        var range = 100;             //距下边界长度/单位px
+        var range = 600;             //距下边界长度/单位px
         var elemt = 500;           //插入元素高度/单位px
         var maxnum = 20;            //设置加载最多次数
         var num = 1;
+        var flag=true;
         var totalheight = 0;
         var main = $("#state-area");                     //主体元素
         $(window).scroll(function () {
@@ -109,19 +110,20 @@
             //console.log("页面的文档高度 ："+$(document).height());
             //console.log('浏览器的高度：'+$(window).height());
             totalheight = parseFloat($(window).height()) + parseFloat(srollPos);
-            if (($(document).height() - range) <= totalheight && num != maxnum) {
+            if (($(document).height() - range) <= totalheight && flag) {
                 console.log('到达页面底部');
+                flag=false;
                 $.ajax({
                     url: "{php echo $this->createMobileUrl('getstate')}",
                     dataType: 'json',
                     type: "post",
-                    data: {last_id: $("#last_id").val(),keyword:"{$_GPC['keyword']}",openid:"{$_W['openid']}"
+                    data: {last_id: $("#last_id").val(),keyword:"{$_GPC['keyword']}",openid:"{$_GPC['openid']}"
                         },
                     success: function (data) {
                         //console.log(data.size);
                         //console.log(data.last_id);
                         for (var s = 0; s < data.size; ++s) {
-                            var elem = '<a class="clearfix" href="' + data[s].detail_link + '">'
+                            var elem = '<a class="state clearfix" href="' + data[s].detail_link + '">'
                                     + '<div class="content-block clearfix">'
                                     + '<div class="poster-info clearfix" style="border-bottom: 1px solid #eee;">'
                                     + '<div class="avatar-block pull-left clearfix">'
@@ -133,17 +135,17 @@
                                     + '</div>'
                                     + '</div>'
                                     + '<div class="content clearfix">'
-                                    + '<span class="link pull-left">' + data[s].travel_TIME + '</span>'
+                                    + '<span class="link pull-left">' + data[s].travel_TIME + '</span>&nbsp;'
                                     + data[s].content
                                     + '</div>'
-                                    + '<div class="tag-container clearfix">';
+                                    + '<div class="tag-container clearfix">'
+                                    + '<span class="glyphicon glyphicon-tag pull-left" aria-hidden="true" style="margin: 0 2px"></span>';
                             console.log(data[s].tags.length);
                             for (var i = 0; i < data[s].tags.length; i++) {
                                 elem += '<span class="tag" data-tag="' + data[s].tags[i] + '">' + data[s].tags[i] + '</span>';
                             }
                             elem += '</div>'
-                                    + '<div class="content-images clearfix">'
-                                    + '<span class="glyphicon glyphicon-tag pull-left" aria-hidden="true" style="margin: 0 2px"></span>';
+                                    + '<div class="content-images clearfix">';
                             for (var i = 0; i < data[s].pic_URL.length; i++) {
                                 elem += '<div class="pull-left images">'
                                         + '<img src="' + data[s].pic_URL[i] + '" class="center-block img-responsive">'
@@ -160,11 +162,13 @@
                             $(".state-area").append($(elem));
                         }
                         console.log("ajax加载成功");
+                        flag=true;
                         $("#last_id").val(data.last_id);
                         window.history.replaceState(null, document.title, this.href);
                     },
                     error: function () {
                         console.log("ajax加载失败");
+                        flag=true;
                     }
                 });
             }
