@@ -53,7 +53,7 @@
                 </div>
                 <div class="detail-block pull-left clearfix">
                     <div class="line"><span class="link">{$s['nickname']}<span class="badge"
-                                                                               style="background-color: #5bc0de;">{if $s['gender']==2}♀{else if $s['gender']==1}♂{else}保密{/if}{$s['age']}</span></span>
+                                                                               style="background-color: {if $s['gender']==2}#d9534f{else if $s['gender']==1}#5bc0de{else}#777{/if};margin-left: 5px;">{if $s['gender']==2}♀{else if $s['gender']==1}♂{else}保密{/if}{$s['age']}</span></span>
                     </div>
                     <div class="line "><span class="normal">{$s['release_TIME']}</span></div>
                 </div>
@@ -85,6 +85,9 @@
     {/loop}
 </div>
 <input type="text" style="display: none" id="last_id">
+<div class="action_button" style="display: none;">
+    <span class="glyphicon glyphicon-refresh" style="margin: 0;" aria-hidden="true"></span>
+</div>
 <script>
     if (history && history.pushState) {
         var loaded = false;
@@ -96,20 +99,31 @@
             }
         });
     }
+
     $(document).ready(function () {
         var range = 600;             //距下边界长度/单位px
-        var elemt = 500;           //插入元素高度/单位px
-        var maxnum = 20;            //设置加载最多次数
-        var num = 1;
+        var prePos=$(window).scrollTop();
         var flag=true;
         var totalheight = 0;
-        var main = $("#state-area");                     //主体元素
+        var main = $("#state-area");                //主体元素
+        $(".action_button").on("click",function (e) {
+            location.assign(location);
+            var href = $(this).attr("href");
+            var pos = $(href).offset().top;
+            $(window).animation({scrollTop:pos},2000);
+            e.stopPropagation();
+        });
         $(window).scroll(function () {
             var srollPos = $(window).scrollTop();    //滚动条距顶部距离(页面超出窗口的高度)
             //console.log("滚动条到顶部的垂直高度: "+$(document).scrollTop());
             //console.log("页面的文档高度 ："+$(document).height());
             //console.log('浏览器的高度：'+$(window).height());
             totalheight = parseFloat($(window).height()) + parseFloat(srollPos);
+            if (srollPos<prePos)
+                $(".action_button").show();
+            else
+                $(".action_button").hide();
+            prePos=srollPos;
             if (($(document).height() - range) <= totalheight && flag) {
                 console.log('到达页面底部');
                 flag=false;
