@@ -29,6 +29,9 @@
         }
     });
     $("#submit").click(function () {
-        window.location.href=$("#index_url").val()+'&op=search&keyword='+$("#search_box").val();
+        if ($("#search_box").val().trim()!='')
+            window.location.href=$("#index_url").val()+'&op=search&keyword='+$("#search_box").val();
+        else
+                alert("输入不能为空");
     });
 </script>

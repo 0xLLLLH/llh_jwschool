@@ -36,7 +36,7 @@
             <div class="content-bottom line" style="margin-top: 5px;position: relative;">
                 <span class="glyphicon glyphicon-map-marker" style="margin: 0;" aria-hidden="true"></span>
                 <span class="normal pull-left-center">我在&nbsp;{$s['position']}</span>
-                <span class="normal pull-right-center">浏览{$s['views']}&nbsp;评论{$s['comments_NUM']}</span>
+                <span class="normal pull-right-center">浏览{$s['views']}&nbsp;评论<span id="comment_count">{$s['comments_NUM']}</span></span>
             </div>
             <div>
                 {loop $s['comments'] $v}
@@ -74,7 +74,10 @@
             data:{cid:$cid,state_ID:$stateid},
             success:function () {
                 console.log("ajax success");
+                alert("删除成功");
                 $del.remove();
+                var $cnt=$("#comment_count");
+                $cnt.text(parseInt($cnt.text())-1);
             },
             error:function () {
                 console.log("ajax error")

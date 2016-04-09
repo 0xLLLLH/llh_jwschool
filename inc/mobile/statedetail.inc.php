@@ -14,7 +14,7 @@ load()->model('mc');
     message("请先关注本公众号以完成信息注册！",'','warning');
 }*/
 if (isset($_GPC['cid'])) {
-    echo $_GPC['cid'];
+    //echo $_GPC['cid'];
     $result=pdo_update('jwschool_comments', array('beread'=>1), array('id' => $_GPC['cid']));
     //$result= pdo_query("UPDATE  ".tablename('jwschool_comments')." SET beread = 1 WHERE id=:cid",array(':cid',);
     //echo $result;
@@ -63,7 +63,7 @@ if (isset($_GPC['submit'])) {
     $result = pdo_insert('jwschool_moments', $state_data);
     $state_ID = pdo_insertid();
     if ($result) {
-        message("恭喜，您的约游消息已发送成功", $this->createMobileUrl('statedetail', array('state_ID' => $state_ID)), success);
+        message("恭喜，您的约游消息已发送成功", $this->createMobileUrl('statedetail', array('state_ID' => $state_ID,'back'=>'index')), success);
     } else {
         message("抱歉，出了点小状况！！", $this->createMobileUrl('statedetail'), error);
     }

@@ -8,6 +8,7 @@
 
 global $_W, $_GPC;
 load()->model('mc');
+//echo $this->getNoticeNum();
 $comment_data = pdo_fetchall("SELECT ".tablename('jwschool_comments').".release_TIME,".tablename('jwschool_comments').".id".",state_ID," . tablename('jwschool_comments') . ".content,from_WHO FROM "
     . tablename('jwschool_comments') . "," . tablename('jwschool_moments')
     . " WHERE " . tablename('jwschool_moments') . ".id=" . tablename('jwschool_comments') . ".state_ID AND beread=0 AND (to_WHO=:to_WHO OR (to_WHO=-1 AND openid=:openid)) ORDER BY "
