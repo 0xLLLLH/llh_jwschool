@@ -14,7 +14,7 @@ if ($_W['ispost'] || $_W['isajax']) {
         $keyword = $_GPC['keyword'];
         $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . " WHERE id < " . $last_id . " AND ( content LIKE '%" . $keyword . "%' OR tags LIKE '%;" . $keyword . ";%' ) ORDER BY release_TIME DESC LIMIT 5");
     } else if (!empty($_GPC['openid'])) {
-        $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . "WHERE openid=:openid ORDER BY release_TIME DESC LIMIT 5",array(':openid'=>$_GPC['openid']));
+        $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . "WHERE id<". $last_id ." AND openid=:openid ORDER BY release_TIME DESC LIMIT 5",array(':openid'=>$_GPC['openid']));
     } else {
         $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . "WHERE id < " . $last_id . " ORDER BY release_TIME DESC LIMIT 5");
     }

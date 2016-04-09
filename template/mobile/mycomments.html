@@ -74,6 +74,7 @@
             data:{cid:$cid,state_ID:$stateid},
             success:function () {
                 console.log("ajax success");
+                alert("删除成功");
                 $del.remove();
                 var $cnt=$("#comment_count");
                 $cnt.text(parseInt($cnt.text())-1);

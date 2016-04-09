@@ -1,4 +1,21 @@
+{if $_GPC['back']}
+{template 'common/header'}
+{php $backto=$_GPC['back'];}
+<link rel="stylesheet" href="../addons/llh_jwschool/template/css/common.css"/>
+
+<nav id="header_back" class="navbar navbar-default navbar-static-top">
+    <a href='{php echo $this->createMobileUrl("$backto")}' class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
+    <span id="title" class="center-block" style="width: 200px;text-align: center;"></span>
+</nav>
+{else}
 {template 'header_back'}
+{/if}
+<!--<script>
+    {php $backto=$_GPC['back'];}
+    alert("123");
+        alert({$backto});
+    $("#header_back").find('a').attr('href','{php echo $this->createMobileUrl("$backto")}');
+</script>-->
 
 <link rel="stylesheet" href="../addons/llh_jwschool/template/css/state.css"/>
 {if !isset($_GPC['op'])}
@@ -11,7 +28,7 @@
             <img src="{if $state_detail['avatar']}{$state_detail['avatar']}{else}http://tp4.sinaimg.cn/3927645471/180/5753508523/1{/if}" class="center-block img-responsive img-circle">
         </div>
         <div class="detail-block pull-left">
-            <div class="line"><a href="{$user_page}" class="link">{$state_detail['nickname']}<span class="badge" style="background-color: {if $state_detail['gender']==2}#d9534f{else if $state_detail['gender']==1}#5bc0de{else}#777{/if};">{if $state_detail['gender']==0}保密{else if $state_detail['gender']==2}♀{else}♂{/if}{$state_detail['age']}</span></a></div>
+            <div class="line"><a href="{$user_page}" class="link">{$state_detail['nickname']}<span class="badge" style="background-color: {if $state_detail['gender']==2}#ffb6c1{else if $state_detail['gender']==1}#5bc0de{else}#777{/if};">{if $state_detail['gender']==0}保密{else if $state_detail['gender']==2}♀{else}♂{/if}{$state_detail['age']}</span></a></div>
             <div class="line "><span class="normal">{$state_detail['release_TIME']} </span></div>
         </div>
     </div>

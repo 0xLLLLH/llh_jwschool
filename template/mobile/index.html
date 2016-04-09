@@ -10,11 +10,24 @@
     </script>
 {else if $_GPC['op']=='homepage'}
     {template 'header_back'}
+    <link rel="stylesheet" href="../addons/llh_jwschool/template/css/basic_info.css"/>
+    <div class="info-panel" style="min-height: 250px;position: relative">
+        <div class="info-block clearfix">
+            <div class="pull-left" style="width: 25%;">
+                <img src="{if $avatar}{$avatar}{else}http://tp4.sinaimg.cn/3927645471/180/5753508523/1{/if}" class="center-block img-responsive img-circle" alt="Responsive image" style="border: 5px solid rgba(255,255,255,0.5);">
+            </div>
+            <div class="detail-block pull-left clearfix">
+                <div class="line" style="">
+                    {$nickname}<span class="badge" style="background-color: {if $gender==2}#ffb6c1{else if $gender==1}#5bc0de{else}#777{/if};margin-left: 10px;">{if $gender==2}♀{else if $gender==1}♂{else}保密{/if}{$age}</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
     <script>
         $("#title").text("{$nickname}的主页");
         $("#header_back").css("margin",'0');
     </script>
-    {template 'basic_info'}
     <div class="content-block">
         <div class="info_title"> <span class="glyphicon glyphicon-user" aria-hidden="true"></span>个人资料</div>
         <div class="info_line">所在地&nbsp;&nbsp;{$location}</div>
@@ -27,7 +40,7 @@
     $("#title").text("我的约游");
 </script>
 {else}
-<nav id="header_back" class="navbar navbar-default navbar-static-top">
+<nav id="header_back" class="navbar navbar-default navbar-fixed-top">
     <div style="float: left;width: 10%;">
         <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
     </div>
@@ -42,21 +55,26 @@
         </div>
     </a>
 </nav>
+<!--<script>-->
+    <!--$('body').css('margin-top','45px');-->
+<!--</script>-->
 {/if}
 <div class="state-area">
     {loop $state_data $s}
-    <a class="state clearfix" href="javascript:void(0);" data-uid="{$s['id']}">
+    <a class="state clearfix" href="javascript:void(0);" data-sid="{$s['id']}" data-uid="{$s['openid']}">
         <div class="content-block clearfix">
             <div class="poster-info clearfix" style="border-bottom: 1px solid #eee;">
                 <div data-uid="{$s['openid']}" class="avatar-block pull-left clearfix">
                     <img src="{if $s['avatar']}{$s['avatar']}{else}http://tp4.sinaimg.cn/3927645471/180/5753508523/1{/if}" class="center-block img-responsive img-circle"/>
                 </div>
                 <div class="detail-block pull-left clearfix">
-                    <div class="line"><span class="link">{$s['nickname']}<span class="badge"
-                                                                               style="background-color: {if $s['gender']==2}#d9534f{else if $s['gender']==1}#5bc0de{else}#777{/if};margin-left: 5px;">{if $s['gender']==2}♀{else if $s['gender']==1}♂{else}保密{/if}{$s['age']}</span></span>
+                    <div class="line">
+                        <span class="link">{$s['nickname']}<span class="badge" style="background-color: {if $s['gender']==2}#ffb6c1{else if $s['gender']==1}#5bc0de{else}#777{/if};margin-left: 5px;">{if $s['gender']==2}♀{else if $s['gender']==1}♂{else}保密{/if}{$s['age']}</span></span>
+
                     </div>
                     <div class="line "><span class="normal">{$s['release_TIME']}</span></div>
                 </div>
+                {if $s['openid']==$_W['openid']}<span class="link pull-right delete_link" >删除</span>{/if}
             </div>
             <div class="content clearfix">
                 <span class="link pull-left">{$s['travel_TIME']}&nbsp;</span>
@@ -99,10 +117,10 @@
             }
         });
     }
-
+    var prePos=$(window).scrollTop();
     $(document).ready(function () {
         var range = 600;             //距下边界长度/单位px
-        var prePos=$(window).scrollTop();
+
         var flag=true;
         var totalheight = 0;
         var main = $("#state-area");                //主体元素
@@ -113,16 +131,45 @@
             $(window).animation({scrollTop:pos},2000);
             e.stopPropagation();
         });
+        $(document).on("click",".state",function (e) {
+            var next_url="{php echo $this->createMobileUrl('statedetail');}"+'&state_ID='+$(this).data('sid');
+            window.location.href=next_url;
+            e.stopPropagation();
+        });
+        $(document).on("click",".avatar-block",function (e) {
+            window.location.href="{php echo $this->createMobileUrl('index');}"+'&openid='+$(this).data('uid')+'&op=homepage';
+            e.stopPropagation();
+        });
+        $(document).on("click",".delete_link",function (e) {
+            var $state=$(this).parents(".state");
+            var $sid=$state.data('sid');
+            //alert('"'+$sid+'"');
+            $.ajax({
+                url: "{php echo $this->createMobileUrl('deletestate')}",
+                dataType: 'json',
+                type:'post',
+                data:{state_ID:$sid},
+                success:function () {
+                    console.log("ajax success");
+                    $state.remove();
+                    alert('删除成功');
+                },
+                error:function () {
+                    console.log("ajax error")
+                }
+            });
+            e.stopPropagation();
+        });
         $(window).scroll(function () {
             var srollPos = $(window).scrollTop();    //滚动条距顶部距离(页面超出窗口的高度)
             //console.log("滚动条到顶部的垂直高度: "+$(document).scrollTop());
             //console.log("页面的文档高度 ："+$(document).height());
             //console.log('浏览器的高度：'+$(window).height());
             totalheight = parseFloat($(window).height()) + parseFloat(srollPos);
-            if (srollPos<prePos)
-                $(".action_button").show();
-            else
-                $(".action_button").hide();
+//            if (srollPos<prePos)
+//                $(".action_button").show();
+//            else
+//                $(".action_button").hide();
             prePos=srollPos;
             if (($(document).height() - range) <= totalheight && flag) {
                 console.log('到达页面底部');
@@ -137,17 +184,26 @@
                         //console.log(data.size);
                         //console.log(data.last_id);
                         for (var s = 0; s < data.size; ++s) {
-                            var elem = '<a class="state clearfix" href="' + data[s].detail_link + '">'
+                            var elem = '<a class="state clearfix" href="javascript:void(0);"data-uid="'+data[s].openid+'" data-sid="'+data[s].id+'">'
                                     + '<div class="content-block clearfix">'
                                     + '<div class="poster-info clearfix" style="border-bottom: 1px solid #eee;">'
-                                    + '<div class="avatar-block pull-left clearfix">'
+                                    + '<div data-uid="'+data[s].openid+'" class="avatar-block pull-left clearfix">'
                                     + '<img src="' + data[s].avatar + '" class="center-block img-responsive img-circle"/>'
                                     + '</div>'
                                     + '<div class="detail-block pull-left clearfix">'
-                                    + '<div class="line"><span class="link">'+data[s].nickname+'<span class="badge" style="background-color: #5bc0de;">' + (data[s].gender ==2 ? '♀' : '♂') + data[s].age+'</span></span></div>'
+                                    + '<div class="line"><span class="link">'+data[s].nickname;
+                            if (data[s].gender==0)
+                                    elem+='<span class="badge" style="background-color: #777;"> 保密' + data[s].age+'</span>';
+                            else if (data[s].gender==1)
+                                elem+='<span class="badge" style="background-color: #5bc0de;">♂'+ data[s].age+'</span>';
+                            else
+                                elem+='<span class="badge" style="background-color: #ffb6c1;">♀'+ data[s].age+'</span>';
+                            elem+='</span></div>'
                                     + '<div class="line "><span class="normal">' + data[s].release_TIME + '</span></div>'
-                                    + '</div>'
-                                    + '</div>'
+                                    + '</div>';
+                            elem+=(data[s].openid=='{$_W["openid"]}')?'<span class="link pull-right delete_link" >删除</span>':'';
+
+                            elem    += '</div>'
                                     + '<div class="content clearfix">'
                                     + '<span class="link pull-left">' + data[s].travel_TIME + '</span>&nbsp;'
                                     + data[s].content
@@ -188,23 +244,12 @@
             }
         });
     });
+
     $(function () {
         $("#last_id").val("{php echo $state_data[count($state_data) - 1]['id']}");
     });
-    $(".avatar-block").on("click",function (e) {
-        window.location.href="{php echo $this->createMobileUrl('index');}"+'&openid='+$(this).data('uid')+'&op=homepage';
-        e.stopPropagation();
-    });
-    $(".state").on("click",function (e) {
-        var state = {
-            title: "index",
-            url: window.location.href
-        };
-        var next_url="{php echo $this->createMobileUrl('statedetail');}"+'&state_ID='+$(this).data('uid');
 
-        window.location.href=next_url;
-        e.stopPropagation();
-    });
+
 </script>
 
 {template 'footer'}

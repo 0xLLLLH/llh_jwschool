@@ -1,11 +1,11 @@
 <link rel="stylesheet" href="../addons/llh_jwschool/template/css/basic_info.css"/>
 <div class="info-panel">
-    <div id="gravatar_block" class="container">
-        <img src="{if $avatar}$avatar{else}http://tp4.sinaimg.cn/3927645471/180/5753508523/1{/if}" class="center-block img-responsive img-circle" alt="Responsive image">
+    <div id="gravatar_block" class="container" >
+        <img src="{if $avatar}{$avatar}{else}http://tp4.sinaimg.cn/3927645471/180/5753508523/1{/if}" class="center-block img-responsive img-circle" alt="Responsive image">
     </div>
     <div id="info_block" class="text-center">
         <a>
-            {$nickname}<span class="badge" style="background-color: {if $gender==2}#d9534f{else if $gender==1}#5bc0de{else}#777{/if};margin-left: 10px;">{if $gender==2}♀{else if $gender==1}♂{else}保密{/if}{$age}</span>
+            {$nickname}<span class="badge" style="background-color: {if $gender==2}#ffb6c1{else if $gender==1}#5bc0de{else}#777{/if};margin-left: 10px;">{if $gender==2}♀{else if $gender==1}♂{else}保密{/if}{$age}</span>
         </a>
     </div>
 </div>
