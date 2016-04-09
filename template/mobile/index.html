@@ -17,15 +17,14 @@
     {template 'basic_info'}
     <div class="content-block">
         <div class="info_title"> <span class="glyphicon glyphicon-user" aria-hidden="true"></span>个人资料</div>
-        <div class="info_line">所在地&nbsp;&nbsp;{location}</div>
-        <div class="info_line">所在地&nbsp;&nbsp;</div>
-        <div class="info_line">所在地&nbsp;&nbsp;</div>
-        <div class="info_line">所在地&nbsp;&nbsp;</div>
+        <div class="info_line">所在地&nbsp;&nbsp;{$location}</div>
+        <div class="info_line">手机号&nbsp;&nbsp;{$mobile}</div>
+        <div class="info_line">QQ&nbsp;&nbsp;{$qq}</div>
     </div>
 {else if $_GPC['op']=='mystates'}
 {template 'header_back'}
 <script>
-    $("#title").text("{$nickname}的约游");
+    $("#title").text("我的约游");
 </script>
 {else}
 <nav id="header_back" class="navbar navbar-default navbar-static-top">

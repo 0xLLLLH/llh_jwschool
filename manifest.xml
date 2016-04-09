@@ -55,7 +55,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2016-04-07 20:35:16
+-- 生成日期: 2016-04-08 23:01:10
 -- 服务器版本: 5.5.46-0ubuntu0.14.04.2
 -- PHP 版本: 5.5.9-1ubuntu4.14
 
@@ -96,40 +96,13 @@ CREATE TABLE IF NOT EXISTS `ims_jwschool_comments` (
   `release_TIME` datetime DEFAULT NULL,
   `content` text,
   `state_ID` int(11) DEFAULT NULL,
-  `from_WHO` varchar(50) DEFAULT NULL,
-  `to_WHO` varchar(50) DEFAULT NULL,
-  `read` tinyint(1) NOT NULL DEFAULT '0',
+  `from_WHO` varchar(50) DEFAULT '-1',
+  `to_WHO` varchar(50) DEFAULT '-1',
+  `beread` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=49 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=60 ;
 
---
--- 转存表中的数据 `ims_jwschool_comments`
---
 
-INSERT INTO `ims_jwschool_comments` (`id`, `release_TIME`, `content`, `state_ID`, `from_WHO`, `to_WHO`, `read`) VALUES
-(26, '2016-04-06 14:15:49', '好嘛', 55, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', NULL, 0),
-(27, '2016-04-06 14:15:57', '哈哈哈哈科科', 55, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', 0),
-(28, '2016-04-06 14:21:19', '到了', 55, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', 0),
-(29, '2016-04-06 14:22:47', '呵呵哒', 55, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', NULL, 0),
-(30, '2016-04-06 14:23:04', '我真的无言以对', 55, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', 0),
-(31, '2016-04-06 14:31:17', '你在向前展望的时候不可能将这些片断串连起来；你只能在回顾的时候将点点滴滴串连起来。所以你必须相信这些片断会在你未来的某一天串连起来。你必须要相信某些东西：你的勇气、目的、生命、因缘。', 57, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', NULL, 0),
-(32, '2016-04-06 14:31:43', '也就这样啦', 57, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', 0),
-(33, '2016-04-06 14:39:12', '科科', 57, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', NULL, 0),
-(34, '2016-04-06 14:42:42', '啊？', 58, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', NULL, 0),
-(35, '2016-04-06 15:01:51', '哈哈哈', 59, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', NULL, 0),
-(36, '2016-04-06 15:02:04', 'go gong', 59, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', NULL, 0),
-(37, '2016-04-06 15:02:12', '哈哈哎', 59, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', 0),
-(38, '2016-04-06 16:54:48', '123123', 54, '', NULL, 0),
-(39, '2016-04-06 16:54:52', '343434', 54, '', NULL, 0),
-(40, '2016-04-06 16:54:54', '324324', 54, '', NULL, 0),
-(41, '2016-04-06 20:06:04', '哈哈', 65, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', NULL, 0),
-(42, '2016-04-06 20:23:32', '好的咯，感觉测试成功了', 66, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', NULL, 0),
-(43, '2016-04-06 21:39:17', '还不错', 66, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', 0),
-(44, '2016-04-06 21:39:38', '科科', 62, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', NULL, 0),
-(45, '2016-04-06 23:52:54', '傻逼吗', 60, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', NULL, 0),
-(46, '2016-04-07 00:02:22', '科科', 68, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', NULL, 0),
-(47, '2016-04-07 00:02:44', '晚安咯', 68, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', 0),
-(48, '2016-04-07 00:04:09', '晚安咯', 66, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', 0);
 
 -- --------------------------------------------------------
 
@@ -152,28 +125,7 @@ CREATE TABLE IF NOT EXISTS `ims_jwschool_moments` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=69 ;
 
---
--- 转存表中的数据 `ims_jwschool_moments`
---
 
-INSERT INTO `ims_jwschool_moments` (`id`, `openid`, `release_TIME`, `travel_TIME`, `content`, `pic_URL`, `views`, `comments_NUM`, `position`, `category_ID`, `tags`) VALUES
-(45, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', '2016-04-05 16:00:28', '2016-04-05', '默默', 'http://dirtytao.com/we7/attachment/images/7/2016/04/Az0BcCc9KKs39sW69Rbze0FBe1vcb9.jpeg;http://dirtytao.com/we7/attachment/images/7/2016/04/rucC8L26C8KZCKIiwc8Wi8eeC989wY.jpeg;http://dirtytao.com/we7/attachment/images/7/2016/04/DqmQEAAmXJ1zuJi1zjEixFYXJhXJEm.png', 70, 10, '吉林省-辽源市-西安区', NULL, ';长途旅行;辞职旅行;潜水;'),
-(49, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', '2016-04-05 18:41:54', '2016-04-05', '2225', 'http://dirtytao.com/we7/attachment/images/7/2016/04/Rvb11b8C8U15B28bNm1vqbQvd2M29b.jpeg;http://dirtytao.com/we7/attachment/images/7/2016/04/JdY57og60OOHZZOHhFRhf4r1gZDRHh.jpeg;http://dirtytao.com/we7/attachment/images/7/2016/04/IPXptXA4rUaZFu4JxR5t6Pr6XB4x6d.jpeg', 72, 10, '北京-北京市-东城区', NULL, ';户外;'),
-(51, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', '2016-04-05 21:10:27', '2016-04-05', '12346', 'http://dirtytao.com/we7/attachment/images/7/2016/04/HEGygNT3A3zY7AR4Bt777tBbC4c1ty.jpeg;http://dirtytao.com/we7/attachment/images/7/2016/04/cafcrry7SY2m4yL7fs7fL4ceVjsj2X.jpeg;http://dirtytao.com/we7/attachment/images/7/2016/04/cbOZT7Mq5oZ155Y5P0nnQREq7nY3qs.jpeg', 70, 10, '浙江省-湖州市-南浔区', NULL, ';求英语好的;毕业旅行;'),
-(53, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', '2016-04-06 12:26:31', '2016-04-06', '你在向前展望的时候不可能将这些片断串连起来；你只能在回顾的时候将点点滴滴串连起来。所以你必须相信这些片断会在你未来的某一天串连起来。你必须要相信某些东西：你的勇气、目的、生命、因缘。', 'http://dirtytao.com/we7/attachment/images/7/2016/04/b370FKi08I3bq3kbk30jjrij0KQGp8.jpeg;http://dirtytao.com/we7/attachment/images/7/2016/04/I2A9aOaOroKyDiOA9MNai9rIqnd2A5.png;http://dirtytao.com/we7/attachment/images/7/2016/04/kU2TM2Gbn7Nyt6MuT7RRUrbzU0bRq5.png', 71, 10, '安徽省-淮南市-田家庵区', NULL, ';自驾;潜水;'),
-(54, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', '2016-04-06 12:39:57', '2016-04-06', '你在向前展望的时候不可能将这些片断串连起来；你只能在回顾的时候将点点滴滴串连起来。所以你必须相信这些片断会在你未来的某一天串连起来。你必须要相信某些东西：你的勇气、目的、生命、因缘。', 'http://dirtytao.com/we7/attachment/images/7/2016/04/TpfFGmL6zX079N9Z07pwr78Gu9rUU6.jpeg;http://dirtytao.com/we7/attachment/images/7/2016/04/V80d62n561PeNCHq6PHgN0s6Ie6De0.png;http://dirtytao.com/we7/attachment/images/7/2016/04/V4RpdY5Jd4rp2v5PzFp9pfq5p2QYP3.png', 72, 10, '安徽省-淮南市-田家庵区', NULL, ';自驾;潜水;'),
-(55, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', '2016-04-06 13:01:17', '2016-04-06', '222355', 'http://dirtytao.com/we7/attachment/images/7/2016/04/OyJReXcyRgKlvyzRhchzVHHChFys0t.jpeg;http://dirtytao.com/we7/attachment/images/7/2016/04/syhiIqh6o66hii1Cc3hB1TH6cnYcI6.jpeg', 71, 10, '天津-天津市-和平区', NULL, ';自驾;辞职旅行;'),
-(56, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', '2016-04-06 14:23:17', '2016-04-06', '222355', 'http://dirtytao.com/we7/attachment/images/7/2016/04/utK5tc6kvv6EU69TOcRcUtTsU7vr87.jpeg;http://dirtytao.com/we7/attachment/images/7/2016/04/GSbseYo9BeomOBI4f1sBZEGLFeo6f4.jpeg', 71, 10, '天津-天津市-和平区', NULL, ';自驾;辞职旅行;'),
-(57, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', '2016-04-06 14:30:58', '2016-04-06', '你在向前展望的时候不可能将这些片断串连起来；你只能在回顾的时候将点点滴滴串连起来。所以你必须相信这些片断会在你未来的某一天串连起来。你必须要相信某些东西：你的勇气、目的、生命、因缘。', 'http://dirtytao.com/we7/attachment/images/7/2016/04/UOkRkDeRDk8ZzRK6nHrw8M8Z6MZOh3.jpeg;http://dirtytao.com/we7/attachment/images/7/2016/04/j39YCic0CT9ERRiD0CPPAA4yvmcPaT.png', 72, 10, '河北省-邯郸市-邯郸县', NULL, ';自驾;潜水;辞职旅行;'),
-(58, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', '2016-04-06 14:39:45', '2016-04-06', '你在向前展望的时候不可能将这些片断串连起来；你只能在回顾的时候将点点滴滴串连起来。所以你必须相信这些片断会在你未来的某一天串连起来。你必须要相信某些东西：你的勇气、目的、生命、因缘。', 'http://dirtytao.com/we7/attachment/images/7/2016/04/o06u5E75TcmgFd5rRC7fn731rt11cr.jpeg;http://dirtytao.com/we7/attachment/images/7/2016/04/DyYx0ABZ3fsF440e3j81JA8zLmfm83.png', 67, 7, '河北省-邯郸市-邯郸县', NULL, ';自驾;潜水;辞职旅行;'),
-(59, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', '2016-04-06 15:01:43', '2016-04-06', '黑底规模h', 'http://dirtytao.com/we7/attachment/images/7/2016/04/qOQCJcO5cA9kEOeAE3599cieeImzck.jpeg;http://dirtytao.com/we7/attachment/images/7/2016/04/D2bz49SzZJgWmqZZ99SS19Q9LEwg2w.jpeg', 62, 6, '天津-天津市-河东区', NULL, ';求英语好的;'),
-(60, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', '2016-04-06 16:01:50', '2016-04-06', '哈哈哈哈哈和攻击', 'http://dirtytao.com/we7/attachment/images/7/2016/04/Tt3QPKDpQ1PnTgd8ppg3pzn3qQPB2Z.jpeg', 68, 4, '北京-北京市-东城区', NULL, ';潜水;'),
-(61, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', '2016-04-06 16:31:06', '2016-04-06', 'h jiong w y', ';http://dirtytao.com/we7/attachment/images/7/2016/04/xql5w2WVHHFPAfyR27PVpPFeblalk0.jpeg', 61, 3, '北京-北京市-东城区', NULL, ';拼车;户外;'),
-(62, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', '2016-04-06 16:43:35', '2016-04-06', 'h jiong w y', ';http://dirtytao.com/we7/attachment/images/7/2016/04/dW2N8fvIOVjGHHq2ZFWN8ChVvD6j66.jpeg', 49, 4, '北京-北京市-东城区', NULL, ';拼车;户外;'),
-(66, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', '2016-04-06 20:23:07', '2016-04-06', '测试下函数嘛', 'http://dirtytao.com/we7/attachment/images/7/2016/04/O7iqQ3gig7Kk7D7nk5vKvBngGMmkGi.jpeg;http://dirtytao.com/we7/attachment/images/7/2016/04/rGdbdMM8gbHGgb1v1KezHN6in5HIVN.jpeg;http://dirtytao.com/we7/attachment/images/7/2016/04/s1X8Xz1Kx1c4t3z4xcMCd4N4A84e4x.png', 17, 3, '河北省-邯郸市-临漳县', NULL, ';自驾;辞职旅行;'),
-(68, 'onZ0iwe5NYhDWy50y1lI3L-XxBEw', '2016-04-06 20:30:06', '2016-04-06', '哈哈', 'http://dirtytao.com/we7/attachment/images/7/2016/04/Aszp5zUmrsLU0Yez0g9eMgmqYK90uE.jpeg', 14, 2, '天津-天津市-河东区', NULL, ';辞职旅行;求英语好的;');
-
--- --------------------------------------------------------
 
 --
 -- 表的结构 `ims_jwschool_system`
@@ -237,8 +189,6 @@ CREATE TABLE IF NOT EXISTS `ims_jwschool_user` (
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
 
     ]]></install>
     <uninstall><![CDATA[
