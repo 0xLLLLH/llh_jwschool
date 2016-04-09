@@ -5,7 +5,6 @@
 <script>
     $("#title").text("约游详情");
 </script>
-
 <div class="content-block">
     <div class="poster-info clear-fix" data-uid="{$_W['openid']}" style="border-bottom: 1px solid #eee;">
         <div class="avatar-block pull-left clearfix">
@@ -62,7 +61,7 @@
 {template 'footer_input'}
 
 <script>
-    $(document).on('touchend  click',".comment-content",function () {
+    $(document).on('touchend  click',".comment",function () {
     //$(".comment-content").click(function(){
         var $text_box=$("#text_box");
         $text_box.val("");
@@ -77,6 +76,12 @@
         //        href+='&uid='+$uid.val();
         //location.href=href;
     });
+    $("#text_box").on('blur',function () {
+        $(this).val("");
+        $(this).attr('placeholder','写评论');
+        $('#uid_hiden').val('');
+    });
+
     $("#submit_btn").click(function(e){
         if ($("#text_box").val().trim()!='') {
 
