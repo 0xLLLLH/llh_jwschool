@@ -86,7 +86,16 @@
 </div>
 <input type="text" style="display: none" id="last_id">
 <script>
-
+    if (history && history.pushState) {
+        var loaded = false;
+        $(window).bind("popstate", function() {
+            if (!loaded) {
+                loaded = true;
+            } else {
+                $.getScript(location.href);
+            }
+        });
+    }
     $(document).ready(function () {
         var range = 100;             //距下边界长度/单位px
         var elemt = 500;           //插入元素高度/单位px
@@ -152,6 +161,7 @@
                         }
                         console.log("ajax加载成功");
                         $("#last_id").val(data.last_id);
+                        window.history.replaceState(null, document.title, this.href);
                     },
                     error: function () {
                         console.log("ajax加载失败");
@@ -173,8 +183,8 @@
             url: window.location.href
         };
         var next_url="{php echo $this->createMobileUrl('statedetail');}"+'&state_ID='+$(this).data('uid');
+
         window.location.href=next_url;
-        window.history.pushState(state, "index", next_url);
         e.stopPropagation();
     });
 </script>
