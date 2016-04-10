@@ -10,7 +10,7 @@ load()->model('mc');
 if (isset($_GPC['op'])) {
     if ($_GPC['op'] == 'search') {
         $keyword = $_GPC['keyword'];
-        $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . " WHERE content LIKE '%" . $keyword . "%' OR tags LIKE '%;" . $keyword . ";%' ORDER BY release_TIME DESC LIMIT 5");
+        $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . " WHERE content LIKE '%" . $keyword . "%' OR tags LIKE '%;" . $keyword . ";%' ORDER BY release_TIME DESC LIMIT 8");
     } else if ($_GPC['op'] == 'homepage') {
         $uid = mc_openid2uid($_GPC['openid']);
         //个人信息member
@@ -27,12 +27,15 @@ if (isset($_GPC['op'])) {
         $mobile=$mobile?$mobile:'未知';
         $birth = $home_member['birthyear'].'年'.$home_member['birthmonth'].'月'.$home_member['birthday'].'日';
         $age = $this->getAge($home_member['birthyear'], $home_member['birthmonth'], $home_member['birthday']);
-        $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . "WHERE openid=:openid ORDER BY release_TIME DESC LIMIT 5", array(':openid' => $_GPC['openid']));
+        $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . "WHERE openid=:openid ORDER BY release_TIME DESC LIMIT 8", array(':openid' => $_GPC['openid']));
     } else if ($_GPC['op'] == 'mystates') {
-        $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . "WHERE openid=:openid ORDER BY release_TIME DESC LIMIT 5", array(':openid' => $_GPC['openid']));
+        if(empty($_W['openid'])){
+            message("请先关注本公众号以完成信息注册！",'','warning');
+        }
+        $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . "WHERE openid=:openid ORDER BY release_TIME DESC LIMIT 8", array(':openid' => $_GPC['openid']));
     }
 } else {
-    $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . " ORDER BY release_TIME DESC LIMIT 5");
+    $state_data = pdo_fetchall("SELECT * FROM " . tablename('jwschool_moments') . " ORDER BY release_TIME DESC LIMIT 8");
 }
 //var_dump($state_data);
 foreach ($state_data as $k => $v) {

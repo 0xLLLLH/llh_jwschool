@@ -4,19 +4,28 @@
  * Date: 2016.4.1
  * Description：头像和基本信息
  */
+/**
+ * Created by Phpstorm.
+ * User: 0xLLLLH
+ * Date: 2016.4.2
+ * Description：全局配置
+ */
+/* header*/
+/* footer*/
 .info-panel {
   background-color: #5cb85c;
   padding: 10px;
+  padding-top: 55px;
 }
 #gravatar_block {
-  padding: 0px 35%;
+  padding: 0px 38%;
 }
 #gravatar_block img {
   border: 4px solid #fff;
 }
 #info_block {
   margin: 10px;
-  font-size: 1.5em;
+  font-size: 15px;
 }
 #info_block a {
   color: #fff;
@@ -26,9 +35,29 @@
   min-height: 200px;
   background: #5cb85c;
 }
+.info_title {
+  font-size: 17px;
+}
 .info_line {
   padding-left: 50px;
   color: grey;
+  font-size: 15px;
+}
+.info-block {
+  height: 80px;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+}
+.info-block .detail-block {
+  width: 70%;
+}
+.info-block .line {
+  margin: 25px 0;
+  color: #fff;
   font-size: 18px;
+  font-weight: bold;
+  margin-left: 10px;
 }
 /*# sourceMappingURL=basic_info.css.map */
