@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="../addons/llh_jwschool/template/css/weui.min.css"/>
 <link rel="stylesheet" href="../addons/llh_jwschool/template/css/common.css"/>
 
-<nav id="header_back" class="navbar navbar-default navbar-static-top">
+<nav id="header_back" class="navbar navbar-default navbar-fixed-top">
     <a href="javascript:history.go(-1)" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
     <span id="title" class="center-block" style="width: 200px;text-align: center;"></span>
     <a href="javascript:void(0);" id="send" class="pull-right"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></a>
@@ -84,7 +84,7 @@
         <a id="picklocation" href="javascript:void(0)">
             <div class="entry entry-inline entry-last">
                 <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
-                <span id="location">选择你的当前位置</span><span class="gt pull-right"> &gt</span>
+                <span id="location">选择约游地点</span><span class="gt pull-right"> &gt</span>
                 <input id="location-hide" name="location-hide" type="hidden" value="">
             </div>
         </a>
@@ -233,12 +233,16 @@
         }
     });
     $("#send").click(function () {
-        if ($("#content").val().trim()=='')
+        if ($("#pickdate").css("display")!='none')
+            alert("请选择约游时间");
+        else if ($("#content").val().trim()=='')
             alert("请填写约游内容");
         else if ($("#tag-hide").val().trim()=='')
             alert("请选择标签");
         else if ($("#location-hide").val().trim()=='')
             alert("请选择约游地点");
+        else if ($("#f_p")[0].style.display=='none'&& $("#s_p")[0].style.display=='none'&& $("#t_p")[0].style.display=='none')
+            alert("请上传至少一张图片");
         else
             $("#state-form").submit();
     });

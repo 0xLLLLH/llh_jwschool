@@ -3,7 +3,7 @@
 {php $backto=$_GPC['back'];}
 <link rel="stylesheet" href="../addons/llh_jwschool/template/css/common.css"/>
 
-<nav id="header_back" class="navbar navbar-default navbar-static-top">
+<nav id="header_back" class="navbar navbar-default navbar-fixed-top">
     <a href='{php echo $this->createMobileUrl("$backto")}' class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
     <span id="title" class="center-block" style="width: 200px;text-align: center;"></span>
 </nav>
@@ -74,7 +74,9 @@
     </div>
     {/loop}
 </div>
-
+<div class="wrap" style="display: none;opacity: 1;vertical-align:middle;text-align: center;">
+    <p><img src="" class="center-block img-responsive" style="border: none;"></p>
+</div>
 {template 'footer_input'}
 
 <script>
@@ -101,7 +103,19 @@
         $text.attr('placeholder','写评论');
         $('#uid_hiden').val('');
     });
+    $(".content-images").on('click',"img",function (e) {
+        var url=$(this).attr("src");
+        var prefix='thumb_';
+        var i=url.indexOf(prefix);
 
+        var pic_url=url.substr(0,i)+url.substr(i+prefix.length);
+        var $wrap=$(".wrap");
+        $wrap.find("img").attr("src",pic_url);
+        $wrap.show();
+    });
+    $(".wrap").click(function () {
+        $(this).hide();
+    });
     $("#submit_btn").click(function(e){
         if ($("#text_box").val().trim()!='') {
 
