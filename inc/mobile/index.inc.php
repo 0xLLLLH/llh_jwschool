@@ -1,13 +1,4 @@
 <?php
-<<<<<<< HEAD
-=======
-/**
- * Created by Phpstorm.
- * User: short
- * Date: 2016.3.31
- * Description：主页/个人主页/我的约游
- */
->>>>>>> refs/remotes/origin/develop
 global $_W, $_GPC;
 load()->model('mc');
 if (isset($_GPC['op'])) {
@@ -56,12 +47,5 @@ foreach ($state_data as $k => $v) {
     $position = explode('-', $v['position']);
     $state_data[$k]['position'] = $position[0] . $position[1];
 }
-<<<<<<< HEAD
 
-=======
-/*echo $state_data['openid'];
-echo $uid;*/
-/*$url=$this->createMobileUrl('usercenter');
-$pagelist=array('个人中心'=>$url);*/
->>>>>>> refs/remotes/origin/develop
 include $this->template('index');
