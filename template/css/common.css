@@ -4,13 +4,22 @@
  * Date: 2016.3.29
  * Description：公共样式及基本的header,footer的样式
  */
+/**
+ * Created by Phpstorm.
+ * User: 0xLLLLH
+ * Date: 2016.4.2
+ * Description：全局配置
+ */
+/* header*/
+/* footer*/
 body {
+  margin-top: 50px;
   min-height: 400px;
   padding-bottom: 70px;
   color: #555;
   background-color: #f9f9f9;
-  font-size: 1em;
-  font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+  font-size: 15px;
+  font-family: "Microsoft YaHei", "Arial", "黑体", "宋体", sans-serif;
 }
 a,
 a:hover {
@@ -32,15 +41,160 @@ a:hover {
   background-color: #5cb85c;
   color: #fff;
   margin-bottom: 10px;
+  border: none;
+}
+#header_back a {
+  padding-top: 3px;
+}
+.headerlink {
+  background: none;
+  color: #fff;
+  padding: 2px 5px;
+  border: none;
+  outline: none;
+}
+.header-tab {
+  width: 200px;
+}
+.tab-item {
+  background-color: #5cb85c;
+  color: #ddd;
+  border: none;
+  padding-top: 0;
+  padding-bottom: 10px;
+  font-size: 20px;
+  outline: none;
+}
+.tab-item-active {
+  color: #fff;
+  border-bottom: 3px solid #fff;
+}
+.search-icon {
+  position: absolute;
+  top: 10px;
+  right: 5px;
+  height: 20px;
 }
 .glyphicon {
   margin: 0 15px;
+}
+#footer {
+  height: 50px;
+  border-top: 1px solid #ddd;
+  font-size: 15px;
 }
 #footer .tab-img {
   padding: 0 40%;
 }
 #footer a {
   padding: 5px;
-  border-top: 1px solid #ddd;
+}
+.content-block {
+  margin-top: 10px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+  padding: 10px 10px;
+  font-size: 15px;
+}
+.wrap {
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  filter: alpha(opacity=50);
+  -moz-opacity: 0.5;
+  opacity: 0.5;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1111;
+}
+.wrap p {
+  width: 100%;
+  height: 100%;
+  line-height: 100%;
+  /* 行高等于高度 */
+}
+/* 兼容标准浏览器 */
+.wrap p:before {
+  content: ".";
+  /* 具体的值与垂直居中无关，尽可能的节省字符 */
+  margin-left: -5px;
+  font-size: 10px;
+  /* 修复居中的小BUG */
+  visibility: hidden;
+  /*设置成隐藏元素*/
+}
+.wrap p img {
+  *margin-top: expression((100% - this.height )/2);
+  /* CSS表达式用来兼容IE6/IE7 */
+  vertical-align: middle;
+  border: 1px solid #ccc;
+}
+.wrap-content,
+.wrap-location {
+  background: #fff;
+  padding-top: 10px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1112;
+  font-size: 20px;
+}
+.tag-container {
+  min-height: 100px;
+  padding: 10px 5px;
+  margin-bottom: 50px;
+}
+.tag {
+  float: left;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 15px;
+  line-height: 20px;
+  text-align: center;
+  color: grey;
+  background-color: gainsboro;
+  margin: 5px 10px;
+}
+.tag-select {
+  color: #5cb85c;
+}
+.wrap-confirm {
+  height: 40px;
+  background-color: #5cb85c;
+  color: #fff;
+  font-size: 20px;
+}
+.action_button {
+  position: fixed;
+  right: 40px;
+  bottom: 90px;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 30px;
+  padding: 10px;
+  line-height: 30px;
+  background-color: #5cb85c;
+  color: #fff;
+  z-index: 999;
+}
+.action_button .glyphicon {
+  margin: 0;
+  padding: 0;
+}
+.badge {
+  vertical-align: middle;
+}
+.block-last {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: 0;
 }
 /*# sourceMappingURL=common.css.map */

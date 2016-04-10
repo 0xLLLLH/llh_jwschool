@@ -1,77 +1,88 @@
 {template 'header_back'}
 
-<link rel="stylesheet" href="../css/usercenter.css"/>
+<link rel="stylesheet" href="../addons/llh_jwschool/template/css/usercenter.css"/>
 {if !isset($_GPC['op'])}
 <div>
     <div class="entry-group">
         <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'nickname','new_title'=>'昵称'));}">
             <div class="entry entry-inline">
-                <span>昵称</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{nickname}</span>
+                <span>昵称</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{if $member['nickname']!=""}{$member['nickname']}{else}待完善...{/if}</span>
             </div>
         </a>
-        <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'realname','new_title'=>'昵称'));}">
+        <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'realname','new_title'=>'真实姓名'));}">
             <div class="entry entry-inline">
-                <span>真实姓名</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{realname}</span>
+                <span>真实姓名</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{if $member['realname']!=""}{$member['realname']}{else}待完善...{/if}</span>
             </div>
         </a>
         <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'gender','new_title'=>'性别'));}">
             <div class="entry entry-inline">
-                <span>性别</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{gender}</span>
+                <span>性别</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{if $member['gender']==0}保密{else if $member['gender']==1}男{else}女{/if}</span>
             </div>
         </a>
-        <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'phone','new_title'=>'手机号'));}">
+        <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'mobile','new_title'=>'手机号'));}">
             <div class="entry entry-inline">
-                <span>手机号</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{phone}</span>
+                <span>手机号</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{if $member['mobile']!=""}{$member['mobile']}{else}待完善...{/if}</span>
             </div>
         </a>
-        <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'email','new_title'=>'E-mail'));}">
+        <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'qq','new_title'=>'QQ'));}">
             <div class="entry entry-inline">
-                <span>E-mail</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{email}</span>
-            </div>
-        </a>
-        <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'gender','new_title'=>'QQ'));}">
-            <div class="entry entry-inline">
-                <span>QQ</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{qq}</span>
+                <span>QQ</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{if $member['qq']!=""}{$member['qq']}{else}待完善...{/if}</span>
             </div>
         </a>
         <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'birth','new_title'=>'生日'));}">
             <div class="entry entry-inline">
-                <span>生日</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{birth}</span>
+                <span>生日</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{if $member['birthyear']}{$member['birthyear']}-{$member['birthmonth']}-{$member['birthday']}{else}待完善...{/if}</span>
             </div>
         </a>
-        <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'address','new_title'=>'地址'));}">
+        <a href="{php echo $this->createMobileUrl('editprofile',array('op'=>'reside','new_title'=>'地址'));}">
             <div class="entry entry-inline entry-last">
-                <span>地址</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{address}</span>
+                <span>地址</span><span class="gt pull-right"> &gt</span><span class="pull-right" style="color: #ccc;">{if $member['resideprovince']!=""}{$member['resideprovince']}{$member['residecity']}{$member['residedist']}{else}待完善...{/if}</span>
             </div>
         </a>
     </div>
 </div>
 {else}
 <script>
-    $(document).attr("title","修改{$_GPC['new_title']}");
+    $(document).attr("title", "修改{$_GPC['new_title']}");
     $("#title").text("修改{$_GPC['new_title']}");
 </script>
 <div class="container">
-    <form>
+    <form action="" method="post">
         {if $_GPC['op']=='email'}
         <div class="form-group">
-            <input type="email" class="form-control" id="Email" placeholder="{email}">
+            {php echo tpl_fans_form('email', $member['email'])}
         </div>
         {else if $_GPC['op']=='birth'}
         <div class="form-group">
-            {php echo tpl_form_field_date('date');}
+            {php echo tpl_fans_form('birth', $member['birth'])}
         </div>
-        {else if $_GPC['op']=='address'}
+        {else if $_GPC['op']=='reside'}
         <div class="form-group">
-            {php echo tpl_form_field_district('birth', array('province' => '', 'city' => '', 'district' => '' ));}
+            {php echo tpl_fans_form('reside', $member['reside']);}
         </div>
-        {else}
+        {else if $_GPC['op']=='gender'}
         <div class="form-group">
-            <input type="text" class="form-control" id="input" placeholder="{something}">
+            {php echo tpl_fans_form('gender', $member['gender']);}
+        </div>
+        {else if $_GPC['op']=='nickname'}
+        <div class="form-group">
+            {php echo tpl_fans_form('nickname', $member['nickname']);}
+        </div>
+        {else if $_GPC['op']=='qq'}
+        <div class="form-group">
+            {php echo tpl_fans_form('qq', $member['qq']);}
+        </div>
+        {else if $_GPC['op']=='mobile'}
+        <div class="form-group">
+            {php echo tpl_fans_form('mobile', $member['mobile']);}
+        </div>
+        {else if $_GPC['op']=='realname'}
+        <div class="form-group">
+            {php echo tpl_fans_form('realname', $member['realname']);}
         </div>
         {/if}
         <input type="hidden" name="token" value="{$_W['token']}">
-        <button type="submit" class="btn btn-default">确认修改</button>
+        <button type="submit" class="btn btn-default" name="submit">确认修改</button>
     </form>
 </div>
 {/if}

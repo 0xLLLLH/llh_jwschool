@@ -1,42 +1,45 @@
-{template 'common/header'}
+{template 'header_back'}
 
-<link rel="stylesheet" href="../css/weui.min.css"/>
-<link rel="stylesheet" href="../css/common.css"/>
-<link rel="stylesheet" href="../css/usercenter.css"/>
+<link rel="stylesheet" href="../addons/llh_jwschool/template/css/common.css"/>
+<link rel="stylesheet" href="../addons/llh_jwschool/template/css/usercenter.css"/>
 
 {template 'basic_info'}
-
+<script>
+    $("#header_back").css("background",'transparent');
+    $("body").css("margin-top","0");
+    $(".info-panel").css("background-image","url('../addons/llh_jwschool/images/usercenter_bg.png')");
+</script>
 <div>
     <div class="entry-group">
-        <a href="#">
+        <a href="{php echo $this->createMobileUrl('index',array('op'=>'homepage','openid'=>$_W['openid']));}">
             <div class="entry entry-inline">
                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span><span>个人主页</span><span class="gt pull-right"> &gt </span>
             </div>
         </a>
         <div class="padding-r" style="display: flex;">
-            <a href="{php echo $this->createMobileUrl('index')}" class="entry-block flex-1">
+            <a href="{php echo $this->createMobileUrl('index')}" class="entry-block flex-1" style="width: 25%">
                 <div class="tab-img">
-                    <img src="/images/icon_nav_button.png" class="center-block img-responsive">
+                    <img src="../addons/llh_jwschool/images/icon_nav_button.png" class="center-block img-responsive">
                 </div>
-                <div class="text-center">index</div>
+                <div class="text-center">简</div>
             </a>
-            <a href="javascript:;" class="entry-block flex-1">
+            <a href="javascript:;" class="entry-block flex-1" style="width: 25%">
                 <div class="tab-img">
-                    <img src="/images/icon_nav_article.png" class="center-block img-responsive">
+                    <img src="../addons/llh_jwschool/images/icon_nav_article.png" class="center-block img-responsive">
                 </div>
-                <div class="text-center">发现</div>
+                <div class="text-center">玩</div>
             </a>
-            <a href="javascript:;" class="entry-block flex-1">
+            <a href="javascript:;" class="entry-block flex-1" style="width: 25%">
                 <div class="tab-img">
-                    <img src="/images/icon_nav_article.png" class="center-block img-responsive">
+                    <img src="../addons/llh_jwschool/images/icon_nav_article.png" class="center-block img-responsive">
                 </div>
-                <div class="text-center">发现</div>
+                <div class="text-center">约</div>
             </a>
-            <a href="{php echo $this->createMobileUrl('usercenter');}" class="entry-block flex-1">
+            <a href="{php echo $this->createMobileUrl('usercenter');}" class="entry-block flex-1"  style="width: 25%">
                 <div class="tab-img">
-                    <img src="/images/icon_nav_cell.png" class="center-block img-responsive">
+                    <img src="../addons/llh_jwschool/images/icon_nav_cell.png" class="center-block img-responsive">
                 </div>
-                <div class="text-center">我</div>
+                <div class="text-center">游</div>
             </a>
         </div>
     </div><!-- end of entry-group -->
@@ -49,12 +52,12 @@
     </div><!-- end of entry-group -->
 
     <div class="entry-group">
-        <a href="#">
+        <a href="{php echo $this->createMobileUrl('index',array('op'=>'mystates','openid'=>$_W['openid']));}">
             <div class="entry entry-inline">
                 <span class="glyphicon glyphicon-flag" aria-hidden="true"></span><span>我的约游</span><span class="gt pull-right"> &gt </span>
             </div>
         </a>
-        <a href="#">
+        <a href="{php echo $this->createMobileUrl('mycomments');}">
             <div class="entry entry-inline entry-last">
                 <span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span>我的评论</span><span class="gt pull-right"> &gt </span>
             </div>

@@ -5,15 +5,20 @@
  * Description：头像和基本信息
  */
 
+@import "config";
+
 @panel-background-color : #5cb85c;
+@basic-info-height:   80px;
 
 .info-panel{
   background-color: @panel-background-color;
   padding: 10px;
+  padding-top: 55px;
+  background-size: 100% 100%;
 }
 
 #gravatar_block{
-  padding: 0px 35%;
+  padding: 0px 38%;
 }
 #gravatar_block img{
   border: 4px solid #fff;
@@ -21,10 +26,42 @@
 
 #info_block{
   margin: 10px;
-  font-size: 1.5em;
+  font-size: @font-size-all;
 }
 
 #info_block a{
   color: #fff;
   font-weight: bold;
+}
+
+.header_bg{
+  min-height: 200px;
+  background: @panel-background-color;
+}
+.info_title{
+  font-size: @font-size-all+2px;
+}
+
+.info_line{
+  padding-left: 50px;
+  color: grey;
+  font-size: @font-size-all;
+}
+
+.info-block{
+  height: 80px;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+}
+.info-block .detail-block{
+  width: 70%;
+}
+.info-block .line{
+  margin: (@basic-info-height - 30px)/2 0;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 10px;
 }

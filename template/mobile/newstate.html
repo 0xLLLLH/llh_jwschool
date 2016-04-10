@@ -1,0 +1,249 @@
+{template 'common/header'}
+<link rel="stylesheet" href="../addons/llh_jwschool/template/css/weui.min.css"/>
+<link rel="stylesheet" href="../addons/llh_jwschool/template/css/common.css"/>
+
+<nav id="header_back" class="navbar navbar-default navbar-fixed-top">
+    <a href="javascript:history.go(-1)" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
+    <span id="title" class="center-block" style="width: 200px;text-align: center;"></span>
+    <a href="javascript:void(0);" id="send" class="pull-right"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></a>
+</nav>
+
+<form enctype="multipart/form-data"  id="state-form" method="post" action="{php echo $this->createMobileUrl('statedetail',array('submit'=>1))}">
+        <div class="wrap" style="display: none"></div>
+        <div class="wrap-content" style="display: none">
+            <div style="padding: 10px;">
+                <textarea id="label_text"  class="form-control" style="min-height: 130px;resize: none;" placeholder="标签使用空格分开，最多三个标签" ></textarea>
+            </div>
+            <div class="tag-container clearfix">
+                {loop $tag $v}
+                <span class="tag" data-tag="{$v['tag']}">{$v['tag']}</span>
+                {/loop}
+            </div>
+            <a>
+                <div class="wrap-confirm text-center">确定</div>
+            </a>
+        </div>
+        <div class="wrap-location" style="display: none;">
+            <div style="padding: 10px;">
+                {php echo tpl_fans_form('reside', $member['reside']);}
+            </div>
+            <a>
+                <div class="wrap-confirm text-center">确定</div>
+            </a>
+        </div>
+    <div class="content-block">
+        <a id="pickdate" href="javascript:void(0)">
+            <div class="entry entry-inline entry-last">
+                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                <span>选择约游时间</span><span class="gt pull-right"> &gt</span>
+            </div>
+        </a>
+        <div style="display: none;">
+            {php echo tpl_form_field_date('date');}
+        </div>
+    </div><!-- end of content-block -->
+    <div class="content-block">
+        <textarea id="content" class="form-control" placeholder="写点什么吧..." name="content" style="border: none;box-shadow: none;min-height: 160px;"></textarea>
+
+        <div class="weui_uploader">
+            <div class="weui_uploader_bd">
+                <ul class="weui_uploader_files">
+                    <li class="weui_uploader_file " style="display:none" id="f_p"></li>
+                    <li class="weui_uploader_file" style="display:none" id="s_p" ></li>
+                    <li class="weui_uploader_file" style="display:none" id="t_p"></li>
+                </ul>
+                <div class="weui_uploader_input_wrp" id="d_pic1">
+                <input class="weui_uploader_input" type="file" accept="image/*" id="pic1" name="pic1">
+                </div>
+                <div class="weui_uploader_input_wrp" id="d_pic2">
+                    <input class="weui_uploader_input" type="file" accept="image/*" id="pic2" name="pic2">
+                </div>
+                <div class="weui_uploader_input_wrp" id="d_pic3">
+                    <input class="weui_uploader_input" type="file" accept="image/*" id="pic3" name="pic3">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-block">
+        <a id="picklabel1" class="picklabel" href="javascript:void(0)">
+            <div class="entry entry-inline entry-last">
+                <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
+                <span>选择标签</span><span class="gt pull-right"> &gt</span>
+            </div>
+        </a>
+        <a id="picklabel2" class="picklabel" href="javascript:void(0)" style="display: none;">
+            <div class="entry entry-inline entry-last">
+                <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
+                <span id="tag-show">标签</span>
+                <input id="tag-hide" name="tags" type="hidden" value="">
+            </div>
+        </a>
+    </div>
+    <div class="content-block">
+        <a id="picklocation" href="javascript:void(0)">
+            <div class="entry entry-inline entry-last">
+                <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                <span id="location">选择约游地点</span><span class="gt pull-right"> &gt</span>
+                <input id="location-hide" name="location-hide" type="hidden" value="">
+            </div>
+        </a>
+    </div>
+    <input name="token" type="hidden" value="{$_W[token]}">
+</form>
+{template 'footer'}
+<script>
+    var cnt=0;
+    $("#pickdate").click(function () {
+        $(this).hide();
+        $(this).next().show();
+    });
+    $(".picklabel").click(function () {
+        $(".wrap").show();
+        $(".wrap-content").show();
+    });
+
+    $("#picklocation").click(function () {
+        $(".wrap").show();
+        $(".wrap-location").show();
+    });
+
+    function check_tags() {
+        cnt=0;
+        $(".tag").removeClass("tag-select");
+        var tags = $(this).val().split(" ");
+        for (var i = 0; i < tags.length; i++) {
+            if (tags[i]!="") {
+                $(".tag[data-tag='"+tags[i]+"']").addClass("tag-select");
+                cnt++;
+            }
+        }
+    }
+    $("#label_text").change(check_tags);
+    $("#label_text").on("input", check_tags);
+    $(".tag").click(function () {
+        var $label = $("#label_text");
+        var $txt = $label.val();
+        if ($(this).hasClass("tag-select")) {
+            $(this).removeClass("tag-select");
+            var str="";
+            var tags = $txt.split(" ");
+            var tg = $(this).text();
+            var first = true;
+            for (var i = 0; i < tags.length; i++) {
+                //alert(tags[i]);
+                if (tags[i]!=tg) {
+                    if (!first){
+                        str+=' '
+                    }
+                    str+=tags[i];
+                    first=false;
+                }
+            }
+            $label.val(str);
+            cnt--;
+        }else {
+            if (cnt<3)
+            {
+                if ($txt=="")
+                    $label.val($(this).text());
+                else
+                    $label.val($label.val()+' '+$(this).text());
+                $(this).addClass("tag-select");
+                cnt++;
+            }
+        }
+
+    });
+    function hide_wrap() {
+        //在最后使用
+        $(".wrap").hide();
+        $(".wrap-content").hide();
+        if ($("#picklabel2").find('#tag-hide').val()!="") {
+            $("#picklabel1").hide();
+            $("#picklabel2").show();
+        }
+        $(".wrap-location").hide();
+        if ($("#location-hide").text()!="") {
+            //do something
+        }
+
+    }
+    $(".wrap").click(function () {
+        hide_wrap();
+    });
+
+    $(".wrap-confirm").click(function () {
+        var v=$("#label_text").val();
+        $("#tag-show").text(v);
+        $("#tag-hide").val(v);
+        var location=$(document).find(".tpl-province")[0].value+'-'+$(document).find(".tpl-city")[0].value+'-'+$(document).find(".tpl-district")[0].value;
+        if (location!='--'){
+            $("#location").text(location);
+            $("#location-hide").val($("#location").text());
+        }
+
+
+        hide_wrap();
+    });
+
+    $("#pic1").change(function(){
+        var file=this.files[0];
+        var f_p=$("#f_p")[0].style.display;
+        if(file){
+            var reader=new FileReader();
+            reader.onload=function(e){
+                if(f_p==='none'){
+                    $("#f_p").attr('style',"background-image:url("+e.target.result+");display:block");
+                    $("#d_pic1").attr('style',"display:none");
+                }
+
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    $("#pic2").change(function(){
+        var file=this.files[0];
+        var s_p=$("#s_p")[0].style.display;
+        if(file){
+            var reader=new FileReader();
+            reader.onload=function(e){
+                if(s_p==='none'){
+                    $("#s_p").attr('style',"background-image:url("+e.target.result+");display:block");
+                    $("#d_pic2").attr('style',"display:none");
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    $("#pic3").change(function(){
+        var file=this.files[0];
+        var t_p=$("#t_p")[0].style.display;
+        if(file){
+            var reader=new FileReader();
+            reader.onload=function(e){
+                if(t_p==='none'){
+                    $("#t_p").attr('style',"background-image:url("+e.target.result+");display:block");
+                    $("#d_pic3").attr('style',"display:none");
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+    $("#send").click(function () {
+        if ($("#pickdate").css("display")!='none')
+            alert("请选择约游时间");
+        else if ($("#content").val().trim()=='')
+            alert("请填写约游内容");
+        else if ($("#tag-hide").val().trim()=='')
+            alert("请选择标签");
+        else if ($("#location-hide").val().trim()=='')
+            alert("请选择约游地点");
+        else if ($("#f_p")[0].style.display=='none'&& $("#s_p")[0].style.display=='none'&& $("#t_p")[0].style.display=='none')
+            alert("请上传至少一张图片");
+        else
+            $("#state-form").submit();
+    });
+</script>

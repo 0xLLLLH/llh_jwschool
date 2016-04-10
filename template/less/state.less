@@ -1,0 +1,144 @@
+/**
+ * Created by Phpstorm.
+ * User: 0xLLLLH
+ * Date: 2016.4.3
+ * Description：状态相关样式
+ */
+
+@import "config";
+
+@poster-info-height:60px;
+@poster-info-padding:10px;
+@avatar-width:@poster-info-height;
+@content-bottom-height:30px;
+@content-bottom-font:0.8em;
+@comment-height:50px;
+@comment-avatar-width:@comment-height;
+.poster-info{
+  height: @poster-info-height + @poster-info-padding;
+}
+
+.avatar-block{
+  width: @avatar-width;
+  height: @poster-info-height;
+}
+
+.poster-info .line{
+  height: 0.5* @poster-info-height;
+  margin-left: 10px;
+}
+
+.link{
+  color: @primary-background-color;
+}
+
+.line .link{
+  font-weight: bold;
+}
+
+.normal{
+  font-size: @content-bottom-font;
+  line-height: @content-bottom-font;
+}
+
+.line .normal{
+  color: grey;
+}
+
+.content-block .content{
+  width: 100%;
+  word-break: break-all;
+  word-wrap: break-word;
+  white-space: normal;
+  padding: 10px 0;
+}
+
+.content-images{
+  padding: 5px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.content-images .images{
+  width: 33.3%;
+  padding: 5px 5px;
+}
+
+.content-bottom{
+  height: @content-bottom-height;
+}
+.pull-left-center{
+  position: absolute;
+  height: auto;
+  top: 50%;
+  margin-top: -(@content-bottom-font/2);
+  left: 20px;
+}
+.pull-right-center{
+  position: absolute;
+  height: auto;
+  top: 50%;
+  margin-top: -(@content-bottom-font/2);
+  right: 0;
+}
+
+.comment-title{
+  /*border-bottom: 1px solid #eee;*/
+}
+
+.comment{
+  min-height: @comment-height;
+  border-bottom: 1px solid #eee;
+  padding: 5px 0;
+}
+
+.comment .avatar-block{
+  width: @comment-avatar-width;
+  height: @comment-height;
+}
+
+.comment .link{
+  font-size: @comment-height/3;
+}
+
+.comment .normal{
+  font-size: @comment-height/3;
+}
+
+.comment .comment-content{
+  margin-left: @comment-avatar-width + 10px;
+  word-break: break-all;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.state .tag-container{
+  min-height: 10px;
+  height: auto;
+  padding: 0 5px;
+  margin: 0;
+}
+.state .tag-container .glyphicon{
+  font-size: @font-size-all;
+}
+
+.state .tag{
+  float: left;
+  padding: 2px 5px;
+  border-radius: 10px;
+  font-size: 15px;
+  line-height: 15px;
+  text-align: center;
+  color: grey;
+  background-color: gainsboro;
+  margin: 0 5px;
+}
+
+.mycomment{
+  padding: 5px 10px;
+  border: 1px solid #eee;
+  background: gainsboro;
+}
+
+.mycomment .detail-block{
+  width: 100%;
+}

@@ -1,0 +1,14 @@
+{template 'header_search'}
+
+
+<div style="padding: 0 10px;font-size: 1.2em;">
+    <p><span class="glyphicon glyphicon-tags" aria-hidden="true" style="margin: 10px 10px;"></span>热门标签</p>
+</div>
+
+<div class="tag-container clearfix">
+    {loop $tag $v}
+    <a href="{php echo $this->createMobileUrl('index',array('op'=>'search','keyword'=>$v['tag']));}"><span class="tag" data-tag="{$v['tag']}">{$v['tag']}</span></a>
+    {/loop}
+</div>
+
+{template 'footer'}

@@ -1,0 +1,38 @@
+{template 'header_back'}
+<link rel="stylesheet" href="../addons/llh_jwschool/template/css/state.css"/>
+
+<script>
+    $("#title").text("消息");
+</script>
+
+<div class="comment-area content-block">
+    {if $comment_data}
+    {loop $comment_data $v}
+    <div  class="comment clearfix" data-sid="{$v['state_ID']}" data-cid="{$v['id']}">
+        <a href='#'>
+            <div class="avatar-block pull-left">
+                <img src="{if $v['avatar']}{$v['avatar']}{else}http://tp4.sinaimg.cn/3927645471/180/5753508523/1{/if}" class="center-block img-responsive img-circle">
+            </div>
+        </a>
+        <div class="comment-content" data-sid="{$v['state_ID']}" data-uid="{$v['from_WHO']}" data-nick="{$v['nickname']}">
+            <div class="detail-block pull-left">
+                <div class="line">
+                    <span class="link">{$v['nickname']} &nbsp;回复了你：</span>
+                    {$v['content']}
+                </div>
+                <div class="line"><span class="normal">{$v['release_TIME']}</span></div>
+            </div>
+        </div>
+    </div>
+    {/loop}
+    {else}
+        暂无通知
+    {/if}
+</div>
+<script>
+    $(".comment").on('click',function () {
+        window.location.href="{php echo $this->createMobileUrl('statedetail');}"+'&state_ID='+$(this).data('sid')+'&cid='+$(this).data('cid');
+    })
+</script>
+
+{template 'footer'}

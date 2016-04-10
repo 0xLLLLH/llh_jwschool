@@ -1,20 +1,21 @@
 
     <div id="footer" class="navbar-fixed-bottom" style="display:flex;background-color: #fff;">
-        <a href="{php echo $this->createMobileUrl('index')}" class="flex-1">
+        <a href="{php echo $this->createMobileUrl('index')}" style="width: 33.3%">
             <div class="tab-img">
-                <img src="/images/icon_nav_button.png" class="center-block img-responsive">
+                <img src="../addons/llh_jwschool/images/icon_nav_button.png" class="center-block img-responsive">
             </div>
-            <div class="text-center">index</div>
+            <div class="text-center">约游</div>
         </a>
-        <a href="javascript:;" class="flex-1">
+        <a href="{php echo $this->createMobileUrl('notification')}" style="width: 33.3%;position: relative;">
+            <span class="badge" style="background-color: lightpink;position: absolute;top:5px;right: 25%;">{if $this->getNoticeNum()}{php echo $this->getNoticeNum();}{/if}</span>
             <div class="tab-img">
-                <img src="/images/icon_nav_article.png" class="center-block img-responsive">
+                <img src="../addons/llh_jwschool/images/icon_nav_article.png" class="center-block img-responsive">
             </div>
-            <div class="text-center">发现</div>
+            <div class="text-center">通知</div>
         </a>
-        <a href="{php echo $this->createMobileUrl('usercenter')}" class="flex-1">
+        <a href="{php echo $this->createMobileUrl('usercenter')}" style="width: 33.3%">
             <div class="tab-img">
-                <img src="/images/icon_nav_cell.png" class="center-block img-responsive">
+                <img src="../addons/llh_jwschool/images/icon_nav_cell.png" class="center-block img-responsive">
             </div>
             <div class="text-center">我</div>
         </a>
@@ -22,6 +23,3 @@
 
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script>
-    $()
-</script>

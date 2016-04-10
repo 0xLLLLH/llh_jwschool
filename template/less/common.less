@@ -4,17 +4,16 @@
  * Date: 2016.3.29
  * Description：公共样式及基本的header,footer的样式
  */
-
-@primary-background-color: #5cb85c;
-@text-in-primary-background-color: #fff;
+@import "config";
 
 body{
+  margin-top: 50px;
   min-height: 400px;
   padding-bottom: 70px;
   color: #555;
   background-color: #f9f9f9;
-  font-size: 1em;
-  font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+  font-size: @font-size-all;
+  font-family: "Microsoft YaHei","Arial","黑体","宋体",sans-serif;
 }
 
 a,a:hover{
@@ -30,20 +29,67 @@ a,a:hover{
   flex-direction: row;
   width: 33%;
 }
-@header-back-height:40px;
-@header-back-padding:10px;
+
+
+@tab-group-width: 200px;
+@tab-item-border: 3px;
 
 #header_back{
-  height: @header-back-height;
-  padding: @header-back-padding 2px;
-  font-size: @header-back-height - 2*(@header-back-padding);
+  height: @header-height;
+  padding: @header-padding 2px;
+  font-size: @header-height - 2*(@header-padding);
   background-color: @primary-background-color;
   color: @text-in-primary-background-color;
   margin-bottom: 10px;
+  border: none;
+}
+#header_back a{
+  padding-top: 3px;
+}
+
+.headerlink{
+  background: none;
+  color: @text-in-primary-background-color;
+  padding: 2px 5px;
+  border: none;
+  outline: none;
+}
+
+.header-tab{
+  width: @tab-group-width;
+}
+
+.tab-item{
+  background-color: @primary-background-color;
+  color: @text-in-primary-background-color-darker;
+  border: none;
+  padding-top: 0;
+  padding-bottom: 10px;
+  font-size: @header-height - 2*(@header-padding);
+  outline: none;
+}
+
+.tab-item-active{
+  color: @text-in-primary-background-color;
+  border-bottom: @tab-item-border solid @text-in-primary-background-color;
+}
+
+.search-icon{
+  position: absolute;
+  top: @header-padding;
+  right: @header-padding / 2;
+
+  height: @header-height - 2*(@header-padding);
 }
 
 .glyphicon{
   margin: 0 15px;
+}
+
+#footer{
+  height: @footer-height;
+  border-top: 1px solid #ddd;
+  font-size: @font-size-all;
 }
 
 #footer .tab-img{
@@ -52,5 +98,120 @@ a,a:hover{
 
 #footer a{
   padding: 5px;
-  border-top: 1px solid #ddd;
+
+}
+
+.content-block{
+  margin-top: 10px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+  padding: 10px 10px;
+  font-size: @font-size-all;
+}
+
+@wrap-z-index:1111;
+
+.wrap {
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  filter: alpha(opacity=50);
+  -moz-opacity: 0.5;
+  opacity: 0.5;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: @wrap-z-index;
+}
+
+.wrap p{
+  width: 100%;
+  height: 100%;
+  line-height: 100%;  /* 行高等于高度 */
+}
+
+/* 兼容标准浏览器 */
+.wrap p:before{
+  content: ".";  /* 具体的值与垂直居中无关，尽可能的节省字符 */
+  margin-left: -5px;
+  font-size: 10px;  /* 修复居中的小BUG */
+  visibility: hidden;  /*设置成隐藏元素*/
+}
+.wrap p img{
+  *margin-top: ~"expression((100% - this.height )/2)";  /* CSS表达式用来兼容IE6/IE7 */
+  vertical-align: middle;
+  border: 1px solid #ccc;
+}
+
+.wrap-content,.wrap-location{
+  background: #fff;
+  padding-top: 10px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: @wrap-z-index+1;
+  font-size: @header-height - 2* (@header-padding);
+}
+
+.tag-container{
+  min-height: 100px;
+  padding: 10px 5px;
+  margin-bottom: 50px;
+}
+
+.tag{
+  float: left;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 15px;
+  line-height: 20px;
+  text-align: center;
+  color: grey;
+  background-color: gainsboro;
+  margin: 5px 10px;
+}
+
+.tag-select{
+  color: @primary-background-color;
+}
+
+.wrap-confirm{
+  height: @header-height;
+  background-color: @primary-background-color;
+  color: @text-in-primary-background-color;
+  font-size: @header-height - 2* (@header-padding);
+}
+
+.action_button{
+  position: fixed;
+  right: 40px;
+  bottom: 90px;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 30px;
+  padding: 10px;
+  line-height: 30px;
+  background-color: @primary-background-color;
+  color: @text-in-primary-background-color;
+  z-index: 999;
+}
+.action_button .glyphicon{
+  margin: 0;
+  padding: 0;
+}
+.badge{
+  vertical-align: middle;
+}
+
+.block-last{
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: 0;
 }

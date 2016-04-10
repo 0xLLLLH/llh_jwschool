@@ -50,12 +50,12 @@
     <permissions>
     </permissions>
     <install><![CDATA[
-   -- phpMyAdmin SQL Dump
+-- phpMyAdmin SQL Dump
 -- version 4.0.10deb1
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2016-04-01 17:43:23
+-- 生成日期: 2016-04-08 23:01:10
 -- 服务器版本: 5.5.46-0ubuntu0.14.04.2
 -- PHP 版本: 5.5.9-1ubuntu4.14
 
@@ -80,9 +80,10 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `ims_jwschool_category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `category` varchar(20) CHARACTER SET utf8 DEFAULT NULL,
+  `category` varchar(20) DEFAULT NULL,
+  `frequency` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -94,11 +95,14 @@ CREATE TABLE IF NOT EXISTS `ims_jwschool_comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `release_TIME` datetime DEFAULT NULL,
   `content` text,
-  `moment_ID` int(11) DEFAULT NULL,
-  `from_WHO` int(11) DEFAULT NULL,
-  `to_WHO` int(11) DEFAULT NULL,
+  `state_ID` int(11) DEFAULT NULL,
+  `from_WHO` varchar(50) DEFAULT '-1',
+  `to_WHO` varchar(50) DEFAULT '-1',
+  `beread` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=60 ;
+
+
 
 -- --------------------------------------------------------
 
@@ -108,20 +112,20 @@ CREATE TABLE IF NOT EXISTS `ims_jwschool_comments` (
 
 CREATE TABLE IF NOT EXISTS `ims_jwschool_moments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `uid` int(11) DEFAULT NULL,
+  `openid` varchar(50) DEFAULT NULL,
   `release_TIME` datetime DEFAULT NULL,
-  `travel_TIME` datetime DEFAULT NULL,
+  `travel_TIME` varchar(20) DEFAULT NULL,
   `content` text,
-  `pic_URL` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
-  `views` int(11) DEFAULT NULL,
-  `comments_NUM` int(11) DEFAULT NULL,
-  `position` varchar(120) CHARACTER SET utf8 DEFAULT NULL,
+  `pic_URL` varchar(1000) DEFAULT NULL,
+  `views` int(11) DEFAULT '0',
+  `comments_NUM` int(11) DEFAULT '0',
+  `position` varchar(120) DEFAULT NULL,
   `category_ID` int(11) DEFAULT NULL,
-  `tag_ID` int(11) DEFAULT NULL,
+  `tags` varchar(120) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=69 ;
 
--- --------------------------------------------------------
+
 
 --
 -- 表的结构 `ims_jwschool_system`
@@ -132,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `ims_jwschool_system` (
   `limit_PIC` int(11) DEFAULT NULL,
   `limit_CONTENT` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -142,9 +146,32 @@ CREATE TABLE IF NOT EXISTS `ims_jwschool_system` (
 
 CREATE TABLE IF NOT EXISTS `ims_jwschool_tag` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `tag` varchar(20) CHARACTER SET utf8 DEFAULT NULL,
+  `tag` varchar(20) DEFAULT NULL,
+  `frequency` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
+
+--
+-- 转存表中的数据 `ims_jwschool_tag`
+--
+
+INSERT INTO `ims_jwschool_tag` (`id`, `tag`, `frequency`) VALUES
+(1, '穷游', 0),
+(2, '富游', 0),
+(3, '自驾', 0),
+(4, '拼车', 0),
+(5, '搭车', 0),
+(6, '拼房', 0),
+(7, '骑行', 0),
+(8, '潜水', 0),
+(9, '户外', 0),
+(10, '毕业旅行', 0),
+(11, '辞职旅行', 0),
+(12, '长途旅行', 0),
+(13, '无目的地', 0),
+(14, '求英语好的', 0),
+(15, '求摄影师', 0),
+(16, '求个对象', 0);
 
 -- --------------------------------------------------------
 
@@ -154,16 +181,23 @@ CREATE TABLE IF NOT EXISTS `ims_jwschool_tag` (
 
 CREATE TABLE IF NOT EXISTS `ims_jwschool_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `uid` int(11) DEFAULT NULL,
+  `openid` varchar(50) DEFAULT NULL,
   `money` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
     ]]></install>
-    <uninstall><![CDATA[]]></uninstall>
+    <uninstall><![CDATA[
+    drop table IF  EXISTS `ims_jwschool_category`;
+    drop table IF  EXISTS `ims_jwschool_comments`;
+    drop table IF  EXISTS `ims_jwschool_moments`;
+    drop table IF  EXISTS `ims_jwschool_system`;
+    drop table IF  EXISTS `ims_jwschool_tag`;
+    drop table IF  EXISTS `ims_jwschool_user`;
+    ]]></uninstall>
     <upgrade><![CDATA[]]></upgrade>
 </manifest>

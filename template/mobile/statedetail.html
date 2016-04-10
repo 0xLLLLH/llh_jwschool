@@ -1,0 +1,181 @@
+{if $_GPC['back']}
+{template 'common/header'}
+{php $backto=$_GPC['back'];}
+<link rel="stylesheet" href="../addons/llh_jwschool/template/css/common.css"/>
+
+<nav id="header_back" class="navbar navbar-default navbar-fixed-top">
+    <a href='{php echo $this->createMobileUrl("$backto")}' class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
+    <span id="title" class="center-block" style="width: 200px;text-align: center;"></span>
+</nav>
+{else}
+{template 'header_back'}
+{/if}
+<!--<script>
+    {php $backto=$_GPC['back'];}
+    alert("123");
+        alert({$backto});
+    $("#header_back").find('a').attr('href','{php echo $this->createMobileUrl("$backto")}');
+</script>-->
+
+<link rel="stylesheet" href="../addons/llh_jwschool/template/css/state.css"/>
+{if !isset($_GPC['op'])}
+<script>
+    $("#title").text("约游详情");
+</script>
+<div class="content-block block-last">
+    <div class="poster-info clear-fix" data-uid="{$_W['openid']}" style="border-bottom: 1px solid #eee;">
+        <div class="avatar-block pull-left clearfix">
+            <img src="{if $state_detail['avatar']}{$state_detail['avatar']}{else}http://tp4.sinaimg.cn/3927645471/180/5753508523/1{/if}" class="center-block img-responsive img-circle">
+        </div>
+        <div class="detail-block pull-left">
+            <div class="line"><a href="{$user_page}" class="link">{$state_detail['nickname']}<span class="badge" style="background-color: {if $state_detail['gender']==2}#ffb6c1{else if $state_detail['gender']==1}#5bc0de{else}#777{/if};">{if $state_detail['gender']==0}保密{else if $state_detail['gender']==2}♀{else}♂{/if}{$state_detail['age']}</span></a></div>
+            <div class="line "><span class="normal">{$state_detail['release_TIME']} </span></div>
+        </div>
+    </div>
+    <div class="content clearfix">
+            <span class="link pull-left"> {$state_detail['travel_TIME']}</span>&nbsp;
+            {$state_detail['content']}
+    </div>
+    <div class="content-images clearfix">
+        {loop $state_detail['pic_URL'] $v}
+        <div class="pull-left images">
+            <img src="{$v}" class="center-block img-responsive">
+        </div>
+        {/loop}
+    </div>
+    <div class="content-bottom line" style="margin-top: 5px;position: relative;">
+        <span class="glyphicon glyphicon-map-marker" style="margin: 0;" aria-hidden="true"></span>
+        <span class="normal pull-left-center">我在&nbsp;{$state_detail['position']}</span>
+        <span class="normal pull-right-center">浏览{$state_detail['views']}&nbsp;评论<span id="comment_count">{$state_detail['comments_NUM']}</span></span>
+    </div>
+</div>
+<div class="comment-area content-block">
+    <div class="comment-title">
+        <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>评论
+    </div>
+
+    {php $data=array(array('uid'=>'uid','cid'=>'cid','nick'=>'nick','replyto'=>'replyto','avatar'=>'','comment_content'=>'comment_content','comment_time'=>'comment_time'),array('uid'=>'uid','cid'=>'cid','nick'=>'nick','replyto'=>'replyto','avatar'=>'','comment_content'=>'comment_content','comment_time'=>'comment_time'));}
+    {loop $comment_data $v}
+    <div class="comment clearfix" data-uid="{$v['from_WHO']}" data-nick="{$v['nickname_FROM']}">
+        <a href='javascript:void(0);'>
+            <div class="avatar-block pull-left" data-uid="{$v['from_WHO']}">
+                <img src="{if $v['avatar_FROM']}{$v['avatar_FROM']}{else}http://tp4.sinaimg.cn/3927645471/180/5753508523/1{/if}" class="center-block img-responsive img-circle">
+            </div>
+        </a>
+        <div class="comment-content" data-cid="{$v['state_ID']}" data-uid="{$v['from_WHO']}" data-nick="{$v['nickname_FROM']}">
+            <div class="detail-block pull-left">
+                <div class="line">
+                    <span class="link">{$v['nickname_FROM']} {if $v['nickname_TO'] }&nbsp;回复&nbsp;{$v['nickname_TO']}{/if}:</span>
+                    {$v['content']}
+                </div>
+                <div class="line"><span class="normal">{$v['release_TIME']}</span></div>
+            </div>
+        </div>
+    </div>
+    {/loop}
+</div>
+<div class="wrap" style="display: none;opacity: 1;vertical-align:middle;text-align: center;">
+    <p><img src="" class="center-block img-responsive" style="border: none;"></p>
+</div>
+{template 'footer_input'}
+
+<script>
+    $(document).on('click',".comment",function (e) {
+    //$(".comment-content").click(function(){
+        var $text_box=$("#text_box");
+        $text_box.val("");
+        $text_box.attr('placeholder','回复' + $(this).data('nick'));
+        $('#uid_hiden').val($(this).data('uid'));
+        $text_box.focus();
+        e.stopPropagation();
+    });
+    $(document).on("click",".avatar-block",function (e) {
+        window.location.href="{php echo $this->createMobileUrl('index');}"+'&openid='+$(this).data('uid')+'&op=homepage';
+        e.stopPropagation();
+    });
+    $("body").on('click',function () {
+        var $text=$("#text_box");
+        $text.val("");
+        $text.attr('placeholder','写评论');
+        $('#uid_hiden').val('');
+    });
+
+    $(".content-block").on('click',function () {
+        var $text=$("#text_box");
+        $text.val("");
+        $text.attr('placeholder','写评论');
+        $('#uid_hiden').val('');
+    });
+    $(".content-images").on('click',"img",function (e) {
+        var url=$(this).attr("src");
+        var prefix='thumb_';
+        var i=url.indexOf(prefix);
+
+        var pic_url=url.substr(0,i)+url.substr(i+prefix.length);
+        var $wrap=$(".wrap");
+        $wrap.find("img").attr("src",pic_url);
+        $wrap.show();
+    });
+    $(".wrap").click(function () {
+        $(this).hide();
+    });
+    $("#submit_btn").click(function(e){
+        if ($("#text_box").val().trim()!='') {
+
+            //$('#form_footer').submit();
+            $.ajax({
+                url: "{php echo $this->createMobileUrl('submitcomment')}",
+                dataType: "json",
+                type:"post",
+                data: {to_WHO:$('#uid_hiden').val(),content:$('#text_box').val(),token:$('input[name="token"]').val(),state_ID:{$state_detail['state_id']} },
+                success: function (data) {
+                    var new_comment='<div class="comment clearfix" data-uid="'+data.from_WHO+'" data-nick="'+data.nickname_FROM+'">'
+                        +'<a href="javascript:void(0);">'
+                        +'<div class="avatar-block pull-left">'
+                        +'<img src="'+data.avatar_FROM+'" class="center-block img-responsive img-circle">'
+                        +"</div>"
+                        +'</a>'
+                        +'<div class="comment-content" data-cid="'+data.state_ID+'" data-uid="'+data.from_WHO+'" data-nick='+data.nickname_FROM+'>'
+                        +'<div class="detail-block pull-left">'
+                        +'<div class="line">'
+                        +'<span class="link">'+data.nickname_FROM+ (data.nickname_TO?('&nbsp;回复&nbsp;'+data.nickname_TO):'&nbsp;')+'</span>'
+                        +data.content
+                        +'</div>'
+                        +'<div class="line"><span class="normal">'+data.comment_time+'</span></div>'
+                        +'</div>'
+                        +'</div>'
+                        +'</div>';
+                    $(".comment-area").append($(new_comment));
+                    var $cnt=$("#comment_count");
+                    $cnt.text(parseInt($cnt.text())+1);
+                    console.log("success");
+                },
+                error: function () {
+                    console.log("error");
+                }
+            });
+            $("#text_box").val('');
+            e.stopPropagation();
+        }
+    });
+    $(".poster-info").on("click",function (e) {
+        window.location.href="{php echo $this->createMobileUrl('index');}"+'&openid='+$(this).data('uid')+'&op=homepage';
+    });
+</script>
+
+{else}
+<script>
+    $("#title").text("评论");
+</script>
+<div class="container">
+    <form method="post" action="">
+        <div class="form-group">
+            <textarea id="input" class="form-control" style="height: 200px;resize: vertical;" placeholder="评论"></textarea>
+        </div>
+        <input type="hidden" name="token" value="{$_W['token']}">
+        <button type="submit"  class="btn btn-default">提交评论</button>
+    </form>
+</div>
+{template 'footer'}
+{/if}
+
