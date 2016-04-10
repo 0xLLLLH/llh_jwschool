@@ -11,7 +11,7 @@
 {else if $_GPC['op']=='homepage'}
     {template 'header_back'}
     <link rel="stylesheet" href="../addons/llh_jwschool/template/css/basic_info.css"/>
-    <div class="info-panel" style="min-height: 250px;position: relative">
+    <div class="info-panel" style="min-height: 250px;position: relative;background-image: url('../addons/llh_jwschool/images/homepage_bg.png')">
         <div class="info-block clearfix">
             <div class="pull-left" style="width: 25%;">
                 <img src="{if $avatar}{$avatar}{else}http://tp4.sinaimg.cn/3927645471/180/5753508523/1{/if}" class="center-block img-responsive img-circle" alt="Responsive image" style="border: 5px solid rgba(255,255,255,0.5);">
@@ -27,6 +27,8 @@
     <script>
         $("#title").text("{$nickname}的主页");
         $("#header_back").css("margin",'0');
+        $("#header_back").css("background",'transparent');
+        $("body").css("margin-top","0");
     </script>
     <div class="content-block">
         <div class="info_title"> <span class="glyphicon glyphicon-user" aria-hidden="true"></span>个人资料</div>
@@ -144,6 +146,7 @@
             var $state=$(this).parents(".state");
             var $sid=$state.data('sid');
             //alert('"'+$sid+'"');
+            if (confirm("确认删除约游?")) {
             $.ajax({
                 url: "{php echo $this->createMobileUrl('deletestate')}",
                 dataType: 'json',
@@ -152,13 +155,14 @@
                 success:function () {
                     console.log("ajax success");
                     $state.remove();
-                    alert('删除成功');
+                    //alert('删除成功');
                 },
                 error:function () {
                     console.log("ajax error")
                 }
             });
             e.stopPropagation();
+        }
         });
         $(window).scroll(function () {
             var srollPos = $(window).scrollTop();    //滚动条距顶部距离(页面超出窗口的高度)

@@ -4,7 +4,11 @@
 <link rel="stylesheet" href="../addons/llh_jwschool/template/css/usercenter.css"/>
 
 {template 'basic_info'}
-
+<script>
+    $("#header_back").css("background",'transparent');
+    $("body").css("margin-top","0");
+    $(".info-panel").css("background-image","url('../addons/llh_jwschool/images/usercenter_bg.png')");
+</script>
 <div>
     <div class="entry-group">
         <a href="{php echo $this->createMobileUrl('index',array('op'=>'homepage','openid'=>$_W['openid']));}">
@@ -17,25 +21,25 @@
                 <div class="tab-img">
                     <img src="../addons/llh_jwschool/images/icon_nav_button.png" class="center-block img-responsive">
                 </div>
-                <div class="text-center">index</div>
+                <div class="text-center">简</div>
             </a>
             <a href="javascript:;" class="entry-block flex-1" style="width: 25%">
                 <div class="tab-img">
                     <img src="../addons/llh_jwschool/images/icon_nav_article.png" class="center-block img-responsive">
                 </div>
-                <div class="text-center">发现</div>
+                <div class="text-center">玩</div>
             </a>
             <a href="javascript:;" class="entry-block flex-1" style="width: 25%">
                 <div class="tab-img">
                     <img src="../addons/llh_jwschool/images/icon_nav_article.png" class="center-block img-responsive">
                 </div>
-                <div class="text-center">发现</div>
+                <div class="text-center">约</div>
             </a>
             <a href="{php echo $this->createMobileUrl('usercenter');}" class="entry-block flex-1"  style="width: 25%">
                 <div class="tab-img">
                     <img src="../addons/llh_jwschool/images/icon_nav_cell.png" class="center-block img-responsive">
                 </div>
-                <div class="text-center">我</div>
+                <div class="text-center">游</div>
             </a>
         </div>
     </div><!-- end of entry-group -->
