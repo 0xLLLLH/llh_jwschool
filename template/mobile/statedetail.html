@@ -58,7 +58,7 @@
     {loop $comment_data $v}
     <div class="comment clearfix" data-uid="{$v['from_WHO']}" data-nick="{$v['nickname_FROM']}">
         <a href='javascript:void(0);'>
-            <div class="avatar-block pull-left">
+            <div class="avatar-block pull-left" data-uid="{$v['from_WHO']}">
                 <img src="{if $v['avatar_FROM']}{$v['avatar_FROM']}{else}http://tp4.sinaimg.cn/3927645471/180/5753508523/1{/if}" class="center-block img-responsive img-circle">
             </div>
         </a>
@@ -89,7 +89,10 @@
         $text_box.focus();
         e.stopPropagation();
     });
-
+    $(document).on("click",".avatar-block",function (e) {
+        window.location.href="{php echo $this->createMobileUrl('index');}"+'&openid='+$(this).data('uid')+'&op=homepage';
+        e.stopPropagation();
+    });
     $("body").on('click',function () {
         var $text=$("#text_box");
         $text.val("");
