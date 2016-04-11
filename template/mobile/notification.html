@@ -6,7 +6,8 @@
 </script>
 
 <div class="comment-area content-block">
-     {loop $comment_data $v}
+    {if $comment_data}
+    {loop $comment_data $v}
     <div  class="comment clearfix" data-sid="{$v['state_ID']}" data-cid="{$v['id']}">
         <a href='#'>
             <div class="avatar-block pull-left">
@@ -24,6 +25,9 @@
         </div>
     </div>
     {/loop}
+    {else}
+        暂无通知
+    {/if}
 </div>
 <script>
     $(".comment").on('click',function () {

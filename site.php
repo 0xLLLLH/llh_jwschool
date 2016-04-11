@@ -118,6 +118,15 @@ class llh_jwschoolModuleSite extends WeModuleSite
         }
         return $age;
     }
+    function getNoticeNum()
+    {
+        global $_W, $_GPC;
+        $num = pdo_fetchall("SELECT COUNT(*) AS num FROM "
+            . tablename('jwschool_comments') . "," . tablename('jwschool_moments')
+            . " WHERE " . tablename('jwschool_moments') . ".id=" . tablename('jwschool_comments') . ".state_ID AND beread=0 AND (to_WHO=:to_WHO OR (to_WHO=-1 AND openid=:openid)) ORDER BY "
+            .tablename('jwschool_comments').".release_TIME DESC ", array(':to_WHO' => $_W['openid'],':openid'=>$_W['openid']));
+        return $num[0]['num'];
+    }
    /* function PDO_FETCH($field, $table, $condition, $arr)
     {
         $sql = "select ";

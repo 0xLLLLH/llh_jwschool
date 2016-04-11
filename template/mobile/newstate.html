@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="../addons/llh_jwschool/template/css/weui.min.css"/>
 <link rel="stylesheet" href="../addons/llh_jwschool/template/css/common.css"/>
 
-<nav id="header_back" class="navbar navbar-default navbar-static-top">
+<nav id="header_back" class="navbar navbar-default navbar-fixed-top">
     <a href="javascript:history.go(-1)" class="pull-left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
     <span id="title" class="center-block" style="width: 200px;text-align: center;"></span>
     <a href="javascript:void(0);" id="send" class="pull-right"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></a>
@@ -43,7 +43,7 @@
         </div>
     </div><!-- end of content-block -->
     <div class="content-block">
-        <textarea class="form-control" placeholder="写点什么吧..." name="content" style="border: none;box-shadow: none;min-height: 160px;"></textarea>
+        <textarea id="content" class="form-control" placeholder="写点什么吧..." name="content" style="border: none;box-shadow: none;min-height: 160px;"></textarea>
 
         <div class="weui_uploader">
             <div class="weui_uploader_bd">
@@ -84,7 +84,7 @@
         <a id="picklocation" href="javascript:void(0)">
             <div class="entry entry-inline entry-last">
                 <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
-                <span id="location">选择你的当前位置</span><span class="gt pull-right"> &gt</span>
+                <span id="location">选择约游地点</span><span class="gt pull-right"> &gt</span>
                 <input id="location-hide" name="location-hide" type="hidden" value="">
             </div>
         </a>
@@ -177,8 +177,13 @@
         var v=$("#label_text").val();
         $("#tag-show").text(v);
         $("#tag-hide").val(v);
-        $("#location").text($(document).find(".tpl-province")[0].value+'-'+$(document).find(".tpl-city")[0].value+'-'+$(document).find(".tpl-district")[0].value);
-        $("#location-hide").val($("#location").text());
+        var location=$(document).find(".tpl-province")[0].value+'-'+$(document).find(".tpl-city")[0].value+'-'+$(document).find(".tpl-district")[0].value;
+        if (location!='--'){
+            $("#location").text(location);
+            $("#location-hide").val($("#location").text());
+        }
+
+
         hide_wrap();
     });
 
@@ -228,6 +233,17 @@
         }
     });
     $("#send").click(function () {
-        $("#state-form").submit();
+        if ($("#pickdate").css("display")!='none')
+            alert("请选择约游时间");
+        else if ($("#content").val().trim()=='')
+            alert("请填写约游内容");
+        else if ($("#tag-hide").val().trim()=='')
+            alert("请选择标签");
+        else if ($("#location-hide").val().trim()=='')
+            alert("请选择约游地点");
+        else if ($("#f_p")[0].style.display=='none'&& $("#s_p")[0].style.display=='none'&& $("#t_p")[0].style.display=='none')
+            alert("请上传至少一张图片");
+        else
+            $("#state-form").submit();
     });
 </script>

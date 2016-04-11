@@ -6,7 +6,8 @@
             </div>
             <div class="text-center">约游</div>
         </a>
-        <a href="{php echo $this->createMobileUrl('notification')}" style="width: 33.3%">
+        <a href="{php echo $this->createMobileUrl('notification')}" style="width: 33.3%;position: relative;">
+            <span class="badge" style="background-color: lightpink;position: absolute;top:5px;right: 25%;">{if $this->getNoticeNum()}{php echo $this->getNoticeNum();}{/if}</span>
             <div class="tab-img">
                 <img src="../addons/llh_jwschool/images/icon_nav_article.png" class="center-block img-responsive">
             </div>
