@@ -15,7 +15,7 @@ $state_ID=pdo_fetchall("SELECT DISTINCT state_ID FROM ".tablename('jwschool_comm
 $member = mc_fetch(intval($_W['member']['uid']), array('nickname'));
 foreach ($state_ID as $k=>$v){
     $comments_data[$k]['state_ID']=$v['state_ID'];
-    $comments_data[$k]['comments']=pdo_fetchall("SELECT id,content,release_TIME FROM ".tablename('jwschool_comments')." WHERE state_ID=:state_ID ORDER BY release_TIME DESC ",array(':state_ID'=>$v['state_ID']));
+    $comments_data[$k]['comments']=pdo_fetchall("SELECT id,content,release_TIME FROM ".tablename('jwschool_comments')." WHERE state_ID=:state_ID AND from_WHO=:from_WHO ORDER BY release_TIME DESC ",array(':state_ID'=>$v['state_ID'],':from_WHO'=>$_W['openid']));
     $state_DATA = pdo_get('jwschool_moments',array('id'=>$v['state_ID']),array('openid','release_TIME','content','position','travel_TIME','views','comments_NUM'));
     $uid=mc_openid2uid($state_DATA['openid']);
     $comments_data[$k]['release_TIME']=$state_DATA['release_TIME'];
