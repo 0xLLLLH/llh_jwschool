@@ -8,6 +8,11 @@
     <script>
         $("#title").text("搜索\"{$_GPC['keyword']}\":");
     </script>
+    {if empty($state_data)}
+        <div class="content-block">
+            没有与“{$_GPC['keyword']}”相关的搜索结果
+        </div>
+    {/if}
 {else if $_GPC['op']=='homepage'}
     {template 'header_back'}
     <link rel="stylesheet" href="../addons/llh_jwschool/template/css/basic_info.css"/>
@@ -41,6 +46,11 @@
 <script>
     $("#title").text("我的约游");
 </script>
+    {if empty($state_data)}
+    <div class="content-block">
+        暂无记录
+    </div>
+    {/if}
 {else}
 <nav id="header_back" class="navbar navbar-default navbar-fixed-top">
     <div style="float: left;width: 10%;">
@@ -108,6 +118,9 @@
 <div class="action_button" style="display: none;">
     <span class="glyphicon glyphicon-refresh" style="margin: 0;" aria-hidden="true"></span>
 </div>
+
+{template 'footer'}
+
 <script>
     if (history && history.pushState) {
         var loaded = false;
@@ -255,5 +268,3 @@
 
 
 </script>
-
-{template 'footer'}

@@ -13,6 +13,7 @@ load()->model('mc');
 if(empty($_W['openid'])){
     message("请先关注本公众号以完成信息注册！",'','warning');
 }
+//echo $_W['openid'];
 if (isset($_GPC['submit'])) {
     $field=$_GPC['op'];//更新的字段
     mc_update(intval($_W['member']['uid']),array($field=>$_GPC[$field]));
