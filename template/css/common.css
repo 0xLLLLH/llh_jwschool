@@ -86,8 +86,12 @@ a:hover {
 #footer .tab-img {
   padding: 0 40%;
 }
+.tab-img img {
+  width: 20px;
+}
 #footer a {
   padding: 5px;
+  height: 50px;
 }
 .content-block {
   margin-top: 10px;

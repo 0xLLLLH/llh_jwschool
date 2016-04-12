@@ -23,8 +23,8 @@
     $("#title").text("约游详情");
 </script>
 <div class="content-block block-last">
-    <div class="poster-info clear-fix" data-uid="{$_W['openid']}" style="border-bottom: 1px solid #eee;">
-        <div class="avatar-block pull-left clearfix">
+    <div class="poster-info clear-fix" data-uid="{$state_detail['openid']}" style="border-bottom: 1px solid #eee;">
+        <div class="avatar-block pull-left clearfix" data-uid="{$state_detail['openid']}">
             <img src="{if $state_detail['avatar']}{$state_detail['avatar']}{else}http://tp4.sinaimg.cn/3927645471/180/5753508523/1{/if}" class="center-block img-responsive img-circle">
         </div>
         <div class="detail-block pull-left">
