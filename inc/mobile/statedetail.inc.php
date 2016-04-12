@@ -112,6 +112,8 @@ if (isset($_GPC['state_ID'])) {
     $state_detail['nickname'] = $member['nickname'];
     $state_detail['gender'] = $member['gender'];
     $state_detail['state_id'] = $_GPC['state_ID'];
+    $position = explode('-', $state_detail['position']);
+    $state_detail['position']=$position[0].$position[1];
     $state_detail['age'] = $this->getAge($member['birthyear'], $member['birthmonth'], $member['birthday']);
     //var_dump($state_detail);//状态所有信息；
     /**************************************************************************************************************/

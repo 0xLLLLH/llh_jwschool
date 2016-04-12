@@ -7,7 +7,26 @@
     <span id="title" class="center-block" style="width: 200px;text-align: center;"></span>
     <a href="javascript:void(0);" id="send" class="pull-right"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></a>
 </nav>
-
+<div id="loadingToast" class="weui_loading_toast" style="display:none;">
+    <div class="weui_mask_transparent"></div>
+    <div class="weui_toast">
+        <div class="weui_loading">            <!-- :) -->
+            <div class="weui_loading_leaf weui_loading_leaf_0"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_1"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_2"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_3"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_4"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_5"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_6"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_7"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_8"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_9"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_10"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_11"></div>
+        </div>
+        <p class="weui_toast_content">约游发布中</p>
+    </div>
+</div>
 <form enctype="multipart/form-data"  id="state-form" method="post" action="{php echo $this->createMobileUrl('statedetail',array('submit'=>1))}">
         <div class="wrap" style="display: none"></div>
         <div class="wrap-content" style="display: none">
@@ -232,18 +251,52 @@
             reader.readAsDataURL(file);
         }
     });
+    var jic = {
+                /**
+                 * Receives an Image Object (can be JPG OR PNG) and returns a new Image Object compressed
+                 * @param {Image} source_img_obj The source Image Object
+                 * @param {Integer} quality The output quality of Image Object
+                 * @return {Image} result_image_obj The compressed Image Object
+                 */
+
+                compress: function(source_img_obj, quality, output_format){
+
+                    var mime_type = "image/jpeg";
+                    if(output_format!=undefined && output_format=="png"){
+                        mime_type = "image/png";
+                    }
+
+
+                    var cvs = document.createElement('canvas');
+                    //naturalWidth真实图片的宽度
+                    cvs.width = source_img_obj.naturalWidth;
+                    cvs.height = source_img_obj.naturalHeight;
+                    var ctx = cvs.getContext("2d").drawImage(source_img_obj, 0, 0);
+                    var newImageData = cvs.toDataURL(mime_type, quality/100);
+                    var result_image_obj = new Image();
+                    result_image_obj.src = newImageData;
+                    return result_image_obj;
+                }
+    }
+    var sending=false;
     $("#send").click(function () {
-        if ($("#pickdate").css("display")!='none')
-            alert("请选择约游时间");
-        else if ($("#content").val().trim()=='')
-            alert("请填写约游内容");
-        else if ($("#tag-hide").val().trim()=='')
-            alert("请选择标签");
-        else if ($("#location-hide").val().trim()=='')
-            alert("请选择约游地点");
-        else if ($("#f_p")[0].style.display=='none'&& $("#s_p")[0].style.display=='none'&& $("#t_p")[0].style.display=='none')
-            alert("请上传至少一张图片");
-        else
-            $("#state-form").submit();
+    	if (!sending){
+	        if ($("#pickdate").css("display")!='none')
+	            alert("请选择约游时间");
+	        else if ($("#content").val().trim()=='')
+	            alert("请填写约游内容");
+	        else if ($("#tag-hide").val().trim()=='')
+	            alert("请选择标签");
+	        else if ($("#location-hide").val().trim()=='')
+	            alert("请选择约游地点");
+	        else if ($("#f_p")[0].style.display=='none'&& $("#s_p")[0].style.display=='none'&& $("#t_p")[0].style.display=='none')
+	            alert("请上传至少一张图片");
+	        else if (confirm("确认发布约游？"))
+	        {
+	        	sending=true;
+	        	$("#loadingToast").show();
+	            $("#state-form").submit();
+	        }
+    	}
     });
 </script>

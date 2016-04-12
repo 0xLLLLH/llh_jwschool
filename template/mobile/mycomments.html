@@ -17,7 +17,7 @@
                 </div>
                 <div class="detail-block pull-left clearfix">
                     <div class="line"><span class="link">{$s['state_USER']['nickname']}<span class="badge"
-                                                                               style="background-color: #5bc0de;">{if $s['state_USER']['gender']==2}♀{else if $s['gender']==1}♂{else}保密{/if}{$s['age']}{$s['state_USER']['age']}</span></span>
+                                                                               style="background-color:{if $s['state_USER']['gender']==2}#ffb6c1{else if $s['state_USER']['gender']==1}#5bc0de{else}#777{/if};">{if $s['state_USER']['gender']==2}♀{else if $s['state_USER']['gender']==1}♂{else}保密{/if}{$s['age']}{$s['state_USER']['age']}</span></span>
                     </div>
                     <div class="line "><span class="normal">{$s['release_TIME']}</span></div>
                 </div>
@@ -58,7 +58,9 @@
     {/loop}
 
     {else}
-        暂无评论
+        <div class="content-block">
+            暂无评论
+        </div>
     {/if}
 </div>
 <script>
